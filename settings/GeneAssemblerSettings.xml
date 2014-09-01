@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="9">
+<GeneAssemblerSettings class_id="0" tracking_level="0" version="0">
+	<fixedTokenSize>24</fixedTokenSize>
+	<fullMatchManagerSettings class_id="1" tracking_level="0" version="0">
+		<searchAlgorithm>1</searchAlgorithm>
+		<maxSeeds>300</maxSeeds>
+		<minTokensPerRead>2</minTokensPerRead>
+		<maxBasesForVariants>30</maxBasesForVariants>
+        <localAlignmentSettings class_id="2" tracking_level="0" version="0">
+            <verbosity>0</verbosity>
+            <useBandMatrix>1</useBandMatrix>
+            <bandwidth>30</bandwidth>
+            <scoreMatch>1.0</scoreMatch>
+            <scoreMismatch>-1.0</scoreMismatch>
+            <scoreInsertion>-1.0</scoreInsertion>
+            <scoreDeletion>-1.0</scoreDeletion>
+        </localAlignmentSettings>
+	</fullMatchManagerSettings>
+	<nucleotideDatabaseSettings class_id="3" tracking_level="0" version="0">
+		<initialBucketSize>100000</initialBucketSize>
+		<createOnlyDatabaseInformation>0</createOnlyDatabaseInformation>
+		<considerReverse>1</considerReverse>
+		<considerComplement>1</considerComplement>
+        <ignoreGeneIDsLargerThanMaxGeneID>1</ignoreGeneIDsLargerThanMaxGeneID>
+        <maxGeneID>377549215</maxGeneID>
+	</nucleotideDatabaseSettings>
+	<organismsReportSettings class_id="4" tracking_level="0" version="0">
+		<cdsDatabaseSettings class_id="5" tracking_level="0" version="0">
+			<proteinLinkTableName>ProteinLink</proteinLinkTableName>
+			<verbosity>0</verbosity>
+			<checkSubdividedLocation>1</checkSubdividedLocation>
+		</cdsDatabaseSettings>
+		<taxonomySettings class_id="6" tracking_level="0" version="0">
+			<verbosity>0</verbosity>
+		</taxonomySettings>
+		<removeUnwantedOrganisms>1</removeUnwantedOrganisms>
+		<minReadsForOrganism>30</minReadsForOrganism>
+		<matchNotificationNumber>1000</matchNotificationNumber>
+        <verbosity>1</verbosity>
+	</organismsReportSettings>
+</GeneAssemblerSettings>
+</boost_serialization>
+

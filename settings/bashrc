@@ -1,0 +1,38 @@
+# Root directory of GeneAssembler
+export GENEASSEMBLER_ROOT=
+
+# Prepend PATH (do not change next line)
+export PATH=${GENEASSEMBLER_ROOT}/bin:$PATH
+
+# MySQL server host name
+export MYSQL_HOST=
+
+# MySQL user name
+export MYSQL_USER=
+
+# MySQL user password
+export MYSQL_PASS=
+
+# MySQL NCBI taxonomy database name
+export MYSQL_TAX_DB=
+
+# MySQL Solver database name
+export MYSQL_MY_DB=
+
+# Path to NCBI NT database
+export NCBI_NT_PATH=
+
+# Scratch folder shared to all cluster nodes 
+export SCRATCH_SHARED=
+
+# Scratch folder on local node
+export SCRATCH_LOCAL=
+
+# Number of worker nodes in the cluster
+export NODE_NUM=1
+
+# Number of CPUs per worker node
+export NODE_CPUS=1
+
+# Gigabytes of RAM per worker node
+export NODE_MEM=2

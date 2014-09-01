@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="9">
+<CDSDatabaseBuilderSettings class_id="0" tracking_level="0" version="0">
+	<cdsIteratorSettings class_id="1" tracking_level="0" version="0">
+		<onlyImportKeyFeaturesWithPrecedingGeneSection>0</onlyImportKeyFeaturesWithPrecedingGeneSection>
+		<listOfFeatureKeysToImport class_id="2" tracking_level="0" version="0">
+			<count>9</count>
+			<item_version>0</item_version>
+			<item>CDS</item>
+            <item>mat_peptide</item>
+            <item>misc_RNA</item>
+            <item>mRNA</item>
+            <item>ncRNA</item>
+            <item>precursor_RNA</item>
+            <item>rRNA</item>
+            <item>tRNA</item>
+            <item>tmRNA</item>
+		</listOfFeatureKeysToImport>
+	</cdsIteratorSettings>
+</CDSDatabaseBuilderSettings>
+</boost_serialization>
+
