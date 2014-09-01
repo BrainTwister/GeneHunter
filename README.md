@@ -21,46 +21,46 @@ Installation
 
 1) Get the source code using git:
 
-  git clone https://github.com/BrainTwister/GeneAssembler
+    git clone https://github.com/BrainTwister/GeneAssembler
   
 2) Make build directory and change into it:
   
-  mkdir GeneAssembler/build
-  cd GeneAssembler/build
+    mkdir GeneAssembler/build
+    cd GeneAssembler/build
 
 3) Generate Makefile using cmake:
 
-  cmake ..
+    cmake ..
 
 4) Compile:
 
-  make -j <number of cores>
+    make -j <number of cores>
 
 5) Execute the Tests
 
-  make test
+    make test
 
 6) Download Nucleotide database
 
-  wget ftp://ftp.ncbi.nih.gov/blast/db/FASTA/nt.gz
+    wget ftp://ftp.ncbi.nih.gov/blast/db/FASTA/nt.gz
 
 7) Download and generate gene database
 
-  wget ftp://ftp.ncbi.nlm.nih.gov/genbank/*.seq.gz
-  
-  CDSDatabaseBuilder [input-files]
+    wget ftp://ftp.ncbi.nlm.nih.gov/genbank/*.seq.gz
+ 
+    CDSDatabaseBuilder [input-files]
 
 8) Download and generate taxonomy database
 
-  wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 
-  TaxonomyDatabaseBuilder [gi_taxid_nucl] [names] [nodes]
+    TaxonomyDatabaseBuilder [gi_taxid_nucl] [names] [nodes]
 
 9) Edit and set environmental variables
 
-  source ../settings/bashrc
+    source ../settings/bashrc
 
 Usage
 -----
 
-  GeneAssembler [read-file] [description-file] [result-file]
+    GeneAssembler [read-file] [description-file] [result-file]
