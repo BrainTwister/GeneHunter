@@ -20,4 +20,8 @@ target_link_libraries(
     ${MYSQL_LIBRARIES}
 )
 
-ADD_TEST(GenomeTest ${CMAKE_BINARY_DIR}/bin/GenomeTest -i ${CMAKE_SOURCE_DIR}/TestSuiteInput -o /home/bernd/scratch)
+add_test(
+    GenomeTest
+    ${CMAKE_BINARY_DIR}/bin/GenomeTest
+    --gtest_output=xml:${CMAKE_BINARY_DIR}/Testing/GenomeTest.xml    
+)

@@ -14,4 +14,8 @@ target_link_libraries(
     ${GTEST_BOTH_LIBRARIES}
 )
 
-ADD_TEST(UtilitiesTest ${CMAKE_BINARY_DIR}/bin/UtilitiesTest -i ${CMAKE_SOURCE_DIR}/TestSuiteInput -o /home/bernd/scratch)
+add_test(
+    UtilitiesTest
+    ${CMAKE_BINARY_DIR}/bin/UtilitiesTest
+    --gtest_output=xml:${CMAKE_BINARY_DIR}/Testing/CoreGTest.xml
+)
