@@ -55,7 +55,7 @@ int main( int argc, char* argv[] )
 			if ( filename.substr(filename.size()-3,3) == ".gz" ) {
 				string cmd = "gunzip " + filename;
 				cout << cmd << endl;
-				system(cmd.c_str());
+				if (system(cmd.c_str())) throw GeneAssemblerException("Error in executing " + cmd + ".");
 				filename.erase(filename.size()-3,3);
 				fileIsZipped = true;
 			}
@@ -68,7 +68,7 @@ int main( int argc, char* argv[] )
 			if ( fileIsZipped ) {
 				string cmd = string("gzip ") + filename;
 				cout << cmd << endl;
-				system(cmd.c_str());
+				if (system(cmd.c_str())) throw GeneAssemblerException("Error in executing " + cmd + ".");
 			}
 		}
 
