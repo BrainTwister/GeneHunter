@@ -3,6 +3,7 @@
 
 #include "CharTypes.h"
 #include "SequenceToken.h"
+#include "Version.h"
 #include <string>
 
 /**
@@ -19,12 +20,7 @@
  * as possible.
  */
 
-#define STR_EXPAND(tok) #tok
-#define STR(tok) STR_EXPAND(tok)
-
 namespace GeneAssembler {
-
-const std::string version = STR(GENEASSEMBLER_VERSION);
 
 /// Integer type for size of FixedToken.
 typedef uint8_t FixedTokenSizeType;

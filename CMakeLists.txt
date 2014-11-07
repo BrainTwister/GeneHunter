@@ -1,5 +1,8 @@
 project(GeneAssembler CXX)
 
+set(GeneAssembler_VERSION_MAJOR 1)
+set(GeneAssembler_VERSION_MINOR 0)
+
 cmake_minimum_required(VERSION 2.6.2)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
@@ -22,7 +25,7 @@ if(    NOT cmake_build_type_tolower STREQUAL "debug"
   message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Debug, Release, RelWithDebInfo, Profiling (case-insensitive).")
 endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++0x -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_VERSION=\"1.0 rev 455\" -DGENEASSEMBLER_THROW_FATAL_ERROR")
+set(CMAKE_CXX_FLAGS "-std=c++11 -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_THROW_FATAL_ERROR")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -DDEBUG_MODE")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DDEBUG_MODE")
@@ -34,13 +37,18 @@ endif()
 
 if( ${CMAKE_COMPILER_IS_GNUCXX} )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-depth=10000 -funsigned-char")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -funroll-loops -ffast-math -mfpmath=sse -march=core2 -mtune=core2 -msse2 -DBLASBOOSTER_DEBUG_MODE")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -funroll-loops -ffast-math -mfpmath=sse -march=core2 -mtune=core2 -msse2")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -funroll-loops --param max-unroll-times=100 -ffast-math -mfpmath=sse -march=core2 -mtune=core2 -msse2")
 endif()
 
 set(CMAKE_VERBOSE_MAKEFILE false)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+
+configure_file (
+  "${PROJECT_SOURCE_DIR}/src/UtilitiesLib/Version.h.in"
+  "${PROJECT_SOURCE_DIR}/src/UtilitiesLib/Version.h"
+)
 
 ENABLE_TESTING()
 
@@ -54,20 +62,6 @@ if(Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
     add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
 endif(Boost_FOUND)
-
-FIND_PACKAGE(Doxygen)
-if(DOXYGEN_FOUND)
-    configure_file(
-        ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile
-        ${PROJECT_BINARY_DIR}/doxygen/Doxyfile
-    )
-    add_custom_target(
-    	doc
-    	${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/doxygen/Doxyfile
-            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/doxygen
-            COMMENT "Generating API documentation with Doxygen" VERBATIM
-    )    
-endif(DOXYGEN_FOUND)
 
 find_package(MySQL REQUIRED)
 
@@ -83,3 +77,13 @@ if(GTEST_FOUND)
     add_subdirectory(src/GenomeTest)
     add_subdirectory(src/UtilitiesTest)
 endif(GTEST_FOUND)
+
+FIND_PACKAGE(Doxygen)
+if(DOXYGEN_FOUND)
+    add_custom_target(
+    	doc
+    	${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen
+            COMMENT "Generating API documentation with Doxygen" VERBATIM
+    )    
+endif()
