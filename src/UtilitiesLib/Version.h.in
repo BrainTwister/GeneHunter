@@ -4,4 +4,13 @@
 #define GeneAssembler_VERSION_MAJOR @GeneAssembler_VERSION_MAJOR@
 #define GeneAssembler_VERSION_MINOR @GeneAssembler_VERSION_MINOR@
 
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
+namespace GeneAssembler {
+
+const std::string version = STR(GeneAssembler_VERSION_MAJOR.GeneAssembler_VERSION_MINOR);
+
+} // namespace GeneAssembler
+
 #endif /* VERSION_H_ */
