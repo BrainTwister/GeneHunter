@@ -9,7 +9,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-  message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there. You may need to remove CMakeCache.txt. ")
+  message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there. You may need to remove CMakeCache.txt.")
 endif()
 
 # guard against bad build-type strings
@@ -50,12 +50,10 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/src/UtilitiesLib/Version.h"
 )
 
-ENABLE_TESTING()
-
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
-    
+
 FIND_PACKAGE(Boost COMPONENTS filesystem serialization system REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
@@ -74,6 +72,7 @@ add_subdirectory(src/TaxonomyDatabaseBuilder)
 
 find_package(GTest)
 if(GTEST_FOUND)
+    ENABLE_TESTING()
     add_subdirectory(src/GenomeTest)
     add_subdirectory(src/UtilitiesTest)
 endif(GTEST_FOUND)
