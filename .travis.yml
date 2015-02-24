@@ -4,7 +4,7 @@ compiler:
   - clang
 before_install:
   - sudo apt-get update
-  - sudo apt-get install boost
+  - sudo apt-get install libboost-all-dev
   - sudo apt-get install doxygen
   - sudo apt-get install libgtest-dev
   - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
