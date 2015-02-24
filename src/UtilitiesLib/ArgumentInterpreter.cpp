@@ -1,5 +1,6 @@
 #include "ArgumentInterpreter.h"
 #include <boost/lexical_cast.hpp>
+#include <algorithm>
 #include <stdexcept>
 #include <iomanip>
 #include <iostream>
