@@ -2,6 +2,7 @@
 #include <boost/lexical_cast.hpp>
 #include <stdexcept>
 #include <iomanip>
+#include <iostream>
 
 using namespace std;
 
