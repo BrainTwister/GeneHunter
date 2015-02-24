@@ -1,9 +1,11 @@
 GeneAssembler
 =============
 
+[![Build Status](https://travis-ci.org/BrainTwister/GeneAssembler.png)](https://travis-ci.org/BrainTwister/GeneAssembler)
+
 Identification of organisms from a stream of DNA sequences.
 
-Copyright 2013-2014 BrainTwister.
+Copyright 2013-2015 BrainTwister - All rights reserved.
 
 GeneAssembler is free software made available under the MIT License. For details see the LICENSE file.
 
