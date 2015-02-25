@@ -20,7 +20,7 @@ Requirements
 
 For Ubuntu 14.04 please install following packages:
 
-    sudo apt-get install cmake libboost-all-dev doxygen mysql-client libmysqlclient-dev
+    sudo apt-get install cmake libboost-all-dev libgtest-dev doxygen mysql-client libmysqlclient-dev
 
 Installation
 ------------
