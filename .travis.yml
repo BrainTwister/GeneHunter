@@ -11,7 +11,7 @@ before_install:
   - wget http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.tar.bz2
   - tar --bzip2 -xf boost_1_55_0.tar.bz2
   - cd boost_1_55_0
-  - ./bootstrap.sh
+  - ./bootstrap.sh --with-libraries=filesystem,serialization,system
   - sudo ./b2 install --toolset=gcc
   - cd ..
 install:
