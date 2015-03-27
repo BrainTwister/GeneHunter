@@ -1,13 +1,13 @@
-GeneAssembler
-=============
+GeneHunter
+==========
 
-[![Build Status](https://travis-ci.org/BrainTwister/GeneAssembler.png)](https://travis-ci.org/BrainTwister/GeneAssembler)
+[![Build Status](https://travis-ci.org/BrainTwister/GeneHunter.png)](https://travis-ci.org/BrainTwister/GeneHunter)
 
 Identification of organisms from a stream of DNA sequences.
 
 Copyright 2013-2015 BrainTwister - All rights reserved.
 
-GeneAssembler is free software made available under the MIT License. For details see the LICENSE file.
+GeneHunter is free software made available under the MIT License. For details see the LICENSE file.
 
 Requirements
 ------------
@@ -27,12 +27,12 @@ Installation
 
 1) Get the source code using git:
 
-    git clone https://github.com/BrainTwister/GeneAssembler
+    git clone https://github.com/BrainTwister/GeneHunter
   
 2) Make build directory and change into it:
   
-    mkdir GeneAssembler/build
-    cd GeneAssembler/build
+    mkdir GeneHunter/build
+    cd GeneHunter/build
 
 3) Generate Makefile using cmake:
 
@@ -69,4 +69,4 @@ Installation
 Usage
 -----
 
-    GeneAssembler [read-file] [description-file] [result-file]
+    GeneHunter [read-file] [description-file] [result-file]
