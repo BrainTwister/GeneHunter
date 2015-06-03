@@ -18,7 +18,7 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.500187050.453381357" name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.1592576905" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.506150726" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/GeneAssembler}/Build_Release_Gnu" id="cdt.managedbuild.target.gnu.builder.base.97017999" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<builder buildPath="${workspace_loc:/GeneHunter}/Build_Release_Gnu" id="cdt.managedbuild.target.gnu.builder.base.97017999" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1608264725" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1506268789" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.742755199" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
@@ -64,7 +64,7 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.500187050.1458653509." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.14269773" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.2104902677" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/GeneAssembler}/Build_Debug_Gnu" id="cdt.managedbuild.target.gnu.builder.base.1881848200" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<builder buildPath="${workspace_loc:/GeneHunter}/Build_Debug_Gnu" id="cdt.managedbuild.target.gnu.builder.base.1881848200" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.69084845" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.197485447" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.497644041" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
@@ -95,12 +95,12 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="GeneAssembler.null.882824994" name="GeneAssembler"/>
+		<project id="GeneHunter.null.882824994" name="GeneHunter"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Default">
-			<resource resourceType="PROJECT" workspacePath="/GeneAssembler"/>
+			<resource resourceType="PROJECT" workspacePath="/GeneHunter"/>
 		</configuration>
 		<configuration configurationName="Release"/>
 		<configuration configurationName="Debug"/>
