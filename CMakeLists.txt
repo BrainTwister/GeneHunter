@@ -25,7 +25,7 @@ if(    NOT cmake_build_type_tolower STREQUAL "debug"
   message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Debug, Release, RelWithDebInfo, Profiling (case-insensitive).")
 endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_THROW_FATAL_ERROR")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_THROW_FATAL_ERROR")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -DDEBUG_MODE")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DDEBUG_MODE")
