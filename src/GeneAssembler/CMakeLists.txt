@@ -16,3 +16,6 @@ target_link_libraries(
     UtilitiesLib
     ${MYSQL_LIBRARIES}
 )
+
+install(TARGETS GeneAssembler RUNTIME DESTINATION bin)
+

@@ -18,3 +18,6 @@ target_link_libraries(
     ${MYSQL_LIBRARIES}
     ${Boost_LIBRARIES}
 )
+
+install(TARGETS TaxonomyDatabaseBuilder RUNTIME DESTINATION bin)
+
