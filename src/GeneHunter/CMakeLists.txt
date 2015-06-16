@@ -18,4 +18,3 @@ target_link_libraries(
 )
 
 install(TARGETS GeneHunter RUNTIME DESTINATION bin)
-
