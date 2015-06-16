@@ -1,7 +1,9 @@
 project(GeneAssembler CXX)
 
-set(GeneAssembler_VERSION_MAJOR 1)
-set(GeneAssembler_VERSION_MINOR 0)
+set(PROJECT_VERSION_MAJOR 1)
+set(PROJECT_VERSION_MINOR 0)
+set(PROJECT_VERSION_PATCH 0)
+mark_as_advanced(PROJECT_VERSION_MAJOR PROJECT_VERSION_MINOR PROJECT_VERSION_PATCH)
 
 cmake_minimum_required(VERSION 2.6.2)
 
@@ -79,11 +81,18 @@ endif(GTEST_FOUND)
 
 FIND_PACKAGE(Doxygen)
 if(DOXYGEN_FOUND)
-    add_custom_target(
-    	doc
-    	${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen
-            COMMENT "Generating API documentation with Doxygen" VERBATIM
-    )    
-endif()
 
+    set(doxyfile_in ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile.in)
+    set(doxyfile ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile)
+
+    configure_file(${doxyfile_in} ${doxyfile} @ONLY)
+
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen/html DESTINATION share/doc)
+    
+endif(DOXYGEN_FOUND)
