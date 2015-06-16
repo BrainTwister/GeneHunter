@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 Organism::Organism()
  : taxonID_(0)
@@ -70,4 +70,4 @@ std::ostream& operator << ( std::ostream& os, Organism const& organism )
 	          << "reads.size()  = " << organism.getReads().size() << endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

@@ -1,12 +1,12 @@
 #ifndef TOKENITERATOR_H_
 #define TOKENITERATOR_H_
 
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Sequence.h"
 #include "SequenceToken.h"
 #include <boost/iterator/iterator_facade.hpp>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /**
  * N: TokenSize
@@ -97,7 +97,7 @@ private:
 			    currentValue_ = Value( std::make_pair(
 			    	SequenceToken<OutTokenType,TokenSize>(iterTokenBeg_,iterTokenEnd), position_)
 			    );
-    	    } catch ( GeneAssemblerException const& e ) {
+    	    } catch ( GeneHunterException const& e ) {
     			std::cout << "position = " << position_ << std::endl;
     			std::cout << "dist = " << std::distance(iterTokenBeg_,iterTokenEnd) << std::endl;
     			std::cout << "iterTokenBeg = " << *iterTokenBeg_ << std::endl;
@@ -134,6 +134,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* TOKENITERATOR_H_ */

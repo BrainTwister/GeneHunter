@@ -2,12 +2,12 @@
 #define COMPRESSEDCHARTHREEINONE_H_
 
 #include "boost/serialization/array.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include <array>
 #include <functional>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct CompressedCharThreeInOne
 {
@@ -24,7 +24,7 @@ struct CompressedCharThreeInOne
 			case 'T' : return 3;
 			case 'N' : return 4;
 			case 'X' : return 5;
-			default : GeneAssemblerException("CompressedCharThreeInOne: stringToken contain unkown letter.");
+			default : GeneHunterException("CompressedCharThreeInOne: stringToken contain unkown letter.");
 		}
 	}
 
@@ -37,7 +37,7 @@ struct CompressedCharThreeInOne
 			case 3 : return 'T';
 			case 4 : return 'N';
 			case 5 : return 'X';
-			default : GeneAssemblerException("CompressedCharThreeInOne: stringToken contain unkown item.");
+			default : GeneHunterException("CompressedCharThreeInOne: stringToken contain unkown item.");
 		}
 	}
 
@@ -60,6 +60,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* COMPRESSEDCHARTHREEINONE_H_ */

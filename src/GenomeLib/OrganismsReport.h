@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class OrganismsReport
 {
@@ -61,6 +61,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* ORGANISMSREPORT_H_ */

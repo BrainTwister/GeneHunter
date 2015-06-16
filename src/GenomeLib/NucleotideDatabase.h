@@ -2,7 +2,7 @@
 #define NUCLEOTIDEDATABASE_H_
 
 #include "CreateDataClass.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Genome.h"
 #include "FASTA.h"
 #include "NucleotideDatabaseInformation.h"
@@ -24,7 +24,7 @@
 #include <sstream>
 #include <unordered_map>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 CREATE_DATA_CLASS( NucleotideDatabaseSettings,\
 	(( size_t, initialBucketSize, 100000 ))\
@@ -213,6 +213,6 @@ public:
 template < class Traits >
 using PtrNucleotideDatabase = boost::shared_ptr<NucleotideDatabase<Traits> >;
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* NUCLEOTIDEDATABASE_H_ */

@@ -14,7 +14,7 @@
 #include <fstream>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /**
  * CDSDatabase holding data in memory.
@@ -54,6 +54,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* CDSDATABASEMEMORYBASED_H_ */

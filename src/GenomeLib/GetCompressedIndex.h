@@ -3,7 +3,7 @@
 
 #include "Power.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < size_t size, size_t factorMinus1, size_t pos >
 struct GetCompressedIndex
@@ -29,6 +29,6 @@ struct GetCompressedIndex<size,factorMinus1,0>
 	}
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* GETCOMPRESSEDINDEX_H_ */

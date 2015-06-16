@@ -1,6 +1,6 @@
 #include "CompressedCharFourInOne.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 const char CompressedCharFourInOne::charByCompressionIndex[CompressedCharFourInOne::size_] =
     {'A','C','G','T'};
@@ -23,4 +23,4 @@ const char CompressedCharFourInOne::compressionIndexByChar[256] =
       16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
       16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

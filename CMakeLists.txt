@@ -67,7 +67,7 @@ find_package(MySQL REQUIRED)
 
 add_subdirectory(src/DatabaseBuilder)
 add_subdirectory(src/CDSDatabaseBuilder)
-add_subdirectory(src/GeneAssembler)
+add_subdirectory(src/GeneHunter)
 add_subdirectory(src/GenomeLib)
 add_subdirectory(src/UtilitiesLib)
 add_subdirectory(src/TaxonomyDatabaseBuilder)

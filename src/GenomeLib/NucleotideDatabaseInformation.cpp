@@ -2,7 +2,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 ostream& operator << ( ostream& os, NucleotideDatabaseInformation const& entry )
 {
@@ -13,4 +13,4 @@ ostream& operator << ( ostream& os, NucleotideDatabaseInformation const& entry )
 	          << " Average length of imported gene sequences = " << static_cast<double>(entry.totalNbOfBases_) / entry.nbImportedGeneSeq_ << endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

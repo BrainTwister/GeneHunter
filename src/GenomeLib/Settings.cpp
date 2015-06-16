@@ -1,8 +1,8 @@
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Settings.h"
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 std::ostream& operator << ( std::ostream& os, SearchAlgorithm s )
 {
@@ -12,7 +12,7 @@ std::ostream& operator << ( std::ostream& os, SearchAlgorithm s )
 	    case TakeMatchWithMostSeeds :
 	    	return os << "TakeMatchWithMostSeeds";
 	    default:
-	    	throw GeneAssemblerException("FullMatchManager: unkown searchAlgorithm");
+	    	throw GeneHunterException("FullMatchManager: unkown searchAlgorithm");
 	}
 }
 
@@ -25,8 +25,8 @@ std::istream& operator >> ( std::istream& is, SearchAlgorithm& s )
 	else if ( str == "TakeMatchWithMostSeeds" )
 	    s = TakeMatchWithMostSeeds;
 	else
-	   	throw GeneAssemblerException("FullMatchManager: unkown searchAlgorithm");
+	   	throw GeneHunterException("FullMatchManager: unkown searchAlgorithm");
 	return is;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

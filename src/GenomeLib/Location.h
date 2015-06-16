@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /**
  * Interpret and manage a CDS location.
@@ -61,6 +61,6 @@ private:
 
 std::ostream& operator << ( std::ostream& os, Location const& location );
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* LOCATION_H_ */

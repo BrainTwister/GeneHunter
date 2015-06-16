@@ -15,7 +15,7 @@
 #include <fstream>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /**
  * CDS "coding sequence" refers to a location of the nucleotides, which could be translated to
@@ -64,6 +64,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* CDSDATABASE_H_ */

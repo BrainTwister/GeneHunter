@@ -6,7 +6,7 @@
 #include <map>
 #include <tuple>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class Key, class T >
 inline std::ostream& operator << ( std::ostream& os, std::map<Key,T> const& m )
@@ -53,6 +53,6 @@ inline std::ostream& operator << ( std::ostream& os, std::tuple< T ... > const& 
 	return os << "tuple[" << std::get<0>(t) << "]";
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* HELPERS_H_ */

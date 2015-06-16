@@ -1,7 +1,7 @@
 #ifndef COMPRESSEDCHARTWOINONE_H_
 #define COMPRESSEDCHARTWOINONE_H_
 
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "GetCompressedIndex.h"
 #include <boost/serialization/access.hpp>
 #include "boost/serialization/array.h"
@@ -11,7 +11,7 @@
 #include <string>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct CompressedCharTwoInOne
 {
@@ -106,7 +106,7 @@ private:
 		if ( iterBeg == iterEnd ) return 255;
 		else if ( iterBeg+1 == iterEnd ) return compressionIndexByChar[*iterBeg] + 15 * size_;
 		else if ( iterBeg+2 == iterEnd ) return compressionIndexByChar[*iterBeg] + compressionIndexByChar[*(iterBeg+1)] * size_;
-		else throw GeneAssemblerException("CompressedCharTwoInOne: error in compress iter");
+		else throw GeneHunterException("CompressedCharTwoInOne: error in compress iter");
 	}
 
 	std::string decompress() const
@@ -126,23 +126,23 @@ inline std::ostream& operator << ( std::ostream& os, CompressedCharTwoInOne cons
 	return os << c.getString();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 namespace std {
 
 template <>
-struct hash< GeneAssembler::CompressedCharTwoInOne >
+struct hash< GeneHunter::CompressedCharTwoInOne >
 {
-	size_t operator () ( GeneAssembler::CompressedCharTwoInOne const& c ) const
+	size_t operator () ( GeneHunter::CompressedCharTwoInOne const& c ) const
 	{
 		return hash<char>()(c.baseItem_);
 	}
 };
 
 template <>
-struct equal_to< GeneAssembler::CompressedCharTwoInOne >
+struct equal_to< GeneHunter::CompressedCharTwoInOne >
 {
-	bool operator () ( GeneAssembler::CompressedCharTwoInOne const& c1, GeneAssembler::CompressedCharTwoInOne const& c2 ) const
+	bool operator () ( GeneHunter::CompressedCharTwoInOne const& c1, GeneHunter::CompressedCharTwoInOne const& c2 ) const
 	{
 		return equal_to<char>()(c1.baseItem_,c2.baseItem_);
 	}

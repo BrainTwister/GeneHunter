@@ -1,5 +1,5 @@
 #include "FileIO.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Match.h"
 #include "OrganismsReport.h"
 #include <boost/property_tree/ptree.hpp>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 OrganismsReport::OrganismsReport( boost::filesystem::path const& reportFile, boost::filesystem::path const& datasetFile,
 	Settings const& settings, size_t nbReads )
@@ -89,7 +89,7 @@ void OrganismsReport::addMatches( Matches const& matches )
 		auto match = elem.second;
 
 		if ( match.nuclGI_ == 0 )
-		    throw GeneAssemblerException("OrganismsReport::addMatches: geneID == 0");
+		    throw GeneHunterException("OrganismsReport::addMatches: geneID == 0");
 
 		Organism organism;
 		try {
@@ -125,4 +125,4 @@ void OrganismsReport::addMatches( Matches const& matches )
 	}
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

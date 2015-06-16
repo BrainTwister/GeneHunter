@@ -4,12 +4,12 @@
 #include <stdexcept>
 #include <cassert>
 
-struct GeneAssemblerException : public std::runtime_error {
-    GeneAssemblerException( std::string const& msg ) : std::runtime_error(msg) {}
+struct GeneHunterException : public std::runtime_error {
+    GeneHunterException( std::string const& msg ) : std::runtime_error(msg) {}
 };
 
-//struct GeneAssemblerException {
-//    GeneAssemblerException( std::string const& msg ) { assert(false); }
+//struct GeneHunterException {
+//    GeneHunterException( std::string const& msg ) { assert(false); }
 //    std::string what() const { return "error"; }
 //};
 

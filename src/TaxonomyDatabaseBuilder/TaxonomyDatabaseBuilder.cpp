@@ -3,7 +3,7 @@
 #include "FileIO.h"
 #include "CDSDatabase.h"
 #include "CDSIterator.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "StringUtilities.h"
 #include "TaxonomyWriter.h"
 #include <boost/filesystem.hpp>
@@ -14,7 +14,7 @@
 
 using namespace std;
 using namespace chrono;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 using boost::filesystem::path;
 
 int main( int argc, char* argv[] )
@@ -45,8 +45,8 @@ int main( int argc, char* argv[] )
 			 << setfill('0') << setw(2) << duration_cast<minutes>(duration % hours(1)).count() << ":"
 			 << setfill('0') << setw(2) << duration_cast<seconds>(duration % minutes(1)).count() << endl;
 
-	} catch ( GeneAssemblerException const& e ) {
-		cout << "GeneAssembler exception: " << e.what() << endl;
+	} catch ( GeneHunterException const& e ) {
+		cout << "GeneHunter exception: " << e.what() << endl;
 		cout << "Program was aborted." << endl;
 		return 1;
 	} catch ( std::exception const& e ) {

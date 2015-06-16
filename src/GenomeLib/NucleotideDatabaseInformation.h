@@ -1,11 +1,11 @@
 #ifndef NUCLEOTIDEDATABASEINFORMATION_H_
 #define NUCLEOTIDEDATABASEINFORMATION_H_
 
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "FASTA.h"
 #include <boost/serialization/access.hpp>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct NucleotideDatabaseInformation
 {
@@ -63,6 +63,6 @@ private:
 
 std::ostream& operator << ( std::ostream& os, NucleotideDatabaseInformation const& entry );
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* NUCLEOTIDEDATABASEINFORMATION_H_ */

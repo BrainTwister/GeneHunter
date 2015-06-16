@@ -3,7 +3,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 OrganismsDataset::OrganismsDataset( boost::filesystem::path const& datasetFile )
 {
@@ -39,4 +39,4 @@ void OrganismsDataset::writeTree( boost::property_tree::ptree& pt )
 	pt.put("sequencer", sequencer_);
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

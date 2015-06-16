@@ -2,7 +2,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 size_t CDSIterator::indention_ = 21;
 
@@ -44,7 +44,7 @@ void CDSIterator::readGeneID()
 	if ( pos == std::string::npos ) {
 		std::cerr << "CDSIterator::readGeneID: GI not found in VERSION line" << std::endl
 				  << "line: " << currentLine_ << std::endl;
-		throw GeneAssemblerException("CDSIterator::readGeneID: GI not found in VERSION line");
+		throw GeneHunterException("CDSIterator::readGeneID: GI not found in VERSION line");
     }
 
 	currentEntry_.geneID_ = boost::lexical_cast<size_t>(currentLine_.substr(pos+3,currentLine_.size()));
@@ -104,7 +104,7 @@ void CDSIterator::readCDS()
 			else if ( currentReading == Product )
 				currentEntry_.ptrProteinLink_->product_ += boost::algorithm::trim_copy(currentLine_.substr(indention_,currentLine_.size()));
 			else if ( currentReading != Unused )
-				throw GeneAssemblerException("CDSIterator::readCDS: Unkown currentReading");
+				throw GeneHunterException("CDSIterator::readCDS: Unkown currentReading");
 		}
 	}
 }
@@ -125,4 +125,4 @@ bool CDSIterator::currentLineContainFeatureKey() const
 	return false;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

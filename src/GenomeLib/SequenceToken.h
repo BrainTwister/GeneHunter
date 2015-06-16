@@ -2,7 +2,7 @@
 #define SEQUENCETOKEN_H_
 
 #include "CharTypes.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Sequence.h"
 #include "boost/lexical_cast.hpp"
 #include "boost/mpl/bool.hpp"
@@ -12,7 +12,7 @@
 #include <functional>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T, size_t N >
 struct SequenceToken
@@ -35,7 +35,7 @@ struct SequenceToken
 		typename boost::enable_if< boost::is_same<typename Iterator::value_type,T> >::type* = 0 )
     {
 		#if DEBUG_MODE
-			if ( std::distance(beg,end) > CompressedSize ) throw GeneAssemblerException("SequenceToken: token size too large 1 ("
+			if ( std::distance(beg,end) > CompressedSize ) throw GeneHunterException("SequenceToken: token size too large 1 ("
 				+ boost::lexical_cast<std::string>(std::distance(beg,end)) + ").");
 		#endif
 		std::fill( std::copy(beg,end,token_.begin()), token_.end(), Type() );
@@ -51,7 +51,7 @@ struct SequenceToken
 		static const size_t FactorInOut = CompressionFactor / CompressionFactorInSeq;
 
 		#if DEBUG_MODE
-			if ( std::distance(beg,end) > CompressedSizeInSeq ) throw GeneAssemblerException("SequenceToken: token size too large 2 ("
+			if ( std::distance(beg,end) > CompressedSizeInSeq ) throw GeneHunterException("SequenceToken: token size too large 2 ("
 				+ boost::lexical_cast<std::string>(std::distance(beg,end)) + ").");
 		#endif
 
@@ -111,7 +111,7 @@ struct SequenceToken<char,N>
 	 : token_()
     {
 		#if DEBUG_MODE
-			if ( std::distance(beg,end) > N ) throw GeneAssemblerException("SequenceToken: token size too large.");
+			if ( std::distance(beg,end) > N ) throw GeneHunterException("SequenceToken: token size too large.");
 		#endif
 		std::fill( std::copy(beg,end,token_.begin()), token_.end(), 'X' );
     }
@@ -120,7 +120,7 @@ struct SequenceToken<char,N>
 	 : token_()
     {
 		#if DEBUG_MODE
-			if ( std::distance(beg,end) > N ) throw GeneAssemblerException("SequenceToken: token size too large.");
+			if ( std::distance(beg,end) > N ) throw GeneHunterException("SequenceToken: token size too large.");
 		#endif
 		std::fill( std::copy(beg,end,token_.begin()), token_.end(), 'X' );
     }
@@ -192,7 +192,7 @@ SequenceToken<T,N> complement( SequenceToken<T,N> const& seq ) {
         else if ( c == 'T' ) s2 += 'A';
         else if ( c == 'G' ) s2 += 'C';
         else if ( c == 'C' ) s2 += 'G';
-        else throw GeneAssemblerException("complement: wrong char " + c);
+        else throw GeneHunterException("complement: wrong char " + c);
 	}
 	return SequenceToken<T,N>(s2);
 }
@@ -208,7 +208,7 @@ inline std::ostream& operator << ( std::ostream& os, SequenceToken<T,N> const& t
 	return os << token.getString();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 namespace std {
 
@@ -230,20 +230,20 @@ inline size_t hash_range( T iterCur, T const& iterEnd )
 }
 
 template < class T, size_t N >
-struct hash< GeneAssembler::SequenceToken<T,N> >
+struct hash< GeneHunter::SequenceToken<T,N> >
 {
-	size_t operator () ( GeneAssembler::SequenceToken<T,N> const& t ) const
+	size_t operator () ( GeneHunter::SequenceToken<T,N> const& t ) const
 	{
 		return std::hash_range(t.token_.begin(),t.token_.end());
 	}
 };
 
 template < class T, size_t N >
-struct equal_to< GeneAssembler::SequenceToken<T,N> >
+struct equal_to< GeneHunter::SequenceToken<T,N> >
 {
-	bool operator () ( GeneAssembler::SequenceToken<T,N> const& t1, GeneAssembler::SequenceToken<T,N> const& t2 ) const
+	bool operator () ( GeneHunter::SequenceToken<T,N> const& t1, GeneHunter::SequenceToken<T,N> const& t2 ) const
 	{
-		for ( size_t i(0); i != N / GeneAssembler::GetNbBaseItemsInChar<T>::value; ++i )
+		for ( size_t i(0); i != N / GeneHunter::GetNbBaseItemsInChar<T>::value; ++i )
 		{
 			if ( !equal_to<T>()(t1.token_[i],t2.token_[i]) ) return false;
 		}

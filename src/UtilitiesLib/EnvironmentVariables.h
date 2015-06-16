@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 std::string getEnvVar( const std::string& key );
 
@@ -11,6 +11,6 @@ void setEnvVar( const std::string& key, const std::string& value, bool overwrite
 
 void unsetEnvVar( const std::string& key );
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* ENVIRONMENTVARIABLES_H_ */

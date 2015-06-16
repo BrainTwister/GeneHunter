@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <!DOCTYPE boost_serialization>
 <boost_serialization signature="serialization::archive" version="9">
-<GeneAssemblerSettings class_id="0" tracking_level="0" version="0">
+<GeneHunterSettings class_id="0" tracking_level="0" version="0">
 	<fixedTokenSize>24</fixedTokenSize>
 	<fullMatchManagerSettings class_id="1" tracking_level="0" version="0">
 		<searchAlgorithm>1</searchAlgorithm>
@@ -40,6 +40,6 @@
 		<matchNotificationNumber>1000</matchNotificationNumber>
         <verbosity>1</verbosity>
 	</organismsReportSettings>
-</GeneAssemblerSettings>
+</GeneHunterSettings>
 </boost_serialization>
 

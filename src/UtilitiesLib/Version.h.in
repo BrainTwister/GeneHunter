@@ -1,16 +1,16 @@
 #ifndef VERSION_H_
 #define VERSION_H_
 
-#define GeneAssembler_VERSION_MAJOR @GeneAssembler_VERSION_MAJOR@
-#define GeneAssembler_VERSION_MINOR @GeneAssembler_VERSION_MINOR@
+#define GeneHunter_VERSION_MAJOR @GeneHunter_VERSION_MAJOR@
+#define GeneHunter_VERSION_MINOR @GeneHunter_VERSION_MINOR@
 
 #define STR_EXPAND(tok) #tok
 #define STR(tok) STR_EXPAND(tok)
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
-const std::string version = STR(GeneAssembler_VERSION_MAJOR.GeneAssembler_VERSION_MINOR);
+const std::string version = STR(GeneHunter_VERSION_MAJOR.GeneHunter_VERSION_MINOR);
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* VERSION_H_ */

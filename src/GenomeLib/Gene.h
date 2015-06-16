@@ -6,7 +6,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct Gene
 {
@@ -82,6 +82,6 @@ inline std::ostream& operator << ( std::ostream& os, Gene const& entry )
 	          << "refName   = " << entry.refName << std::endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* GENE_H_ */

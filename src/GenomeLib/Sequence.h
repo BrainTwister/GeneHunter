@@ -2,14 +2,14 @@
 #define SEQUENCE_H_
 
 #include "CharTypes.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/string.hpp>
 #include <algorithm>
 #include <string>
 #include <vector>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 struct Sequence
@@ -178,7 +178,7 @@ Sequence<T> complement( Sequence<T> const& seq ) {
         else if ( c == 'N' ) s2 += 'X';
         else if ( c == 'X' ) s2 += 'N';
         else if ( c == 'U' ) s2 += 'A';
-        else throw GeneAssemblerException("complement: unsupported char " + std::string(1,c));
+        else throw GeneHunterException("complement: unsupported char " + std::string(1,c));
 	}
 	return Sequence<T>(s2);
 }
@@ -194,6 +194,6 @@ inline std::ostream& operator << ( std::ostream& os, Sequence<T> const& seq )
 	return os << seq.getString();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* SEQUENCE_H_ */

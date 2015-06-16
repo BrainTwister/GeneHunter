@@ -17,7 +17,7 @@
 #include <map>
 #include <set>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T1, class T2 >
 auto begin( std::pair<T1,T2> p) -> T1 { return p.first; }
@@ -107,7 +107,7 @@ void FullMatchManager::findBestMatch( NucleotideDatabase<Traits> const& db, FAST
             takeMatchWithMostSeeds(db,read,curMatch);
             break;
 	    default:
-	    	throw GeneAssemblerException("FullMatchManager: unkown searchAlgorithm");
+	    	throw GeneHunterException("FullMatchManager: unkown searchAlgorithm");
 	}
 }
 
@@ -287,8 +287,8 @@ void FullMatchManager::takeMatchWithMostSeeds( NucleotideDatabase<Traits> const&
 	}
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
-BOOST_CLASS_VERSION(GeneAssembler::FullMatchManager,1)
+BOOST_CLASS_VERSION(GeneHunter::FullMatchManager,1)
 
 #endif /* FULLMATCHMANAGER_H_ */

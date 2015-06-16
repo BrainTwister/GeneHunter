@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace std;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 
 TEST(SequenceTest,TestChar1)
 {

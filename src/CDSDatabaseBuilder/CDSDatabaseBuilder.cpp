@@ -4,7 +4,7 @@
 #include "FileIO.h"
 #include "CDSDatabase.h"
 #include "CDSIterator.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "StringUtilities.h"
 #include <boost/filesystem.hpp>
 #include <chrono>
@@ -14,7 +14,7 @@
 
 using namespace std;
 using namespace chrono;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 using boost::filesystem::path;
 
 CREATE_DATA_CLASS( CDSDatabaseBuilderSettings,\
@@ -40,9 +40,9 @@ int main( int argc, char* argv[] )
 		CDSDatabase cdsDatabase(CDSDatabase::Settings(tableName,0,false));
 
 		// Read settings
-		path settingsFile = Environment::getGeneAssemblerRootDirectory() / "settings" / "CDSDatabaseBuilderSettings.xml";
+		path settingsFile = Environment::getGeneHunterRootDirectory() / "settings" / "CDSDatabaseBuilderSettings.xml";
 		if (arg.isOptionalFlagSet("settings")) settingsFile = path(arg.getOptionalArgument("settings"));
-        if (!exists(settingsFile)) throw GeneAssemblerException("Settings file " + settingsFile.string() + " not found.");
+        if (!exists(settingsFile)) throw GeneHunterException("Settings file " + settingsFile.string() + " not found.");
         CDSDatabaseBuilderSettings settings;
 	    readXML(settings,"CDSDatabaseBuilderSettings",settingsFile);
 
@@ -55,7 +55,7 @@ int main( int argc, char* argv[] )
 			if ( filename.substr(filename.size()-3,3) == ".gz" ) {
 				string cmd = "gunzip " + filename;
 				cout << cmd << endl;
-				if (system(cmd.c_str())) throw GeneAssemblerException("Error in executing " + cmd + ".");
+				if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
 				filename.erase(filename.size()-3,3);
 				fileIsZipped = true;
 			}
@@ -68,7 +68,7 @@ int main( int argc, char* argv[] )
 			if ( fileIsZipped ) {
 				string cmd = string("gzip ") + filename;
 				cout << cmd << endl;
-				if (system(cmd.c_str())) throw GeneAssemblerException("Error in executing " + cmd + ".");
+				if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
 			}
 		}
 
@@ -84,8 +84,8 @@ int main( int argc, char* argv[] )
 			 << setfill('0') << setw(2) << duration_cast<minutes>(duration % hours(1)).count() << ":"
 			 << setfill('0') << setw(2) << duration_cast<seconds>(duration % minutes(1)).count() << endl;
 
-	} catch ( GeneAssemblerException const& e ) {
-		cout << "GeneAssembler exception: " << e.what() << endl;
+	} catch ( GeneHunterException const& e ) {
+		cout << "GeneHunter exception: " << e.what() << endl;
 		cout << "Program was aborted." << endl;
 		return 1;
 	} catch ( std::exception const& e ) {

@@ -7,7 +7,7 @@
 #include <string>
 
 /**
- * \mainpage GeneAssembler
+ * \mainpage GeneHunter
  *
  * The basic idea is to use fixed size sequence token to match the FASTQ reads
  * with the nucleotide reference database (NT). Fixed sized tokens will have the
@@ -20,7 +20,7 @@
  * as possible.
  */
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /// Integer type for size of FixedToken.
 typedef uint8_t FixedTokenSizeType;
@@ -61,6 +61,6 @@ typedef uint32_t QualityType;
 /// Integer type for geneID number.
 typedef uint32_t TaxonIDType;
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* GENOME_H_ */

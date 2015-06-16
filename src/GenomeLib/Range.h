@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 struct Range
@@ -79,6 +79,6 @@ std::ostream& operator << ( std::ostream& os, Range<T2> const& range )
 		      << boost::lexical_cast<std::string>(range.upperBoundary_);
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* RANGE_H_ */

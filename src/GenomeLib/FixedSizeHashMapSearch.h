@@ -14,7 +14,7 @@
 
 std::mutex mutex;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 void threadFunction( FullMatchManager& fullMatchManager, FASTQIterator& iterEntryCur, FASTQIterator const& iterEntryEnd,
@@ -44,7 +44,7 @@ void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideD
 	using boost::filesystem::path;
 
 	path readFile = arg.getNonOptionalArgument("readFile");
-	if (!exists(readFile)) throw GeneAssemblerException("File not found: " + readFile.string());
+	if (!exists(readFile)) throw GeneHunterException("File not found: " + readFile.string());
 
 	path ntFile;
 	if ( arg.isOptionalFlagSet("NTDatabase") ) ntFile = arg.getOptionalArgument("NTDatabase");
@@ -140,9 +140,9 @@ void fixedSizeHashMapSearch( FixedTokenSizeType fixedTokenSize, FullMatchManager
 	} else if (fixedTokenSize == 48 ) {
 		fixedSizeHashMapSearchImpl<48>(fullMatchManager,nucleotideDatabaseSettings,arg);
 	} else
-		throw GeneAssemblerException("fixedTokenSize not supported.");
+		throw GeneHunterException("fixedTokenSize not supported.");
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* FIXEDSIZEHASHMAPSEARCH_H_ */

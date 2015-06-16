@@ -3,7 +3,7 @@
 
 #include "NucleotideDatabase.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 CREATE_DATA_CLASS( MatchGeneratorSettings,\
 	(( SearchAlgorithm, searchAlgorithm, FirstTokensAsSeed ))\
@@ -39,10 +39,10 @@ Matches operator()( NucleotideDatabase<Traits> const& db, FASTQ const& read ) co
             takeMatchWithMostSeeds(db,read);
             break;
 	    default:
-	    	throw GeneAssemblerException("MatchManager: unkown searchAlgorithm");
+	    	throw GeneHunterException("MatchManager: unkown searchAlgorithm");
 	}
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* MATCHGENERATOR_H_ */
