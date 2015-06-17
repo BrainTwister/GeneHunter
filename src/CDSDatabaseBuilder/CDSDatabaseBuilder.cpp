@@ -18,87 +18,87 @@ using namespace GeneHunter;
 using boost::filesystem::path;
 
 CREATE_DATA_CLASS( CDSDatabaseBuilderSettings,\
-	(( CDSIterator::Settings, cdsIteratorSettings, CDSIterator::Settings() ))\
+    (( CDSIterator::Settings, cdsIteratorSettings, CDSIterator::Settings() ))\
 )
 
 int main( int argc, char* argv[] )
 {
-	try {
+    try {
 
-		cout << "\n" << makeFrame("CDSDatabaseBuilder version " + version, '*') << "\n" << endl;
-		const auto startTime = steady_clock::now();
+        cout << "\n" << makeFrame("CDSDatabaseBuilder version " + version, '*') << "\n" << endl;
+        const auto startTime = steady_clock::now();
 
-		const ArgumentInterpreter arg(argc,argv,
-			{{ "inputFiles", ArgumentInterpreter::NonOptionalList, "Input files containing CDS features (gz-files are supported)." },
-			 { "settings",   ArgumentInterpreter::Optional,        "File for specific settings (default: $GENEASSEMBLER_ROOT/settings/CDSDatabaseBuilderSettings.xml)." },
-			 { "tableName",  ArgumentInterpreter::Optional,        "Table name for MySQL database (default: ProteinLink)." }}
-		);
+        const ArgumentInterpreter arg(argc,argv,
+            {{ "inputFiles", ArgumentInterpreter::NonOptionalList, "Input files containing CDS features (gz-files are supported)." },
+             { "settings",   ArgumentInterpreter::Optional,        "File for specific settings (default: $GENEASSEMBLER_ROOT/settings/CDSDatabaseBuilderSettings.xml)." },
+             { "tableName",  ArgumentInterpreter::Optional,        "Table name for MySQL database (default: ProteinLink)." }}
+        );
 
-		string tableName = arg.isOptionalFlagSet("tableName") ? arg.getOptionalArgument("tableName") : "ProteinLink";
-		bool onlyGenes = arg.isOptionalFlagSet("onlyGenes") ? true : false;
+        string tableName = arg.isOptionalFlagSet("tableName") ? arg.getOptionalArgument("tableName") : "ProteinLink";
+        bool onlyGenes = arg.isOptionalFlagSet("onlyGenes") ? true : false;
 
-		CDSDatabase cdsDatabase(CDSDatabase::Settings(tableName,0,false));
+        CDSDatabase cdsDatabase(CDSDatabase::Settings(tableName,0,false));
 
-		// Read settings
-		path settingsFile = Environment::getGeneHunterRootDirectory() / "settings" / "CDSDatabaseBuilderSettings.xml";
-		if (arg.isOptionalFlagSet("settings")) settingsFile = path(arg.getOptionalArgument("settings"));
+        // Read settings
+        path settingsFile = Environment::getGeneHunterRootDirectory() / "settings" / "CDSDatabaseBuilderSettings.xml";
+        if (arg.isOptionalFlagSet("settings")) settingsFile = path(arg.getOptionalArgument("settings"));
         if (!exists(settingsFile)) throw GeneHunterException("Settings file " + settingsFile.string() + " not found.");
         CDSDatabaseBuilderSettings settings;
-	    readXML(settings,"CDSDatabaseBuilderSettings",settingsFile);
+        readXML(settings,"CDSDatabaseBuilderSettings",settingsFile);
 
-		for ( auto const& inputFile : arg.getNonOptionalList() )
-		{
-			string filename(inputFile);
-			cout << "Import " << filename << endl;
+        for ( auto const& inputFile : arg.getNonOptionalList() )
+        {
+            string filename(inputFile);
+            cout << "Import " << filename << endl;
 
-			bool fileIsZipped = false;
-			if ( filename.substr(filename.size()-3,3) == ".gz" ) {
-				string cmd = "gunzip " + filename;
-				cout << cmd << endl;
-				if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
-				filename.erase(filename.size()-3,3);
-				fileIsZipped = true;
-			}
+            bool fileIsZipped = false;
+            if ( filename.substr(filename.size()-3,3) == ".gz" ) {
+                string cmd = "gunzip " + filename;
+                cout << cmd << endl;
+                if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
+                filename.erase(filename.size()-3,3);
+                fileIsZipped = true;
+            }
 
-			for ( CDSIterator iterCur(filename,settings.cdsIteratorSettings_), iterEnd; iterCur != iterEnd; ++iterCur )
-			{
-				cdsDatabase.importGene(*iterCur);
-			}
+            for ( CDSIterator iterCur(filename,settings.cdsIteratorSettings_), iterEnd; iterCur != iterEnd; ++iterCur )
+            {
+                cdsDatabase.importGene(*iterCur);
+            }
 
-			if ( fileIsZipped ) {
-				string cmd = string("gzip ") + filename;
-				cout << cmd << endl;
-				if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
-			}
-		}
+            if ( fileIsZipped ) {
+                string cmd = string("gzip ") + filename;
+                cout << cmd << endl;
+                if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
+            }
+        }
 
-		cout << "Number of entries in CDSDatabase = " << cdsDatabase.nbGeneEntries() << endl;
-		cout << "Number of proteinLinks in CDSDatabase = " << cdsDatabase.nbProteinLinks() << endl;
+        cout << "Number of entries in CDSDatabase = " << cdsDatabase.nbGeneEntries() << endl;
+        cout << "Number of proteinLinks in CDSDatabase = " << cdsDatabase.nbProteinLinks() << endl;
 
-		cdsDatabase.createIndex();
+        cdsDatabase.createIndex();
 
-		const auto stopTime = steady_clock::now();
-		const auto duration = stopTime - startTime;
-		cout << "Total time (hh:mm:ss): "
-			 << setfill('0') << setw(2) << duration_cast<hours>(duration).count() << ":"
-			 << setfill('0') << setw(2) << duration_cast<minutes>(duration % hours(1)).count() << ":"
-			 << setfill('0') << setw(2) << duration_cast<seconds>(duration % minutes(1)).count() << endl;
+        const auto stopTime = steady_clock::now();
+        const auto duration = stopTime - startTime;
+        cout << "Total time (hh:mm:ss): "
+             << setfill('0') << setw(2) << duration_cast<hours>(duration).count() << ":"
+             << setfill('0') << setw(2) << duration_cast<minutes>(duration % hours(1)).count() << ":"
+             << setfill('0') << setw(2) << duration_cast<seconds>(duration % minutes(1)).count() << endl;
 
-	} catch ( GeneHunterException const& e ) {
-		cout << "GeneHunter exception: " << e.what() << endl;
-		cout << "Program was aborted." << endl;
-		return 1;
-	} catch ( std::exception const& e ) {
-		cout << "Standard exception: " << e.what() << endl;
-		cout << "Program was aborted." << endl;
-		return 1;
-	} catch ( ... ) {
-		cout << "Unknown exception." << endl;
-		cout << "Program was aborted." << endl;
-		return 1;
-	}
+    } catch ( GeneHunterException const& e ) {
+        cout << "GeneHunter exception: " << e.what() << endl;
+        cout << "Program was aborted." << endl;
+        return 1;
+    } catch ( std::exception const& e ) {
+        cout << "Standard exception: " << e.what() << endl;
+        cout << "Program was aborted." << endl;
+        return 1;
+    } catch ( ... ) {
+        cout << "Unknown exception." << endl;
+        cout << "Program was aborted." << endl;
+        return 1;
+    }
 
-	cout << "\nCDSDatabaseBuilder successfully finished. Have a nice day.\n" << endl;
-	return 0;
+    cout << "\nCDSDatabaseBuilder successfully finished. Have a nice day.\n" << endl;
+    return 0;
 
 }

@@ -17,62 +17,62 @@ namespace GeneHunter {
 
 struct CompressedCharFourInOne
 {
-	static const size_t CompressionFactor = 4;
-	static const size_t size_ = 4;
+    static const size_t CompressionFactor = 4;
+    static const size_t size_ = 4;
 
-	CompressedCharFourInOne()
-	 : baseItem_(0) // default AAAA
-	{}
+    CompressedCharFourInOne()
+     : baseItem_(0) // default AAAA
+    {}
 
-	CompressedCharFourInOne( char c1, char c2, char c3, char c4 )
-	 : baseItem_(compress(c1,c2,c3,c4))
-	{}
+    CompressedCharFourInOne( char c1, char c2, char c3, char c4 )
+     : baseItem_(compress(c1,c2,c3,c4))
+    {}
 
-	template < class Iterator >
-	CompressedCharFourInOne( Iterator const& iterBeg, Iterator const& iterEnd )
-	 : baseItem_(compress(iterBeg,iterEnd))
-	{}
+    template < class Iterator >
+    CompressedCharFourInOne( Iterator const& iterBeg, Iterator const& iterEnd )
+     : baseItem_(compress(iterBeg,iterEnd))
+    {}
 
     std::string getString() const
     {
-    	return decompress();
+        return decompress();
     }
 
     template < size_t pos >
     char getChar() const
     {
-    	static_assert( pos < CompressionFactor, "CompressedCharTwoInOne::getChar out of range" );
-    	return charByCompressionIndex[GetCompressedIndex<size_,CompressionFactor-1,pos>()(baseItem_)];
+        static_assert( pos < CompressionFactor, "CompressedCharTwoInOne::getChar out of range" );
+        return charByCompressionIndex[GetCompressedIndex<size_,CompressionFactor-1,pos>()(baseItem_)];
     }
 
     template < size_t pos >
     char getCompressedIndex() const
     {
-    	static_assert( pos < CompressionFactor, "CompressedCharTwoInOne::getCompressedIndex out of range" );
-    	return GetCompressedIndex<size_,CompressionFactor-1,pos>()(baseItem_);
+        static_assert( pos < CompressionFactor, "CompressedCharTwoInOne::getCompressedIndex out of range" );
+        return GetCompressedIndex<size_,CompressionFactor-1,pos>()(baseItem_);
     }
 
-	bool containChar( char c ) const
-	{
-		return (this->baseItem_ / Power<this->size_,3>::value) == compressionIndexByChar[c] or
-			   (this->baseItem_ / Power<this->size_,2>::value) == compressionIndexByChar[c] or
-		       (this->baseItem_ / this->size_) == compressionIndexByChar[c] or
-			   (this->baseItem_ % this->size_) == compressionIndexByChar[c];
-	}
+    bool containChar( char c ) const
+    {
+        return (this->baseItem_ / Power<this->size_,3>::value) == compressionIndexByChar[c] or
+               (this->baseItem_ / Power<this->size_,2>::value) == compressionIndexByChar[c] or
+               (this->baseItem_ / this->size_) == compressionIndexByChar[c] or
+               (this->baseItem_ % this->size_) == compressionIndexByChar[c];
+    }
 
-	bool containOnlyPureBases() const
-	{
-		return true;
-	}
+    bool containOnlyPureBases() const
+    {
+        return true;
+    }
 
     static const char getEndChar()
     {
-    	return 'A';
+        return 'A';
     }
 
     size_t getNbBases() const
     {
-    	throw GeneHunterException("CompressedCharFourInOne: number of bases are unkown.");
+        throw GeneHunterException("CompressedCharFourInOne: number of bases are unkown.");
     }
 
 private:
@@ -88,62 +88,62 @@ private:
         ar & baseItem_;
     }
 
-	char compress( char c1, char c2, char c3, char c4 ) const
-	{
-		return compressionIndexByChar[c1]
-		     + compressionIndexByChar[c2] * size_
-			 + compressionIndexByChar[c3] * Power<size_,2>::value
-			 + compressionIndexByChar[c4] * Power<size_,3>::value;
-	}
+    char compress( char c1, char c2, char c3, char c4 ) const
+    {
+        return compressionIndexByChar[c1]
+             + compressionIndexByChar[c2] * size_
+             + compressionIndexByChar[c3] * Power<size_,2>::value
+             + compressionIndexByChar[c4] * Power<size_,3>::value;
+    }
 
-	template < class Iterator >
-	char compress( Iterator const& iterBeg,	Iterator const& iterEnd,
-		typename boost::enable_if< boost::is_same<typename Iterator::value_type,char> >::type* = 0 ) const
-	{
-		if ( iterBeg == iterEnd ) return 0;
-		else if ( iterBeg+1 == iterEnd ) return compressionIndexByChar[*iterBeg];
-		else if ( iterBeg+2 == iterEnd ) return compressionIndexByChar[*iterBeg]
-		                                      + compressionIndexByChar[*(iterBeg+1)] * size_;
-		else if ( iterBeg+3 == iterEnd ) return compressionIndexByChar[*iterBeg]
-        									  + compressionIndexByChar[*(iterBeg+1)] * size_
-        									  + compressionIndexByChar[*(iterBeg+2)] * Power<size_,2>::value;
-		else if ( iterBeg+4 == iterEnd ) return compressionIndexByChar[*iterBeg]
-											  + compressionIndexByChar[*(iterBeg+1)] * size_
-											  + compressionIndexByChar[*(iterBeg+2)] * Power<size_,2>::value
-											  + compressionIndexByChar[*(iterBeg+3)] * Power<size_,3>::value;
-		else throw GeneHunterException("CompressedCharFourInOne: error in compress iter");
-	}
+    template < class Iterator >
+    char compress( Iterator const& iterBeg,    Iterator const& iterEnd,
+        typename boost::enable_if< boost::is_same<typename Iterator::value_type,char> >::type* = 0 ) const
+    {
+        if ( iterBeg == iterEnd ) return 0;
+        else if ( iterBeg+1 == iterEnd ) return compressionIndexByChar[*iterBeg];
+        else if ( iterBeg+2 == iterEnd ) return compressionIndexByChar[*iterBeg]
+                                              + compressionIndexByChar[*(iterBeg+1)] * size_;
+        else if ( iterBeg+3 == iterEnd ) return compressionIndexByChar[*iterBeg]
+                                              + compressionIndexByChar[*(iterBeg+1)] * size_
+                                              + compressionIndexByChar[*(iterBeg+2)] * Power<size_,2>::value;
+        else if ( iterBeg+4 == iterEnd ) return compressionIndexByChar[*iterBeg]
+                                              + compressionIndexByChar[*(iterBeg+1)] * size_
+                                              + compressionIndexByChar[*(iterBeg+2)] * Power<size_,2>::value
+                                              + compressionIndexByChar[*(iterBeg+3)] * Power<size_,3>::value;
+        else throw GeneHunterException("CompressedCharFourInOne: error in compress iter");
+    }
 
-	template < class Iterator >
-	char compress( Iterator const& iterBeg,	Iterator const& iterEnd,
-		typename boost::enable_if< boost::is_same<typename Iterator::value_type,CompressedCharTwoInOne> >::type* = 0 ) const
-	{
-		if ( iterBeg == iterEnd ) return 0;
-		else if ( iterBeg+1 == iterEnd ) return iterBeg->template getCompressedIndex<0>()
-				                              + iterBeg->template getCompressedIndex<1>() * size_;
-		else if ( iterBeg+2 == iterEnd ) return iterBeg->template getCompressedIndex<0>()
+    template < class Iterator >
+    char compress( Iterator const& iterBeg,    Iterator const& iterEnd,
+        typename boost::enable_if< boost::is_same<typename Iterator::value_type,CompressedCharTwoInOne> >::type* = 0 ) const
+    {
+        if ( iterBeg == iterEnd ) return 0;
+        else if ( iterBeg+1 == iterEnd ) return iterBeg->template getCompressedIndex<0>()
+                                              + iterBeg->template getCompressedIndex<1>() * size_;
+        else if ( iterBeg+2 == iterEnd ) return iterBeg->template getCompressedIndex<0>()
                                               + iterBeg->template getCompressedIndex<1>() * size_
                                               + (iterBeg+1)->template getCompressedIndex<0>() * Power<size_,2>::value
                                               + (iterBeg+1)->template getCompressedIndex<1>() * Power<size_,3>::value;
-		else throw GeneHunterException("CompressedCharFourInOne: error in compress iter");
-	}
+        else throw GeneHunterException("CompressedCharFourInOne: error in compress iter");
+    }
 
-	std::string decompress() const
-	{
-		return std::string(1,getChar<0>()) + std::string(1,getChar<1>())
-			+ std::string(1,getChar<2>()) + std::string(1,getChar<3>());
-	}
+    std::string decompress() const
+    {
+        return std::string(1,getChar<0>()) + std::string(1,getChar<1>())
+            + std::string(1,getChar<2>()) + std::string(1,getChar<3>());
+    }
 
-	static const char compressionIndexByChar[256];
-	static const char charByCompressionIndex[size_];
+    static const char compressionIndexByChar[256];
+    static const char charByCompressionIndex[size_];
 
-	char baseItem_;
+    char baseItem_;
 
 };
 
 inline std::ostream& operator << ( std::ostream& os, CompressedCharFourInOne const& c )
 {
-	return os << c.getString();
+    return os << c.getString();
 }
 
 } // namespace GeneHunter
@@ -153,19 +153,19 @@ namespace std {
 template <>
 struct hash< GeneHunter::CompressedCharFourInOne >
 {
-	size_t operator () ( GeneHunter::CompressedCharFourInOne const& c ) const
-	{
-		return hash<char>()(c.baseItem_);
-	}
+    size_t operator () ( GeneHunter::CompressedCharFourInOne const& c ) const
+    {
+        return hash<char>()(c.baseItem_);
+    }
 };
 
 template <>
 struct equal_to< GeneHunter::CompressedCharFourInOne >
 {
-	bool operator () ( GeneHunter::CompressedCharFourInOne const& c1, GeneHunter::CompressedCharFourInOne const& c2 ) const
-	{
-		return equal_to<char>()(c1.baseItem_,c2.baseItem_);
-	}
+    bool operator () ( GeneHunter::CompressedCharFourInOne const& c1, GeneHunter::CompressedCharFourInOne const& c2 ) const
+    {
+        return equal_to<char>()(c1.baseItem_,c2.baseItem_);
+    }
 };
 
 } // namespace std

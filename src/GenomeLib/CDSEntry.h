@@ -12,22 +12,22 @@ class CDSEntry
 {
 public:
 
-	size_t geneID_ = 0;
+    size_t geneID_ = 0;
 
-	std::string referenceName_;
+    std::string referenceName_;
 
-	std::string location_;
+    std::string location_;
 
-	PtrProteinLink ptrProteinLink_ = PtrProteinLink(new ProteinLink);
+    PtrProteinLink ptrProteinLink_ = PtrProteinLink(new ProteinLink);
 
-	void clearWithoutGeneID() {
-		location_.clear();
-		ptrProteinLink_ = PtrProteinLink(new ProteinLink);
-	}
+    void clearWithoutGeneID() {
+        location_.clear();
+        ptrProteinLink_ = PtrProteinLink(new ProteinLink);
+    }
 
 private:
 
-	friend std::ostream& operator << ( std::ostream& os, CDSEntry const& entry );
+    friend std::ostream& operator << ( std::ostream& os, CDSEntry const& entry );
 
     friend class boost::serialization::access;
 
@@ -43,9 +43,9 @@ private:
 
 inline std::ostream& operator << ( std::ostream& os, CDSEntry const& entry )
 {
-	return os << "geneID           = " << entry.geneID_ << std::endl
-	          << "referenceName    = " << entry.referenceName_ << std::endl
-	          << "location         = " << entry.location_ << std::endl
+    return os << "geneID           = " << entry.geneID_ << std::endl
+              << "referenceName    = " << entry.referenceName_ << std::endl
+              << "location         = " << entry.location_ << std::endl
               << *entry.ptrProteinLink_ << std::endl;
 }
 

@@ -11,14 +11,14 @@ namespace GeneHunter {
 
 struct ProteinLink
 {
-	std::string gene_;
-	std::string locusTag_;
-	std::string proteinID_;
-	std::string product_;
+    std::string gene_;
+    std::string locusTag_;
+    std::string proteinID_;
+    std::string product_;
 
 private:
 
-	friend std::ostream& operator << ( std::ostream& os, ProteinLink const& proteinLink );
+    friend std::ostream& operator << ( std::ostream& os, ProteinLink const& proteinLink );
 
     friend class boost::serialization::access;
 
@@ -36,9 +36,9 @@ typedef boost::shared_ptr<ProteinLink> PtrProteinLink;
 
 inline std::ostream& operator << ( std::ostream& os, ProteinLink const& proteinLink )
 {
-	return os << "gene             = " << boost::lexical_cast<std::string>(proteinLink.gene_) << std::endl
-	          << "locusTag         = " << proteinLink.locusTag_ << std::endl
-	          << "proteinID        = " << proteinLink.proteinID_ << std::endl
+    return os << "gene             = " << boost::lexical_cast<std::string>(proteinLink.gene_) << std::endl
+              << "locusTag         = " << proteinLink.locusTag_ << std::endl
+              << "proteinID        = " << proteinLink.proteinID_ << std::endl
               << "product          = " << proteinLink.product_ << std::endl;
 }
 

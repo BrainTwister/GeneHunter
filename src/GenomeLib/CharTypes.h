@@ -10,35 +10,35 @@ namespace GeneHunter {
 template < class T >
 struct GetNbBaseItemsInChar
 {
-	static const size_t value = T::CompressionFactor;
+    static const size_t value = T::CompressionFactor;
 };
 
 template < >
 struct GetNbBaseItemsInChar<char>
 {
-	static const size_t value = 1;
+    static const size_t value = 1;
 };
 
 template < class T >
 inline bool containChar( T c1, char c2 )
 {
-	return c1.containChar(c2);
+    return c1.containChar(c2);
 }
 
 inline bool containChar( char c1, char c2 )
 {
-	return c1 == c2;
+    return c1 == c2;
 }
 
 template < class T >
 inline bool containOnlyPureBases( T const& c )
 {
-	return c.containOnlyPureBases();
+    return c.containOnlyPureBases();
 }
 
 inline bool containOnlyPureBases( char c )
 {
-	return c == 'A' or c == 'C' or c == 'G' or c == 'T';
+    return c == 'A' or c == 'C' or c == 'G' or c == 'T';
 }
 
 /**

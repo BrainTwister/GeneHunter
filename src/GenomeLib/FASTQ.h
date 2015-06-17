@@ -15,15 +15,15 @@ class FASTQ
 {
 public:
 
-	FASTQ() {}
+    FASTQ() {}
 
-	FASTQ( std::string const& name, std::string const& sequence, std::string const& quality )
-	 : name_(name), sequence_(sequence), quality_(quality)
-	{}
+    FASTQ( std::string const& name, std::string const& sequence, std::string const& quality )
+     : name_(name), sequence_(sequence), quality_(quality)
+    {}
 
-	std::string const& getName() const { return name_; }
-	Sequence<ReadSeqCharType> const& getSequence() const { return sequence_; }
-	Sequence<ReadQualCharType> const& getQuality() const { return quality_; }
+    std::string const& getName() const { return name_; }
+    Sequence<ReadSeqCharType> const& getSequence() const { return sequence_; }
+    Sequence<ReadQualCharType> const& getQuality() const { return quality_; }
 
 private:
 
@@ -37,11 +37,11 @@ private:
         ar & BOOST_SERIALIZATION_NVP(quality_);
     }
 
-	std::string name_;
+    std::string name_;
 
-	Sequence<ReadSeqCharType> sequence_;
+    Sequence<ReadSeqCharType> sequence_;
 
-	Sequence<ReadQualCharType> quality_;
+    Sequence<ReadQualCharType> quality_;
 
 };
 
@@ -49,9 +49,9 @@ using PtrFASTQ = boost::shared_ptr<FASTQ>;
 
 inline std::ostream& operator << ( std::ostream& os, FASTQ const& fastq )
 {
-	return os << "name     = " << fastq.getName() << std::endl
-	          << "sequence = " << fastq.getSequence() << std::endl
-	          << "quality  = " << fastq.getQuality() << std::endl;
+    return os << "name     = " << fastq.getName() << std::endl
+              << "sequence = " << fastq.getSequence() << std::endl
+              << "quality  = " << fastq.getQuality() << std::endl;
 }
 
 } // namespace GeneHunter

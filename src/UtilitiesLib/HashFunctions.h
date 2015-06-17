@@ -6,9 +6,9 @@ namespace std {
 template < class T, class U >
 struct hash< pair<T,U> >
 {
-	size_t operator()( pair<T,U> x ) const {
-		return hash<T>()(x.first) ^ hash<U>()(x.second);
-	}
+    size_t operator()( pair<T,U> x ) const {
+        return hash<T>()(x.first) ^ hash<U>()(x.second);
+    }
 };
 
 /**
@@ -19,20 +19,20 @@ struct hash< pair<T,U> >
 //template < class T1, class T2 >
 //bool operator == ( Matches<T1> const& m1, Matches<T2> const& m2 )
 //{
-//	if ( m1.size() != m2.size() ) return false;
-//	for ( auto const& e1 : m1 )
-//	{
-//		auto i2 = m2.find(e1.first);
-//		if ( i2 == m2.end() ) return false;
-//		if ( e1.second != i2->second ) return false;
-//	}
-//	return true;
+//    if ( m1.size() != m2.size() ) return false;
+//    for ( auto const& e1 : m1 )
+//    {
+//        auto i2 = m2.find(e1.first);
+//        if ( i2 == m2.end() ) return false;
+//        if ( e1.second != i2->second ) return false;
+//    }
+//    return true;
 //}
 //
 //template < class T1, class T2 >
 //bool operator != ( Matches<T1> const& m1, Matches<T2> const& m2 )
 //{
-//	return !(m1 == m2);
+//    return !(m1 == m2);
 //}
 
 } // namespace std

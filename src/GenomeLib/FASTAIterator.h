@@ -15,22 +15,22 @@ namespace GeneHunter {
 template < class T >
 class FASTAIterator
  : public boost::iterator_facade <
-   	   FASTAIterator<T>,
-   	   PtrFASTA<T> const,
-   	   boost::forward_traversal_tag
+          FASTAIterator<T>,
+          PtrFASTA<T> const,
+          boost::forward_traversal_tag
    >
 {
 public:
 
-	FASTAIterator() {}
+    FASTAIterator() {}
 
-	FASTAIterator( boost::filesystem::path const& filename )
-	 : ptrInputStream_(new std::ifstream(filename.string().c_str()))
-	{
-		increment();
-	}
+    FASTAIterator( boost::filesystem::path const& filename )
+     : ptrInputStream_(new std::ifstream(filename.string().c_str()))
+    {
+        increment();
+    }
 
-	FASTAIterator( FASTAIterator const& other ) = default;
+    FASTAIterator( FASTAIterator const& other ) = default;
 
 private:
 
@@ -48,31 +48,31 @@ private:
 
     void increment()
     {
-    	ptrFASTA_ = PtrFASTA<T>(new FASTA<T>);
+        ptrFASTA_ = PtrFASTA<T>(new FASTA<T>);
 
-    	if ( lastHeaderLine_.empty() ) std::getline(*ptrInputStream_,lastHeaderLine_);
+        if ( lastHeaderLine_.empty() ) std::getline(*ptrInputStream_,lastHeaderLine_);
 
-		ptrFASTA_->setGeneID(ptrFASTA_->getFirstGeneID(lastHeaderLine_));
+        ptrFASTA_->setGeneID(ptrFASTA_->getFirstGeneID(lastHeaderLine_));
 
-    	std::string line;
-    	std::string sequence;
-		while ( std::getline(*ptrInputStream_,line) )
-		{
-			boost::algorithm::trim(line);
-			if ( line[0] == '>' ) {
-				lastHeaderLine_ = line;
-				break;
-			} else {
-				// Read sequence
-				sequence += line;
-			}
-		}
+        std::string line;
+        std::string sequence;
+        while ( std::getline(*ptrInputStream_,line) )
+        {
+            boost::algorithm::trim(line);
+            if ( line[0] == '>' ) {
+                lastHeaderLine_ = line;
+                break;
+            } else {
+                // Read sequence
+                sequence += line;
+            }
+        }
 
-		if (sequence.empty()) ptrFASTA_.reset();
-		else ptrFASTA_->setSequence(sequence);
+        if (sequence.empty()) ptrFASTA_.reset();
+        else ptrFASTA_->setSequence(sequence);
     }
 
-	boost::shared_ptr<std::ifstream> ptrInputStream_;
+    boost::shared_ptr<std::ifstream> ptrInputStream_;
 
     PtrFASTA<T> ptrFASTA_;
 

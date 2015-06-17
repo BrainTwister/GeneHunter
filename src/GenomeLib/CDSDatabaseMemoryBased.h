@@ -21,36 +21,36 @@ namespace GeneHunter {
  */
 class CDSDatabaseMemoryBased
 {
-	typedef std::map<Location, PtrProteinLink> LocationLink;
-	typedef std::map<size_t, LocationLink> DatabaseType;
+    typedef std::map<Location, PtrProteinLink> LocationLink;
+    typedef std::map<size_t, LocationLink> DatabaseType;
 
 public:
 
-	bool getGene( Match const& match ) const
-	{
-		DatabaseType::const_iterator iterDatabaseEntry = database_.find(match.geneID_);
-		if ( iterDatabaseEntry == database_.end() ) return false;
-	}
+    bool getGene( Match const& match ) const
+    {
+        DatabaseType::const_iterator iterDatabaseEntry = database_.find(match.geneID_);
+        if ( iterDatabaseEntry == database_.end() ) return false;
+    }
 
-	void importGene( CDSEntry const& entry )
-	{
-		DatabaseType::iterator iterDatabaseEntry = database_.find(entry.geneID_);
-		if ( iterDatabaseEntry == database_.end() )
-			iterDatabaseEntry = database_.insert(database_.begin(), std::make_pair(entry.geneID_,entry.location_));
-		iterDatabaseEntry->second.insert(std::make_pair(Location(entry.location_),entry.ptrProteinLink_));
-	}
+    void importGene( CDSEntry const& entry )
+    {
+        DatabaseType::iterator iterDatabaseEntry = database_.find(entry.geneID_);
+        if ( iterDatabaseEntry == database_.end() )
+            iterDatabaseEntry = database_.insert(database_.begin(), std::make_pair(entry.geneID_,entry.location_));
+        iterDatabaseEntry->second.insert(std::make_pair(Location(entry.location_),entry.ptrProteinLink_));
+    }
 
 private:
 
-	friend class boost::serialization::access;
+    friend class boost::serialization::access;
 
-	template < class Archive >
-	void serialize( Archive & ar, const unsigned int )
-	{
-		ar & database_;
-	}
+    template < class Archive >
+    void serialize( Archive & ar, const unsigned int )
+    {
+        ar & database_;
+    }
 
-	DatabaseType database_;
+    DatabaseType database_;
 
 };
 

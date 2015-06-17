@@ -18,28 +18,28 @@ namespace GeneHunter {
 class CDSIterator
  : public boost::iterator_facade <
        CDSIterator,
-   	   CDSEntry const,
-   	   boost::forward_traversal_tag
+          CDSEntry const,
+          boost::forward_traversal_tag
    >
 {
 public:
 
-	CREATE_DATA_CLASS( Settings,\
-		(( bool, onlyImportKeyFeaturesWithPrecedingGeneSection, false ))\
-		(( std::vector<std::string>, listOfFeatureKeysToImport, std::vector<std::string>{"CDS"} ))\
-	)
+    CREATE_DATA_CLASS( Settings,\
+        (( bool, onlyImportKeyFeaturesWithPrecedingGeneSection, false ))\
+        (( std::vector<std::string>, listOfFeatureKeysToImport, std::vector<std::string>{"CDS"} ))\
+    )
 
-	CDSIterator()
-	 : endFlag_(true)
-	{}
+    CDSIterator()
+     : endFlag_(true)
+    {}
 
-	CDSIterator( boost::filesystem::path const& filename, Settings const& settings )
-	 : ptrInputStream_(new std::ifstream(filename.string().c_str())), settings_(settings)
-	{
-		if ( ! *ptrInputStream_ )
-			throw GeneHunterException("CDSIterator: Error opening file " + filename.string());
-		increment();
-	}
+    CDSIterator( boost::filesystem::path const& filename, Settings const& settings )
+     : ptrInputStream_(new std::ifstream(filename.string().c_str())), settings_(settings)
+    {
+        if ( ! *ptrInputStream_ )
+            throw GeneHunterException("CDSIterator: Error opening file " + filename.string());
+        increment();
+    }
 
 private:
 
@@ -63,9 +63,9 @@ private:
 
     enum CurrentReading { Gene, Location, LocusTag, ProteinID, Product, Unused };
 
-	boost::shared_ptr<std::ifstream> ptrInputStream_;
+    boost::shared_ptr<std::ifstream> ptrInputStream_;
 
-	CDSEntry currentEntry_;
+    CDSEntry currentEntry_;
 
     std::string currentLine_;
 

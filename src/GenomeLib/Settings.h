@@ -6,8 +6,8 @@
 namespace GeneHunter {
 
 enum SearchAlgorithm {
-	FirstTokensAsSeed,
-	TakeMatchWithMostSeeds
+    FirstTokensAsSeed,
+    TakeMatchWithMostSeeds
 };
 
 std::ostream& operator << ( std::ostream& os, SearchAlgorithm s );

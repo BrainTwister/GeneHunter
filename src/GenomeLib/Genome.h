@@ -28,16 +28,16 @@ typedef uint8_t FixedTokenSizeType;
 template <
     FixedTokenSizeType Size,
     class HashChar = CompressedCharFourInOne,
-	class RefChar = CompressedCharTwoInOne
+    class RefChar = CompressedCharTwoInOne
 >
 struct Traits
 {
-	static const FixedTokenSizeType FixedTokenSize = Size;
+    static const FixedTokenSizeType FixedTokenSize = Size;
 
-	typedef HashChar HashTokenCharType;
-	typedef RefChar RefSeqCharType;
+    typedef HashChar HashTokenCharType;
+    typedef RefChar RefSeqCharType;
 
-	typedef SequenceToken<HashTokenCharType,FixedTokenSize> HashTokenType;
+    typedef SequenceToken<HashTokenCharType,FixedTokenSize> HashTokenType;
 };
 
 /// Integer type for NCBI GenBank identification number.

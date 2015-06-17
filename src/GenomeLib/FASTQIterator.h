@@ -12,20 +12,20 @@ namespace GeneHunter {
 
 class FASTQIterator
  : public boost::iterator_facade <
-   	   FASTQIterator,
-   	   PtrFASTQ const,
-   	   boost::forward_traversal_tag
+          FASTQIterator,
+          PtrFASTQ const,
+          boost::forward_traversal_tag
    >
 {
 public:
 
-	FASTQIterator()	{}
+    FASTQIterator()    {}
 
-	FASTQIterator( boost::filesystem::path const& FASTQFilename )
-	 : ptrInputStream_(new std::ifstream(FASTQFilename.string().c_str()))
-	{
-		increment();
-	}
+    FASTQIterator( boost::filesystem::path const& FASTQFilename )
+     : ptrInputStream_(new std::ifstream(FASTQFilename.string().c_str()))
+    {
+        increment();
+    }
 
 private:
 
@@ -43,53 +43,53 @@ private:
 
     void increment()
     {
-    	std::string line,name,sequence,quality;
-    	bool headerFound = false;
-    	bool baseQualitySeparatorFound = false;
+        std::string line,name,sequence,quality;
+        bool headerFound = false;
+        bool baseQualitySeparatorFound = false;
 
-		while ( std::getline(*ptrInputStream_,line) )
-		{
-			boost::algorithm::trim(line);
-			if ( line.empty() ) continue;
+        while ( std::getline(*ptrInputStream_,line) )
+        {
+            boost::algorithm::trim(line);
+            if ( line.empty() ) continue;
 
-			// Quality string can begin with '@'. To distinguish from header second query is needed.
-			if ( line[0] == '@' and !headerFound ) {
-				// Read header
-	    		line.erase(0,1);
-				name = std::move(line);
-				headerFound = true;
-			} else if ( line[0] == '+' and !baseQualitySeparatorFound ) {
-				baseQualitySeparatorFound = true;
-			} else {
-				if (baseQualitySeparatorFound) {
-					// Read quality sequence
-					quality = std::move(line);
-					break;
-				} else {
-					// Read base sequence
-					sequence = std::move(line);
-				}
-			}
-		}
+            // Quality string can begin with '@'. To distinguish from header second query is needed.
+            if ( line[0] == '@' and !headerFound ) {
+                // Read header
+                line.erase(0,1);
+                name = std::move(line);
+                headerFound = true;
+            } else if ( line[0] == '+' and !baseQualitySeparatorFound ) {
+                baseQualitySeparatorFound = true;
+            } else {
+                if (baseQualitySeparatorFound) {
+                    // Read quality sequence
+                    quality = std::move(line);
+                    break;
+                } else {
+                    // Read base sequence
+                    sequence = std::move(line);
+                }
+            }
+        }
 
-    	if ( headerFound ) {
-        	ptrFASTQ_ = PtrFASTQ(new FASTQ(name,sequence,quality));
+        if ( headerFound ) {
+            ptrFASTQ_ = PtrFASTQ(new FASTQ(name,sequence,quality));
 
-    		if ( ptrFASTQ_->getQuality().getNbBases() != ptrFASTQ_->getSequence().getNbBases()
-    			or ptrFASTQ_->getQuality().getNbBases() == 0 or ptrFASTQ_->getSequence().getNbBases() == 0 )
-    		{
-    			std::cout << "quality size  = " << ptrFASTQ_->getQuality().getNbBases() << std::endl;
-    			std::cout << "sequence size = " << ptrFASTQ_->getSequence().getNbBases() << std::endl;
-    			std::cout << "quality  = " << ptrFASTQ_->getQuality() << std::endl;
-    			std::cout << "sequence = " << ptrFASTQ_->getSequence() << std::endl;
-    			throw GeneHunterException("FASTQIterator: length of base and quality sequence are not equal or zero.");
-    		}
-    	} else {
-    		ptrFASTQ_.reset();
-    	}
+            if ( ptrFASTQ_->getQuality().getNbBases() != ptrFASTQ_->getSequence().getNbBases()
+                or ptrFASTQ_->getQuality().getNbBases() == 0 or ptrFASTQ_->getSequence().getNbBases() == 0 )
+            {
+                std::cout << "quality size  = " << ptrFASTQ_->getQuality().getNbBases() << std::endl;
+                std::cout << "sequence size = " << ptrFASTQ_->getSequence().getNbBases() << std::endl;
+                std::cout << "quality  = " << ptrFASTQ_->getQuality() << std::endl;
+                std::cout << "sequence = " << ptrFASTQ_->getSequence() << std::endl;
+                throw GeneHunterException("FASTQIterator: length of base and quality sequence are not equal or zero.");
+            }
+        } else {
+            ptrFASTQ_.reset();
+        }
     }
 
-	boost::shared_ptr<std::ifstream> ptrInputStream_;
+    boost::shared_ptr<std::ifstream> ptrInputStream_;
 
     PtrFASTQ ptrFASTQ_;
 

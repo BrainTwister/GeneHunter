@@ -12,31 +12,31 @@ namespace GeneHunter {
 class LocalAlignment {
 public:
 
-	CREATE_DATA_CLASS( Settings,\
-		(( uint8_t, verbosity, 0 ))\
-		(( bool, useBandMatrix, false ))\
-		(( size_t, bandwidth, 0 ))\
-		(( double, scoreMatch, 1.0 ))\
-		(( double, scoreMismatch, -1.0 ))\
-		(( double, scoreInsertion, -1.0 ))\
-		(( double, scoreDeletion, -1.0 ))\
-	)
+    CREATE_DATA_CLASS( Settings,\
+        (( uint8_t, verbosity, 0 ))\
+        (( bool, useBandMatrix, false ))\
+        (( size_t, bandwidth, 0 ))\
+        (( double, scoreMatch, 1.0 ))\
+        (( double, scoreMismatch, -1.0 ))\
+        (( double, scoreInsertion, -1.0 ))\
+        (( double, scoreDeletion, -1.0 ))\
+    )
 
-	LocalAlignment( Settings const& settings = Settings() )
-	 : settings(settings)
-	{}
+    LocalAlignment( Settings const& settings = Settings() )
+     : settings(settings)
+    {}
 
-	double getQuality( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality );
+    double getQuality( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality );
 
 private:
 
-	double getQualityDense( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality );
+    double getQualityDense( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality );
 
-	double getQualitySparse( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality );
+    double getQualitySparse( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality );
 
-	double match( char c1, char c2 ) const;
+    double match( char c1, char c2 ) const;
 
-	Settings settings;
+    Settings settings;
 
 };
 

@@ -35,14 +35,14 @@ void writeXML( T& data, const std::string& name, const boost::filesystem::path& 
 template < class T >
 void readBinary( T& data, const std::string& name, const boost::filesystem::path& filename )
 {
-	if (!exists(filename)) throw GeneHunterException("readBinary: " + filename.string() + " not exist");
-	try {
-		std::ifstream in(filename.string().c_str());
-		boost::archive::binary_iarchive ia(in);
-		ia >> boost::serialization::make_nvp(name.c_str(),data);
-	} catch ( ... ) {
-		throw GeneHunterException("readBinary: serialization error.");
-	}
+    if (!exists(filename)) throw GeneHunterException("readBinary: " + filename.string() + " not exist");
+    try {
+        std::ifstream in(filename.string().c_str());
+        boost::archive::binary_iarchive ia(in);
+        ia >> boost::serialization::make_nvp(name.c_str(),data);
+    } catch ( ... ) {
+        throw GeneHunterException("readBinary: serialization error.");
+    }
 }
 
 template < class T >

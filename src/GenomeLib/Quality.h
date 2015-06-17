@@ -19,7 +19,7 @@ struct gens< 0, S... >
 };
 
 constexpr double quality( char c, uint8_t offset ) {
-	return c > offset ? pow(10.0,-static_cast<double>(c-offset)/10) : 1.0;
+    return c > offset ? pow(10.0,-static_cast<double>(c-offset)/10) : 1.0;
 }
 
 /**
@@ -33,17 +33,17 @@ constexpr double quality( char c, uint8_t offset ) {
  */
 struct FastqSanger
 {
-	static constexpr uint8_t size = 127;
-	static constexpr uint8_t offset = 33;
+    static constexpr uint8_t size = 127;
+    static constexpr uint8_t offset = 33;
 
-	typedef typename gens<size>::type list;
+    typedef typename gens<size>::type list;
 
-	template < char ...S >
-	static constexpr std::array<double,size> make_arr(seq<S...>) {
-	    return std::array<double,size>{{ quality(S,offset) ... }};
-	}
+    template < char ...S >
+    static constexpr std::array<double,size> make_arr(seq<S...>) {
+        return std::array<double,size>{{ quality(S,offset) ... }};
+    }
 
-	static const std::array<double,size> data;
+    static const std::array<double,size> data;
 
 };
 

@@ -28,39 +28,39 @@ class CDSDatabase
 {
 public:
 
-	CREATE_DATA_CLASS( Settings,\
-		(( std::string, proteinLinkTableName, "ProteinLink" ))\
-		(( uint8_t, verbosity, 0 ))\
-		(( bool, checkSubdividedLocation, true ))\
-	)
+    CREATE_DATA_CLASS( Settings,\
+        (( std::string, proteinLinkTableName, "ProteinLink" ))\
+        (( uint8_t, verbosity, 0 ))\
+        (( bool, checkSubdividedLocation, true ))\
+    )
 
-	CDSDatabase( Settings const& settings );
+    CDSDatabase( Settings const& settings );
 
-	~CDSDatabase();
+    ~CDSDatabase();
 
-	std::vector<Gene> getGene( size_t geneID, size_t locStart, size_t locEnd ) const;
+    std::vector<Gene> getGene( size_t geneID, size_t locStart, size_t locEnd ) const;
 
-	void importGene( CDSEntry const& entry );
+    void importGene( CDSEntry const& entry );
 
-	size_t nbGeneEntries() const;
+    size_t nbGeneEntries() const;
 
-	size_t nbProteinLinks() const;
+    size_t nbProteinLinks() const;
 
-	void createIndex() const;
+    void createIndex() const;
 
 private:
 
-	/// Produce a valid sql string.
-	std::string strip( std::string const& s ) const;
+    /// Produce a valid sql string.
+    std::string strip( std::string const& s ) const;
 
     Settings settings_;
 
-	MYSQL *myConnection_;
+    MYSQL *myConnection_;
 
-	static const uint16_t stripBufferLength_ = 10000;
+    static const uint16_t stripBufferLength_ = 10000;
 
-	/// Buffer for striping to reduces heap allocations.
-	mutable char stripBuffer_[stripBufferLength_];
+    /// Buffer for striping to reduces heap allocations.
+    mutable char stripBuffer_[stripBufferLength_];
 
 };
 

@@ -25,52 +25,52 @@ class ArgumentInterpreter
 {
 public:
 
-	enum ArgumentType { NonOptional, Optional, Boolean, NonOptionalList };
+    enum ArgumentType { NonOptional, Optional, Boolean, NonOptionalList };
 
-	struct ArgumentDefinition{
-		std::string name_;
-		ArgumentType type_;
-		std::string description_;
-	};
+    struct ArgumentDefinition{
+        std::string name_;
+        ArgumentType type_;
+        std::string description_;
+    };
 
-	ArgumentInterpreter( int argc, char* argv[],
-		std::initializer_list<ArgumentDefinition> argumentDefinitionList = std::initializer_list<ArgumentDefinition>()
-	);
+    ArgumentInterpreter( int argc, char* argv[],
+        std::initializer_list<ArgumentDefinition> argumentDefinitionList = std::initializer_list<ArgumentDefinition>()
+    );
 
-	size_t getNbOfNonOptionalArguments() const {
-		return nonOptionalArgumentList_.size();
-	}
+    size_t getNbOfNonOptionalArguments() const {
+        return nonOptionalArgumentList_.size();
+    }
 
-	std::string getNonOptionalArgument( std::string const& nonOptionalFlag ) const;
+    std::string getNonOptionalArgument( std::string const& nonOptionalFlag ) const;
 
-	std::vector<std::string> const& getNonOptionalList() const {
-		return nonOptionalList_;
-	}
+    std::vector<std::string> const& getNonOptionalList() const {
+        return nonOptionalList_;
+    }
 
-	bool isOptionalFlagSet( std::string const& optionalFlag ) const;
+    bool isOptionalFlagSet( std::string const& optionalFlag ) const;
 
-	std::string getOptionalArgument( std::string const& optionalFlag ) const;
+    std::string getOptionalArgument( std::string const& optionalFlag ) const;
 
-	bool isBooleanFlagSet( std::string const& booleanFlag ) const;
+    bool isBooleanFlagSet( std::string const& booleanFlag ) const;
 
-	void printUsage() const;
+    void printUsage() const;
 
 private:
 
-	std::vector<std::string> nonOptionalArgumentList_;
-	std::vector<std::string> nonOptionalList_;
-	std::map<std::string,std::string> optionalArgumentList_;
-	std::set<std::string> booleanFlagList_;
+    std::vector<std::string> nonOptionalArgumentList_;
+    std::vector<std::string> nonOptionalList_;
+    std::map<std::string,std::string> optionalArgumentList_;
+    std::set<std::string> booleanFlagList_;
 
-	std::vector<std::string> nonOptionalArgumentName_;
-	std::vector<std::string> nonOptionalArgumentDescription_;
-	std::map<std::string,std::string> optionalArgumentDescription_;
-	std::map<std::string,std::string> booleanFlagDescription_;
+    std::vector<std::string> nonOptionalArgumentName_;
+    std::vector<std::string> nonOptionalArgumentDescription_;
+    std::map<std::string,std::string> optionalArgumentDescription_;
+    std::map<std::string,std::string> booleanFlagDescription_;
 
-	std::string nonOptionalListName_;
-	std::string nonOptionalListDescription_;
+    std::string nonOptionalListName_;
+    std::string nonOptionalListDescription_;
 
-	std::string programName_;
+    std::string programName_;
 
 };
 

@@ -11,25 +11,25 @@ class OrganismsDataset
 {
 public:
 
-	OrganismsDataset( boost::filesystem::path const& datasetFile );
+    OrganismsDataset( boost::filesystem::path const& datasetFile );
 
     void writeTree( boost::property_tree::ptree& pt );
 
-	size_t getTaxonID() const { return taxonID_; }
-	std::string getTaxonomy() const { return taxonomy_; }
+    size_t getTaxonID() const { return taxonID_; }
+    std::string getTaxonomy() const { return taxonomy_; }
 
 private:
 
-	std::string datasetName_;
-	std::string hostGenus_;
-	std::string hostSpecies_;
-	std::string commonName_;
-	size_t taxonID_;
-	std::string taxonomy_;
-	std::string sampleSource_;
-	std::string sampleType_;
-	std::string sequencerMethod_;
-	std::string sequencer_;
+    std::string datasetName_;
+    std::string hostGenus_;
+    std::string hostSpecies_;
+    std::string commonName_;
+    size_t taxonID_;
+    std::string taxonomy_;
+    std::string sampleSource_;
+    std::string sampleType_;
+    std::string sequencerMethod_;
+    std::string sequencer_;
 
 };
 

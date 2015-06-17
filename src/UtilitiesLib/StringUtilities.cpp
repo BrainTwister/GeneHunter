@@ -33,27 +33,27 @@ std::set<size_t> readListing( const std::string& listingString )
 
 std::string makeFrame( std::string const& content, char letter )
 {
-	return std::string(content.size() + 6,letter) + '\n' + letter + "  "
-		+ content + "  " + letter + '\n' + std::string(content.size() + 6,letter);
+    return std::string(content.size() + 6,letter) + '\n' + letter + "  "
+        + content + "  " + letter + '\n' + std::string(content.size() + 6,letter);
 }
 
 std::string underline( std::string const& content )
 {
-	return content + '\n' + std::string(content.size(),'-');
+    return content + '\n' + std::string(content.size(),'-');
 }
 
 std::string removePrependingLowerLetters( std::string const& str )
 {
-	auto iterFirstUpperChar = str.begin();
+    auto iterFirstUpperChar = str.begin();
     for ( ; iterFirstUpperChar != str.end(); ++iterFirstUpperChar ) if ( std::isupper(*iterFirstUpperChar) ) break;
     if (iterFirstUpperChar == str.end()) return str;
-	return str.substr(distance(str.begin(),iterFirstUpperChar));
+    return str.substr(distance(str.begin(),iterFirstUpperChar));
 }
 
 std::string removePrependingLowerLettersByReference( std::string const& str, std::string const& ref )
 {
-	auto iterFirstUpperChar = ref.begin();
+    auto iterFirstUpperChar = ref.begin();
     for ( ; iterFirstUpperChar != ref.end(); ++iterFirstUpperChar ) if ( std::isupper(*iterFirstUpperChar) ) break;
     if (iterFirstUpperChar == ref.end()) return str;
-	return str.substr(distance(ref.begin(),iterFirstUpperChar));
+    return str.substr(distance(ref.begin(),iterFirstUpperChar));
 }

@@ -8,46 +8,46 @@ namespace Environment {
 
 boost::filesystem::path getDatabaseFile()
 {
-	std::string dbFileString = getEnvVar("NCBI_NT_PATH");
-	if (dbFileString.empty()) throw GeneHunterException("NCBI_NT_PATH not defined");
+    std::string dbFileString = getEnvVar("NCBI_NT_PATH");
+    if (dbFileString.empty()) throw GeneHunterException("NCBI_NT_PATH not defined");
 
-	boost::filesystem::path dbFile = boost::filesystem::path(dbFileString) / "nt";
-	if (!exists(dbFile)) throw GeneHunterException(dbFile.string() + " not exist");
+    boost::filesystem::path dbFile = boost::filesystem::path(dbFileString) / "nt";
+    if (!exists(dbFile)) throw GeneHunterException(dbFile.string() + " not exist");
 
-	return dbFile;
+    return dbFile;
 }
 
 boost::filesystem::path getSharedDirectory()
 {
-	std::string scratchShared = getEnvVar("SCRATCH_SHARED");
-	if (scratchShared.empty()) throw GeneHunterException("SCRATCH_SHARED not defined");
+    std::string scratchShared = getEnvVar("SCRATCH_SHARED");
+    if (scratchShared.empty()) throw GeneHunterException("SCRATCH_SHARED not defined");
 
-	boost::filesystem::path scratchSharedPath = boost::filesystem::path(scratchShared);
-	if (!exists(scratchSharedPath)) throw GeneHunterException(scratchSharedPath.string() + " not exist");
+    boost::filesystem::path scratchSharedPath = boost::filesystem::path(scratchShared);
+    if (!exists(scratchSharedPath)) throw GeneHunterException(scratchSharedPath.string() + " not exist");
 
-	return scratchSharedPath;
+    return scratchSharedPath;
 }
 
 boost::filesystem::path getLocalDirectory()
 {
-	std::string localScratch = getEnvVar("SCRATCH_LOCAL");
-	if (localScratch.empty()) throw GeneHunterException("SCRATCH_LOCAL not defined");
+    std::string localScratch = getEnvVar("SCRATCH_LOCAL");
+    if (localScratch.empty()) throw GeneHunterException("SCRATCH_LOCAL not defined");
 
-	boost::filesystem::path localScratchPath = boost::filesystem::path(localScratch);
-	if (!exists(localScratchPath)) throw GeneHunterException(localScratchPath.string() + " not exist");
+    boost::filesystem::path localScratchPath = boost::filesystem::path(localScratch);
+    if (!exists(localScratchPath)) throw GeneHunterException(localScratchPath.string() + " not exist");
 
-	return localScratchPath;
+    return localScratchPath;
 }
 
 boost::filesystem::path getGeneHunterRootDirectory()
 {
-	std::string geneAssemblerRoot = getEnvVar("GENEASSEMBLER_ROOT");
-	if (geneAssemblerRoot.empty()) throw GeneHunterException("GENEASSEMBLER_ROOT not defined");
+    std::string geneAssemblerRoot = getEnvVar("GENEASSEMBLER_ROOT");
+    if (geneAssemblerRoot.empty()) throw GeneHunterException("GENEASSEMBLER_ROOT not defined");
 
-	boost::filesystem::path geneAssemblerRootPath = boost::filesystem::path(geneAssemblerRoot);
-	if (!exists(geneAssemblerRootPath)) throw GeneHunterException(geneAssemblerRootPath.string() + " not exist");
+    boost::filesystem::path geneAssemblerRootPath = boost::filesystem::path(geneAssemblerRoot);
+    if (!exists(geneAssemblerRootPath)) throw GeneHunterException(geneAssemblerRootPath.string() + " not exist");
 
-	return geneAssemblerRootPath;
+    return geneAssemblerRootPath;
 }
 
 size_t getNbNodes() { return boost::lexical_cast<size_t>(getEnvVar("NODE_NUM")); }

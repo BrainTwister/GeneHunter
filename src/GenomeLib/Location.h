@@ -18,15 +18,15 @@ class Location
 {
 public:
 
-	Location();
+    Location();
 
-	Location( std::string const& locationString );
+    Location( std::string const& locationString );
 
-	Location( Range<uint32_t> const& range );
+    Location( Range<uint32_t> const& range );
 
     bool operator < ( Location const& other ) const
     {
-    	return rangeSet_.begin()->getLowerBoundary() < other.rangeSet_.begin()->getLowerBoundary();
+        return rangeSet_.begin()->getLowerBoundary() < other.rangeSet_.begin()->getLowerBoundary();
     }
 
     /// Returns true if the given range is totally within the location.
@@ -39,7 +39,7 @@ public:
 
 private:
 
-	friend std::ostream& operator << ( std::ostream& os, Location const& location );
+    friend std::ostream& operator << ( std::ostream& os, Location const& location );
 
     friend class boost::serialization::access;
 
