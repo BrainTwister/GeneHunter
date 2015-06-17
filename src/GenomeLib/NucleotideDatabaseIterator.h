@@ -2,7 +2,7 @@
 #define NUCLEOTIDEDATABASEITERATOR_H_
 
 #include "FASTAIterator.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "NucleotideDatabase.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
@@ -10,7 +10,7 @@
 #include <boost/shared_ptr.hpp>
 #include <fstream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class Traits >
 class NucleotideDatabaseIterator
@@ -99,6 +99,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* NUCLEOTIDEDATABASEITERATOR_H_ */

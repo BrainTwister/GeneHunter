@@ -1,6 +1,6 @@
 #include "CompressedCharTwoInOne.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 const char CompressedCharTwoInOne::charByCompressionIndex[CompressedCharTwoInOne::size_] =
     {'A','C','G','T','K','S','R','M','W','Y','B','D','H','V','N','X'};
@@ -23,4 +23,4 @@ const char CompressedCharTwoInOne::compressionIndexByChar[256] =
       16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
       16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

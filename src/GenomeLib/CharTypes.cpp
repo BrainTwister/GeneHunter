@@ -1,6 +1,6 @@
 #include "CharTypes.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /*
  *     U   uridine (matches T)
@@ -30,4 +30,4 @@ bool firstMatchSecond( char c1, char c2 )
 	return false;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

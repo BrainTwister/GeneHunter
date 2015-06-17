@@ -1,12 +1,12 @@
 #include "Environment.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Taxonomy.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 Taxonomy::Taxonomy( Settings const& settings )
  : settings_(settings),
@@ -19,7 +19,7 @@ Taxonomy::Taxonomy( Settings const& settings )
     	Environment::getMysqlPassword().c_str(),
     	Environment::getMysqlTaxDatabase().c_str(),0,0,0) == NULL )
     {
-        throw GeneAssemblerException(mysql_error(myConnection_));
+        throw GeneHunterException(mysql_error(myConnection_));
     }
 }
 
@@ -32,15 +32,15 @@ size_t Taxonomy::getTaxIDByNucGI( size_t geneID ) const
 {
 	string query = "SELECT tax_id FROM gi_taxid_nuc WHERE gi = " + boost::lexical_cast<string>(geneID);
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_RES *result = mysql_store_result(myConnection_);
 	if ( result == NULL )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_ROW row = mysql_fetch_row(result);
 	if ( row == NULL )
-		throw GeneAssemblerException("mysql_fetch_row == NULL");
+		throw GeneHunterException("mysql_fetch_row == NULL");
 
 	size_t taxID = boost::lexical_cast<size_t>(row[0]);
 
@@ -53,15 +53,15 @@ std::tuple<size_t,std::string,bool> Taxonomy::getTaxInfo( size_t taxID ) const
 {
 	string query = "SELECT parent_tax_id, rank, GenBank_hidden_flag FROM ncbi_nodes WHERE tax_id = " + boost::lexical_cast<string>(taxID);
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_RES *result = mysql_store_result(myConnection_);
 	if ( result == NULL )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_ROW row = mysql_fetch_row(result);
 	if ( row == NULL )
-		throw GeneAssemblerException("mysql_fetch_row == NULL");
+		throw GeneHunterException("mysql_fetch_row == NULL");
 
 	std::tuple<size_t,std::string,bool> taxInfo(boost::lexical_cast<size_t>(row[0]),row[1],boost::lexical_cast<bool>(row[2]));
 
@@ -124,7 +124,7 @@ size_t Taxonomy::getLowestTaxIDWithRank( size_t taxID ) const
 		if ( get<1>(taxInfo) != "no rank" and get<1>(taxInfo) != "subspecies" ) return taxID;
 		taxID = get<0>(taxInfo);
 	}
-	throw GeneAssemblerException("Taxonomy::getLowestTaxIDWithRank: no lowestTaxIDWithRank found.");
+	throw GeneHunterException("Taxonomy::getLowestTaxIDWithRank: no lowestTaxIDWithRank found.");
 }
 
 std::string Taxonomy::getOrganismName( size_t taxID ) const
@@ -161,7 +161,7 @@ void Taxonomy::updateLineageTrace( size_t taxID ) const
 		curTaxID = get<0>(taxInfo);
 	}
 
-	if ( currentTrace_.empty() ) throw GeneAssemblerException("Lineage trace is empty.");
+	if ( currentTrace_.empty() ) throw GeneHunterException("Lineage trace is empty.");
 
 	currentTraceTaxID_ = taxID;
 }
@@ -170,15 +170,15 @@ std::string Taxonomy::getScientificNameByTaxID( size_t taxID ) const
 {
 	string query = "SELECT name_txt FROM ncbi_names WHERE tax_id = " + boost::lexical_cast<string>(taxID) + " AND name_class = 'scientific name'";
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_RES *result = mysql_store_result(myConnection_);
 	if ( result == NULL )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_ROW row = mysql_fetch_row(result);
 	if ( row == NULL )
-		throw GeneAssemblerException("mysql_fetch_row == NULL");
+		throw GeneHunterException("mysql_fetch_row == NULL");
 
 	string scientificName(row[0]);
 
@@ -187,4 +187,4 @@ std::string Taxonomy::getScientificNameByTaxID( size_t taxID ) const
 	return scientificName;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

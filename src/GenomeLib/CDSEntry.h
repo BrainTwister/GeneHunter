@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class CDSEntry
 {
@@ -49,6 +49,6 @@ inline std::ostream& operator << ( std::ostream& os, CDSEntry const& entry )
               << *entry.ptrProteinLink_ << std::endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* CDSENTRY_H_ */

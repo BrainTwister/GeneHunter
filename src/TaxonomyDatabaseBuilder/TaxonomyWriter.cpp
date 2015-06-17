@@ -1,6 +1,6 @@
 #include "TaxonomyWriter.h"
 #include "Environment.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Location.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/tokenizer.hpp>
@@ -10,7 +10,7 @@
 using namespace std;
 using boost::filesystem::path;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 const std::string TaxonomyWriter::giTaxIDNucTableName_ = "gi_taxid_nuc";
 
@@ -28,13 +28,13 @@ TaxonomyWriter::TaxonomyWriter( boost::filesystem::path const& gi_taxid_nucl_fil
     	Environment::getMysqlPassword().c_str(),
     	database.c_str(),0,0,0) == NULL )
     {
-        throw GeneAssemblerException(mysql_error(myConnection_));
+        throw GeneHunterException(mysql_error(myConnection_));
     }
 
     string query = "START TRANSACTION";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE TABLE IF NOT EXISTS " + giTaxIDNucTableName_ + "(\
 			        gi INT PRIMARY KEY,\
@@ -42,7 +42,7 @@ TaxonomyWriter::TaxonomyWriter( boost::filesystem::path const& gi_taxid_nucl_fil
 			        ENGINE = MYISAM";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE TABLE IF NOT EXISTS " + ncbiNamesTableName_ + "(\
 			        tax_id INT,\
@@ -52,7 +52,7 @@ TaxonomyWriter::TaxonomyWriter( boost::filesystem::path const& gi_taxid_nucl_fil
 			        ENGINE = MYISAM";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE TABLE IF NOT EXISTS " + ncbiNodesTableName_ + "(\
 			        tax_id mediumint(11) PRIMARY KEY,\
@@ -71,7 +71,7 @@ TaxonomyWriter::TaxonomyWriter( boost::filesystem::path const& gi_taxid_nucl_fil
 			        ENGINE = MYISAM";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	importGITaxIDNuc(gi_taxid_nucl_file);
 	importNCBINames(names_file);
@@ -84,7 +84,7 @@ TaxonomyWriter::~TaxonomyWriter()
 	string query("COMMIT");
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
     mysql_close(myConnection_);
 }
@@ -104,7 +104,7 @@ void TaxonomyWriter::importGITaxIDNuc( path const& filename )
 					 + " tax_id='" + boost::lexical_cast<string>(tax_id) + "'";
 
 		if ( mysql_query(myConnection_,query.c_str()) )
-			throw GeneAssemblerException(mysql_error(myConnection_));
+			throw GeneHunterException(mysql_error(myConnection_));
 	}
 }
 
@@ -132,7 +132,7 @@ void TaxonomyWriter::importNCBINames( path const& filename )
 					 + " name_class='" + strip(name_class) + "'";
 
 		if ( mysql_query(myConnection_,query.c_str()) )
-			throw GeneAssemblerException(mysql_error(myConnection_));
+			throw GeneHunterException(mysql_error(myConnection_));
 	}
 }
 
@@ -178,7 +178,7 @@ void TaxonomyWriter::importNCBINodes( path const& filename )
 					 + " comments='" + strip(comments) + "'";
 
 		if ( mysql_query(myConnection_,query.c_str()) )
-			throw GeneAssemblerException(mysql_error(myConnection_));
+			throw GeneHunterException(mysql_error(myConnection_));
 	}
 }
 
@@ -187,35 +187,35 @@ void TaxonomyWriter::createIndices() const
 	string query = "CREATE INDEX tax_id ON " + giTaxIDNucTableName_ + " (tax_id)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE INDEX tax_id ON " + ncbiNamesTableName_ + " (tax_id)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE INDEX name_class ON " + ncbiNamesTableName_ + " (name_class)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE INDEX name_txt ON " + ncbiNamesTableName_ + " (name_txt)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE INDEX parent_tax_id ON " + ncbiNodesTableName_ + " (parent_tax_id)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 }
 
 string TaxonomyWriter::strip( string const& s ) const
 {
 	if (s.length() > stripBufferLength_)
-		throw GeneAssemblerException("CDSDatabase::strip: buffer overflow.");
+		throw GeneHunterException("CDSDatabase::strip: buffer overflow.");
 	mysql_real_escape_string(myConnection_, stripBuffer_, s.c_str(), s.length());
 	return stripBuffer_;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

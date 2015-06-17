@@ -7,7 +7,7 @@
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct ProteinLink
 {
@@ -42,6 +42,6 @@ inline std::ostream& operator << ( std::ostream& os, ProteinLink const& proteinL
               << "product          = " << proteinLink.product_ << std::endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* PROTEINLINK_H_ */

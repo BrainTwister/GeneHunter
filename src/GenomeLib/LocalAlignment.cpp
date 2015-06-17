@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 double LocalAlignment::getQuality( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality )
 {
@@ -62,4 +62,4 @@ double LocalAlignment::getQualitySparse( Sequence<char> const& seq1, Sequence<ch
 	return H.getMax();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

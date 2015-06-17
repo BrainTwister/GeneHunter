@@ -1,4 +1,4 @@
-# Root directory of GeneAssembler
+# Root directory of GeneHunter
 export GENEASSEMBLER_ROOT=
 
 # Prepend PATH (do not change next line)

@@ -3,7 +3,7 @@
 
 #include "CDSEntry.h"
 #include "CreateDataClass.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
@@ -13,7 +13,7 @@
 #include <boost/tokenizer.hpp>
 #include <fstream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class CDSIterator
  : public boost::iterator_facade <
@@ -37,7 +37,7 @@ public:
 	 : ptrInputStream_(new std::ifstream(filename.string().c_str())), settings_(settings)
 	{
 		if ( ! *ptrInputStream_ )
-			throw GeneAssemblerException("CDSIterator: Error opening file " + filename.string());
+			throw GeneHunterException("CDSIterator: Error opening file " + filename.string());
 		increment();
 	}
 
@@ -77,6 +77,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* CDSITERATOR_H_ */

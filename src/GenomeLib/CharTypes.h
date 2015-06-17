@@ -5,7 +5,7 @@
 #include "CompressedCharThreeInOne.h"
 #include "CompressedCharFourInOne.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 struct GetNbBaseItemsInChar
@@ -46,6 +46,6 @@ inline bool containOnlyPureBases( char c )
  */
 bool firstMatchSecond( char c1, char c2 );
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* CHARTYPES_H_ */

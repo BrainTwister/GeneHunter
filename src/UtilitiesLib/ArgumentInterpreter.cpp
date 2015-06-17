@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 ArgumentInterpreter::ArgumentInterpreter( int argc, char* argv[],
     initializer_list<ArgumentDefinition> argumentDefinitionList
@@ -126,4 +126,4 @@ void ArgumentInterpreter::printUsage() const
     cout << endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

@@ -13,7 +13,7 @@ Requirements
 ------------
 
 - cmake (Version >= 2.6.6, http://www.cmake.org)
-- Boost (Version >= 1.52, http://www.boost.org), only modules: system, filesystem, and serialization
+- Boost (Version >= 1.52, http://www.boost.org, modules: system, filesystem, and serialization)
 - MySQL
 - gtest (optional)
 - doxygen (optional)

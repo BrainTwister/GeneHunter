@@ -2,7 +2,7 @@
 #define COMPRESSEDCHARFOURINONE_H_
 
 #include "CompressedCharTwoInOne.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "GetCompressedIndex.h"
 #include "Power.h"
 #include <boost/lexical_cast.hpp>
@@ -13,7 +13,7 @@
 #include <functional>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct CompressedCharFourInOne
 {
@@ -72,7 +72,7 @@ struct CompressedCharFourInOne
 
     size_t getNbBases() const
     {
-    	throw GeneAssemblerException("CompressedCharFourInOne: number of bases are unkown.");
+    	throw GeneHunterException("CompressedCharFourInOne: number of bases are unkown.");
     }
 
 private:
@@ -111,7 +111,7 @@ private:
 											  + compressionIndexByChar[*(iterBeg+1)] * size_
 											  + compressionIndexByChar[*(iterBeg+2)] * Power<size_,2>::value
 											  + compressionIndexByChar[*(iterBeg+3)] * Power<size_,3>::value;
-		else throw GeneAssemblerException("CompressedCharFourInOne: error in compress iter");
+		else throw GeneHunterException("CompressedCharFourInOne: error in compress iter");
 	}
 
 	template < class Iterator >
@@ -125,7 +125,7 @@ private:
                                               + iterBeg->template getCompressedIndex<1>() * size_
                                               + (iterBeg+1)->template getCompressedIndex<0>() * Power<size_,2>::value
                                               + (iterBeg+1)->template getCompressedIndex<1>() * Power<size_,3>::value;
-		else throw GeneAssemblerException("CompressedCharFourInOne: error in compress iter");
+		else throw GeneHunterException("CompressedCharFourInOne: error in compress iter");
 	}
 
 	std::string decompress() const
@@ -146,23 +146,23 @@ inline std::ostream& operator << ( std::ostream& os, CompressedCharFourInOne con
 	return os << c.getString();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 namespace std {
 
 template <>
-struct hash< GeneAssembler::CompressedCharFourInOne >
+struct hash< GeneHunter::CompressedCharFourInOne >
 {
-	size_t operator () ( GeneAssembler::CompressedCharFourInOne const& c ) const
+	size_t operator () ( GeneHunter::CompressedCharFourInOne const& c ) const
 	{
 		return hash<char>()(c.baseItem_);
 	}
 };
 
 template <>
-struct equal_to< GeneAssembler::CompressedCharFourInOne >
+struct equal_to< GeneHunter::CompressedCharFourInOne >
 {
-	bool operator () ( GeneAssembler::CompressedCharFourInOne const& c1, GeneAssembler::CompressedCharFourInOne const& c2 ) const
+	bool operator () ( GeneHunter::CompressedCharFourInOne const& c1, GeneHunter::CompressedCharFourInOne const& c2 ) const
 	{
 		return equal_to<char>()(c1.baseItem_,c2.baseItem_);
 	}

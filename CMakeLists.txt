@@ -1,9 +1,6 @@
-project(GeneAssembler CXX)
-
-set(GeneAssembler_VERSION_MAJOR 1)
-set(GeneAssembler_VERSION_MINOR 0)
-
-cmake_minimum_required(VERSION 2.6.2)
+cmake_minimum_required(VERSION 3.0)
+project(GeneHunter VERSION 1.0.1 LANGUAGES CXX)
+message("Project version ${PROJECT_VERSION}")
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
@@ -25,7 +22,7 @@ if(    NOT cmake_build_type_tolower STREQUAL "debug"
   message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Debug, Release, RelWithDebInfo, Profiling (case-insensitive).")
 endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_THROW_FATAL_ERROR")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_THROW_FATAL_ERROR")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -DDEBUG_MODE")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DDEBUG_MODE")
@@ -65,7 +62,7 @@ find_package(MySQL REQUIRED)
 
 add_subdirectory(src/DatabaseBuilder)
 add_subdirectory(src/CDSDatabaseBuilder)
-add_subdirectory(src/GeneAssembler)
+add_subdirectory(src/GeneHunter)
 add_subdirectory(src/GenomeLib)
 add_subdirectory(src/UtilitiesLib)
 add_subdirectory(src/TaxonomyDatabaseBuilder)
@@ -79,10 +76,18 @@ endif(GTEST_FOUND)
 
 FIND_PACKAGE(Doxygen)
 if(DOXYGEN_FOUND)
-    add_custom_target(
-    	doc
-    	${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen
-            COMMENT "Generating API documentation with Doxygen" VERBATIM
-    )    
-endif()
+
+    set(doxyfile_in ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile.in)
+    set(doxyfile ${PROJECT_SOURCE_DIR}/doxygen/Doxyfile)
+
+    configure_file(${doxyfile_in} ${doxyfile} @ONLY)
+
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen/html DESTINATION share/doc)
+    
+endif(DOXYGEN_FOUND)

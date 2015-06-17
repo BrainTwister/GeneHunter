@@ -9,7 +9,7 @@
 #include <fstream>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class TaxonomyWriter
 {
@@ -48,6 +48,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* TAXONOMYWRITER_H_ */

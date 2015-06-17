@@ -1,7 +1,7 @@
 #include "Environment.h"
 #include "FASTAIterator.h"
 #include "FileIO.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "NucleotideDatabase.h"
 #include "Power.h"
 #include "StringUtilities.h"
@@ -11,7 +11,7 @@
 #include <string>
 
 using namespace std;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 using boost::filesystem::path;
 
 int main( int argc, char* argv[] )
@@ -24,7 +24,7 @@ int main( int argc, char* argv[] )
 
 		if ( argc < 2 ) {
 		    cout << "Usage: DatabaseBuilder <nbEntries> <nbBases> <nbBasesInFile>" << endl;
-		    throw GeneAssemblerException("Wrong number of arguments.");
+		    throw GeneHunterException("Wrong number of arguments.");
 		}
 
 		PtrNucleotideDatabase<DefaultTraits> ptrDatabase = PtrNucleotideDatabase<DefaultTraits>(new NucleotideDatabase<DefaultTraits>());
@@ -72,8 +72,8 @@ int main( int argc, char* argv[] )
 		totalInfo.merge(ptrDatabase->getInformation());
 		std::cout << totalInfo << std::endl;
 
-	} catch ( GeneAssemblerException const& e ) {
-		cout << "GeneAssembler exception: " << e.what() << endl;
+	} catch ( GeneHunterException const& e ) {
+		cout << "GeneHunter exception: " << e.what() << endl;
 		cout << "Program was aborted." << endl;
 		return 1;
 	} catch ( std::exception const& e ) {

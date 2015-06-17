@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 enum SearchAlgorithm {
 	FirstTokensAsSeed,
@@ -13,6 +13,6 @@ enum SearchAlgorithm {
 std::ostream& operator << ( std::ostream& os, SearchAlgorithm s );
 std::istream& operator >> ( std::istream& is, SearchAlgorithm& s );
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* SETTINGS_H_ */

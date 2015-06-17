@@ -25,3 +25,6 @@ target_link_libraries(
     GenomeLib
     UtilitiesLib
 )
+
+install(TARGETS DatabaseBuilder RUNTIME DESTINATION bin)
+

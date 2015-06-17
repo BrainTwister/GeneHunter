@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class Organism
 {
@@ -58,6 +58,6 @@ private:
 
 std::ostream& operator << ( std::ostream& os, Organism const& organism );
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* ORGANISM_H_ */

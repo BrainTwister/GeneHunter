@@ -5,7 +5,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 //<sequenceDifference>
 //  <variant ref_name="CAB54900.1" ref_start="44" ref_seq="-">A</variant>
@@ -65,6 +65,6 @@ struct Variant
 	}
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* VARIANT_H_ */

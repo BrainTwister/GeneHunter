@@ -3,13 +3,13 @@
 
 #include <boost/filesystem.hpp>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 namespace Environment {
 
 boost::filesystem::path getDatabaseFile();
 boost::filesystem::path getSharedDirectory();
 boost::filesystem::path getLocalDirectory();
-boost::filesystem::path getGeneAssemblerRootDirectory();
+boost::filesystem::path getGeneHunterRootDirectory();
 size_t getNbNodes();
 size_t getNbCoresPerNode();
 size_t getNodeMemoryGB();
@@ -20,6 +20,6 @@ std::string getMysqlTaxDatabase();
 std::string getMysqlMyDatabase();
 
 } // namespace Environment
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* ENVIRONMENT_H_ */

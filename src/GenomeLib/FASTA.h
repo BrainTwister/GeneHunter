@@ -12,7 +12,7 @@
 #include <string>
 #include <functional>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 class FASTA
@@ -54,7 +54,7 @@ template < class T >
 NuclGIType FASTA<T>::getFirstGeneID( std::string const& header )
 {
 	if ( header[0] != '>' )
-		throw GeneAssemblerException("FASTA<T>::getFirstGeneID: Header doesn't start with >.");
+		throw GeneHunterException("FASTA<T>::getFirstGeneID: Header doesn't start with >.");
 
 	typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
@@ -76,7 +76,7 @@ NuclGIType FASTA<T>::getFirstGeneID( std::string const& header )
 	ptrFASTA_->setDescription(boost::algorithm::trim_copy(*iterCur)); ++iterCur;
 
 	if ( iterCur != tokens2.end() )
-		throw GeneAssemblerException("FASTAIterator::increment: Number of tokens greater 5 in header. (line = " + line + ")");
+		throw GeneHunterException("FASTAIterator::increment: Number of tokens greater 5 in header. (line = " + line + ")");
 #endif
 }
 
@@ -102,23 +102,23 @@ inline bool operator < ( PtrFASTA<T> const& p1, PtrFASTA<T> const& p2 )
 	return p1->getGeneID() < p2->getGeneID();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 namespace std {
 
 template < class T >
-struct hash< GeneAssembler::PtrFASTA<T> >
+struct hash< GeneHunter::PtrFASTA<T> >
 {
-	size_t operator () ( GeneAssembler::PtrFASTA<T> const& p ) const
+	size_t operator () ( GeneHunter::PtrFASTA<T> const& p ) const
 	{
-		return hash<GeneAssembler::NuclGIType>()(p->getGeneID());
+		return hash<GeneHunter::NuclGIType>()(p->getGeneID());
 	}
 };
 
 template < class T >
-struct equal_to< GeneAssembler::PtrFASTA<T> >
+struct equal_to< GeneHunter::PtrFASTA<T> >
 {
-	bool operator () ( GeneAssembler::PtrFASTA<T> const& p1, GeneAssembler::PtrFASTA<T> const& p2 ) const
+	bool operator () ( GeneHunter::PtrFASTA<T> const& p1, GeneHunter::PtrFASTA<T> const& p2 ) const
 	{
 		return p1->getGeneID() == p2->getGeneID();
 	}

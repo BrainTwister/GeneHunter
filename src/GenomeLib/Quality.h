@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <array>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < char ... >
 struct seq {};
@@ -47,6 +47,6 @@ struct FastqSanger
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* QUALITY_H_ */

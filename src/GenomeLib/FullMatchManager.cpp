@@ -1,6 +1,6 @@
 #include "FullMatchManager.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 void FullMatchManager::addMatch( std::string const& readName, Match const& match )
 {
@@ -17,4 +17,4 @@ Match FullMatchManager::getMatch( std::string const& readName ) const
     else return Match();
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

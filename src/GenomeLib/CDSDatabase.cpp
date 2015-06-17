@@ -1,11 +1,11 @@
 #include "CDSDatabase.h"
 #include "Environment.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Location.h"
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 CDSDatabase::CDSDatabase( Settings const& settings )
  : settings_(settings),
@@ -17,7 +17,7 @@ CDSDatabase::CDSDatabase( Settings const& settings )
     	Environment::getMysqlPassword().c_str(),
     	Environment::getMysqlMyDatabase().c_str(),0,0,0) == NULL )
     {
-        throw GeneAssemblerException(mysql_error(myConnection_));
+        throw GeneHunterException(mysql_error(myConnection_));
     }
 
 	string query = "CREATE TABLE IF NOT EXISTS " + settings_.proteinLinkTableName_ + "(\
@@ -36,12 +36,12 @@ CDSDatabase::CDSDatabase( Settings const& settings )
 			        ENGINE = MYISAM";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "START TRANSACTION";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	if ( settings_.verbosity_ > 0 ) {
 	    cout << "Number of entries in CDSDatabase = " << nbGeneEntries() << endl;
@@ -54,7 +54,7 @@ CDSDatabase::~CDSDatabase()
 	string query("COMMIT");
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
     mysql_close(myConnection_);
 }
@@ -69,7 +69,7 @@ void CDSDatabase::importGene( CDSEntry const& entry )
 	}
 
 	if ( entry.location_.size() > 10000 )
-		throw GeneAssemblerException("CDSDatabase::importGene: location string too large.");
+		throw GeneHunterException("CDSDatabase::importGene: location string too large.");
 
 	string query = string("INSERT INTO " + settings_.proteinLinkTableName_ + " SET")
 		  	     + " geneID='" + boost::lexical_cast<string>(entry.geneID_) + "',"
@@ -85,18 +85,18 @@ void CDSDatabase::importGene( CDSEntry const& entry )
 			     + " product='" + strip(entry.ptrProteinLink_->product_) + "'";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 }
 
 size_t CDSDatabase::nbProteinLinks() const
 {
 	string query = "SELECT id FROM " + settings_.proteinLinkTableName_ + " ORDER BY id DESC LIMIT 1";
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_RES *result = mysql_store_result(myConnection_);
 	if ( result == NULL )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_ROW row = mysql_fetch_row(result);
 	if ( row == NULL ) {
@@ -115,11 +115,11 @@ size_t CDSDatabase::nbGeneEntries() const
 {
 	string query = "SELECT COUNT(DISTINCT geneID) FROM " + settings_.proteinLinkTableName_;
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_RES *result = mysql_store_result(myConnection_);
 	if ( result == NULL )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_ROW row = mysql_fetch_row(result);
 	if ( row == NULL ) {
@@ -150,11 +150,11 @@ std::vector<Gene> CDSDatabase::getGene( size_t geneID, size_t locStart, size_t l
                  + " AND enclosingLocationLowerBoundary <= " + boost::lexical_cast<string>(locEnd);
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	MYSQL_RES *result = mysql_store_result(myConnection_);
 	if ( result == NULL )
-		throw GeneAssemblerException(mysql_error(myConnection_));
+		throw GeneHunterException(mysql_error(myConnection_));
 
 	while ( MYSQL_ROW row = mysql_fetch_row(result) )
 	{
@@ -173,27 +173,27 @@ void CDSDatabase::createIndex() const
     geneID)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE INDEX enclosingLocationLowerBoundaryIndex ON " + settings_.proteinLinkTableName_ + " (\
     enclosingLocationLowerBoundary)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 
 	query = "CREATE INDEX enclosingLocationUpperBoundaryIndex ON " + settings_.proteinLinkTableName_ + " (\
     enclosingLocationUpperBoundary)";
 
 	if ( mysql_query(myConnection_,query.c_str()) )
-	throw GeneAssemblerException(mysql_error(myConnection_));
+	throw GeneHunterException(mysql_error(myConnection_));
 }
 
 string CDSDatabase::strip( string const& s ) const
 {
 	if (s.length() > stripBufferLength_)
-		throw GeneAssemblerException("CDSDatabase::strip: buffer overflow.");
+		throw GeneHunterException("CDSDatabase::strip: buffer overflow.");
 	mysql_real_escape_string(myConnection_, stripBuffer_, s.c_str(), s.length());
 	return stripBuffer_;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

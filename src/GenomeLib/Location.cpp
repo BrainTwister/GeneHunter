@@ -1,11 +1,11 @@
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Location.h"
 #include <boost/tokenizer.hpp>
 #include <iostream>
 
 using namespace std;
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 std::set<char> Location::charSet_ = {'0','1','2','3','4','5','6','7','8','9','<','>','.'};
 
@@ -40,7 +40,7 @@ Location::Location( std::string const& locationString )
 	    tokenizer::const_iterator iterToken = token.begin();
 
 	    if ( iterToken == token.end() )
-	    	throw GeneAssemblerException("Location: error reading " + locationString);
+	    	throw GeneHunterException("Location: error reading " + locationString);
 
 	    firstString = *iterToken;
 	    ++iterToken;
@@ -54,7 +54,7 @@ Location::Location( std::string const& locationString )
 	    }
 
 	    if ( iterToken != token.end() )
-	    	throw GeneAssemblerException("Location: error reading " + locationString);
+	    	throw GeneHunterException("Location: error reading " + locationString);
 
         if ( firstString[0] == '<' ) {
         	range.setOpenLowerBoundary(true);
@@ -118,4 +118,4 @@ std::ostream& operator << ( std::ostream& os, Location const& location )
 	return os;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

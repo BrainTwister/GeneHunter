@@ -5,7 +5,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class OrganismsDataset
 {
@@ -33,6 +33,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* ORGANISMSDATASET_H_ */

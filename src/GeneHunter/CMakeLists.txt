@@ -6,13 +6,15 @@ include_directories(
 )
 
 add_executable(
-    GeneAssembler
-    GeneAssembler.cpp
+    GeneHunter
+    GeneHunter.cpp
 )
     
 target_link_libraries(
-    GeneAssembler
+    GeneHunter
     GenomeLib
     UtilitiesLib
     ${MYSQL_LIBRARIES}
 )
+
+install(TARGETS GeneHunter RUNTIME DESTINATION bin)

@@ -4,7 +4,7 @@
 #include "CreateDataClass.h"
 #include "Sequence.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /**
  * \brief Local alignment using Smith-Waterman algorithm.
@@ -46,6 +46,6 @@ inline double LocalAlignment::match( char c1, char c2 ) const
     else return settings.scoreMismatch_;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* LOCALALIGNMENT_H_ */

@@ -2,13 +2,13 @@
 #define FASTQITERATOR_H_
 
 #include "FASTQ.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/filesystem/path.hpp>
 #include <fstream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class FASTQIterator
  : public boost::iterator_facade <
@@ -82,7 +82,7 @@ private:
     			std::cout << "sequence size = " << ptrFASTQ_->getSequence().getNbBases() << std::endl;
     			std::cout << "quality  = " << ptrFASTQ_->getQuality() << std::endl;
     			std::cout << "sequence = " << ptrFASTQ_->getSequence() << std::endl;
-    			throw GeneAssemblerException("FASTQIterator: length of base and quality sequence are not equal or zero.");
+    			throw GeneHunterException("FASTQIterator: length of base and quality sequence are not equal or zero.");
     		}
     	} else {
     		ptrFASTQ_.reset();
@@ -95,6 +95,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* FASTQITERATOR_H_ */

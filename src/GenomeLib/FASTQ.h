@@ -1,7 +1,7 @@
 #ifndef FASTQ_H_
 #define FASTQ_H_
 
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "Genome.h"
 #include "Sequence.h"
 #include <boost/serialization/shared_ptr.hpp>
@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class FASTQ
 {
@@ -54,6 +54,6 @@ inline std::ostream& operator << ( std::ostream& os, FASTQ const& fastq )
 	          << "quality  = " << fastq.getQuality() << std::endl;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* FASTQ_H_ */

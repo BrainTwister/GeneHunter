@@ -3,14 +3,14 @@
 
 #include "FASTA.h"
 #include "Genome.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 class FASTAIterator
@@ -80,6 +80,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* FASTAITERATOR_H_ */

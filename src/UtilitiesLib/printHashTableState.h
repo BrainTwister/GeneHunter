@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 template < class T >
 void printHashTableState( const T& cont, std::ostream& out )
@@ -44,6 +44,6 @@ void printHashTableBucketEntries( const T& cont, std::ostream& out )
 	}
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* PRINTHASHTABLESTATE_H_ */

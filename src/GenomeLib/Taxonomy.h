@@ -7,7 +7,7 @@
 #include <mysql.h>
 #include <string>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 class Taxonomy
 {
@@ -54,6 +54,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* TAXONOMY_H_ */

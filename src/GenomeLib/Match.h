@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <iostream>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 struct Match
 {
@@ -70,6 +70,6 @@ inline std::ostream& operator << ( std::ostream& os, Matches const& matches )
 	return os;
 }
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* MATCH_H_ */

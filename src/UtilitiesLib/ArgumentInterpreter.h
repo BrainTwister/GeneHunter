@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 /**
  * Analyze an argument list given for a command. Three types of arguments will be distinguished:
@@ -74,6 +74,6 @@ private:
 
 };
 
-} // namespace GeneAssembler
+} // namespace GeneHunter
 
 #endif /* ARGUMENTINTERPRETER_H_ */

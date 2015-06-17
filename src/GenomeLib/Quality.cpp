@@ -1,7 +1,7 @@
 #include "Quality.h"
 
-namespace GeneAssembler {
+namespace GeneHunter {
 
 const std::array<double,FastqSanger::size> FastqSanger::data = make_arr(FastqSanger::list());
 
-} // namespace GeneAssembler
+} // namespace GeneHunter

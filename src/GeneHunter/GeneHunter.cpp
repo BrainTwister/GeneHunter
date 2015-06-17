@@ -5,7 +5,7 @@
 #include "FileIO.h"
 #include "FixedSizeHashMapSearch.h"
 #include "FullMatchManager.h"
-#include "GeneAssemblerException.h"
+#include "GeneHunterException.h"
 #include "NucleotideDatabaseIterator.h"
 #include "OrganismsReport.h"
 #include "Sequence.h"
@@ -19,10 +19,10 @@
 
 using namespace std;
 using namespace chrono;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 using boost::filesystem::path;
 
-CREATE_DATA_CLASS( GeneAssemblerSettings,\
+CREATE_DATA_CLASS( GeneHunterSettings,\
 	(( FixedTokenSizeType, fixedTokenSize, 12 ))\
 	(( FullMatchManagerSettings, fullMatchManagerSettings, FullMatchManagerSettings() ))\
 	(( NucleotideDatabaseSettings, nucleotideDatabaseSettings, NucleotideDatabaseSettings() ))\
@@ -33,7 +33,7 @@ int main( int argc, char* argv[] )
 {
 	try {
 
-		cout << "\n" << makeFrame("GeneAssembler version " + version, '*') << "\n" << endl;
+		cout << "\n" << makeFrame("GeneHunter version " + version, '*') << "\n" << endl;
 		const auto startTime = steady_clock::now();
 
 		ArgumentInterpreter arg(argc,argv,
@@ -47,7 +47,7 @@ int main( int argc, char* argv[] )
 			 { "maxReads",             ArgumentInterpreter::Optional,    "Maximal number of reads in fq file." },
 			 { "readFullMatchManager", ArgumentInterpreter::Optional,    "FullMatchManager file for restart or determine taxonomy (binary or xml)." },
 			 //{ "threshold",            ArgumentInterpreter::Optional,    "Threshold for match quality." },
-			 { "settings",             ArgumentInterpreter::Optional,    "Define file for specific settings (default: $GENEASSEMBLER_ROOT/settings/GeneAssemblerSettings.xml)." },
+			 { "settings",             ArgumentInterpreter::Optional,    "Define file for specific settings (default: $GENEASSEMBLER_ROOT/settings/GeneHunterSettings.xml)." },
 			 { "NTDatabase",           ArgumentInterpreter::Optional,    "Define nucleotide database file." },
 			 { "overwriteOutput",      ArgumentInterpreter::Boolean,     "If set an existing output file will overwritten." },
 			 { "skipTaxonomy",         ArgumentInterpreter::Boolean,     "Do not write result file, only FullMatchManager output." },
@@ -57,21 +57,21 @@ int main( int argc, char* argv[] )
 		);
 
 		path inputXMLFile = arg.getNonOptionalArgument("descriptionFile");
-		if (!exists(inputXMLFile)) throw GeneAssemblerException("File not found: " + inputXMLFile.string());
+		if (!exists(inputXMLFile)) throw GeneHunterException("File not found: " + inputXMLFile.string());
 
 		path outputXMLFile = arg.getNonOptionalArgument("outputFile");
 		if (!arg.isBooleanFlagSet("overwriteOutput") and exists(outputXMLFile))
-			throw GeneAssemblerException("File exist and not allowed to overwrite: " + outputXMLFile.string());
+			throw GeneHunterException("File exist and not allowed to overwrite: " + outputXMLFile.string());
 
 		if ( arg.isBooleanFlagSet("onlyTaxonomy") and !arg.isOptionalFlagSet("readFullMatchManager") )
-			throw GeneAssemblerException("Option 'onlyTaxonomy' can only used together with 'readFullMatchManager'.");
+			throw GeneHunterException("Option 'onlyTaxonomy' can only used together with 'readFullMatchManager'.");
 
 		// Read settings
-		path settingsFile = Environment::getGeneAssemblerRootDirectory() / "settings" / "GeneAssemblerSettings.xml";
+		path settingsFile = Environment::getGeneHunterRootDirectory() / "settings" / "GeneHunterSettings.xml";
 		if (arg.isOptionalFlagSet("settings")) settingsFile = path(arg.getOptionalArgument("settings"));
-        if (!exists(settingsFile)) throw GeneAssemblerException("Settings file " + settingsFile.string() + " not found.");
-        GeneAssemblerSettings settings;
-	    readXML(settings,"GeneAssemblerSettings",settingsFile);
+        if (!exists(settingsFile)) throw GeneHunterException("Settings file " + settingsFile.string() + " not found.");
+        GeneHunterSettings settings;
+	    readXML(settings,"GeneHunterSettings",settingsFile);
 
 		//double threshold = arg.isOptionalFlagSet("threshold") ? boost::lexical_cast<double>(arg.getOptionalArgument("threshold")) : numeric_limits<double>::max();
 
@@ -112,8 +112,8 @@ int main( int argc, char* argv[] )
 			 << setfill('0') << setw(2) << duration_cast<minutes>(duration % hours(1)).count() << ":"
 			 << setfill('0') << setw(2) << duration_cast<seconds>(duration % minutes(1)).count() << endl;
 
-	} catch ( GeneAssemblerException const& e ) {
-		cout << "GeneAssembler exception: " << e.what() << endl;
+	} catch ( GeneHunterException const& e ) {
+		cout << "GeneHunter exception: " << e.what() << endl;
 		cout << "Program was aborted." << endl;
 		return 1;
 	} catch ( std::exception const& e ) {
@@ -126,7 +126,7 @@ int main( int argc, char* argv[] )
 		return 1;
 	}
 
-	cout << "\nGeneAssembler successfully finished. Have a nice day.\n" << endl;
+	cout << "\nGeneHunter successfully finished. Have a nice day.\n" << endl;
 	return 0;
 
 }
