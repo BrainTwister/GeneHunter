@@ -22,9 +22,9 @@ public:
     BandMatrix( size_t nbRows = 0, size_t nbColumns = 0, size_t leftBandwidth = 0, size_t rightBandwidth = 0 )
      : nbRows_(nbRows),
        nbColumns_(nbColumns),
+       nbInternalColumns_(leftBandwidth + rightBandwidth + 1),
        leftBandwidth_(leftBandwidth),
        rightBandwidth_(rightBandwidth),
-       nbInternalColumns_(leftBandwidth + rightBandwidth + 1),
        container_(nbRows * nbInternalColumns_)
     {}
 
