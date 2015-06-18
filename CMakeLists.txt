@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 project(GeneHunter VERSION 1.0.1 LANGUAGES CXX)
 message("Project version ${PROJECT_VERSION}")
 
