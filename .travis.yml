@@ -4,7 +4,7 @@ compiler:
 before_install:
   - wget http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.tar.bz2
   - tar --bzip2 -xf boost_1_55_0.tar.bz2
-  - cd boost_1_55_0 && ./bootstrap.sh --with-libraries=filesystem,serialization,system && ./b2 install --prefix=$HOME/boost --toolset=gcc
+  - cd boost_1_55_0 && ./bootstrap.sh --with-libraries=filesystem,serialization,system && ./b2 install --prefix=$HOME/boost --toolset=gcc >build.log 2>&1
 addons:
   apt:
     sources:
