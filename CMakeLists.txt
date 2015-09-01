@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.0)
-project(GeneHunter VERSION 1.0.1 LANGUAGES CXX)
+cmake_minimum_required(VERSION 2.8)
+project(GeneHunter LANGUAGES CXX)
+
+set(PROJECT_VERSION "1.0.1")
 message("Project version ${PROJECT_VERSION}")
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
