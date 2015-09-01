@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(GeneHunter LANGUAGES CXX)
+project(GeneHunter CXX)
 
 set(PROJECT_VERSION "1.0.1")
 message("Project version ${PROJECT_VERSION}")
