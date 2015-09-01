@@ -5,7 +5,9 @@ before_install:
   - wget http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.tar.bz2
   - tar --bzip2 -xf boost_1_55_0.tar.bz2
   - cd boost_1_55_0 && ./bootstrap.sh --with-libraries=filesystem,serialization,system && ./b2 install --prefix=$HOME/boost --toolset=gcc >build.log 2>&1 && cd -
-  - cd /usr/src/gtest && cmake . && cmake --build . && mv libg* /usr/local/lib/ && cd -
+  - wget https://github.com/google/googletest/archive/release-1.7.0.zip
+  - unzip release-1.7.0.zip
+  - cd release-1.7.0 && cmake . && cmake --build . && mv libg* /usr/local/lib/ && cd -
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - ${CXX} --version
@@ -16,9 +18,6 @@ addons:
     packages:
     - gcc-4.9
     - g++-4.9
-    - clang
-    - valgrind
-    - libgtest-dev
 os:
   - linux
   - osx
