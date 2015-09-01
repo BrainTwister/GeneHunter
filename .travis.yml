@@ -26,8 +26,7 @@ script:
   - cd build
   - export BOOST_ROOT=$HOME/boost
   - cmake ..
-  - make
-  - make test
+  - make && make test
 notifications:
   recipients:
     - service@braintwister.eu
