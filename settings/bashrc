@@ -1,5 +1,5 @@
 # Root directory of GeneHunter
-export GENEASSEMBLER_ROOT=
+export GENEHUNTER_ROOT=
 
 # Prepend PATH (do not change next line)
 export PATH=${GENEASSEMBLER_ROOT}/bin:$PATH

@@ -1,3 +1,4 @@
+#include "BrainTwister/ArgumentParser.h"
 #include "Environment.h"
 #include "FASTAIterator.h"
 #include "FileIO.h"
@@ -13,12 +14,22 @@
 using namespace std;
 using namespace GeneHunter;
 using boost::filesystem::path;
+namespace bt = BrainTwister;
 
-int main( int argc, char* argv[] )
+int main(int argc, char* argv[])
 {
     try {
 
+        bt::ArgumentParser arg(argc, argv, version,
+            {{"input", "i", bt::Value<std::string>("nt.gz"), "Input file."},
+             {"output", "o", bt::Value<std::string>("."), "Output directory."}},
+            {{"nbEntries", bt::Value<size_t>(), "Number of entries to collect."},
+             {"nbBases", bt::Value<size_t>(), "Number of nucleotide bases to collect."},
+             {"nbBasesInFile", bt::Value<size_t>(), "Number of nucleotide bases per file."}}
+        );
+
         cout << "\n" << makeFrame("DatabaseBuilder version " + version, '*') << "\n" << endl;
+        const auto startTime = steady_clock::now();
 
         typedef Traits<12> DefaultTraits;
 
@@ -28,26 +39,18 @@ int main( int argc, char* argv[] )
         }
 
         PtrNucleotideDatabase<DefaultTraits> ptrDatabase = PtrNucleotideDatabase<DefaultTraits>(new NucleotideDatabase<DefaultTraits>());
-
         NucleotideDatabaseInformation totalInfo;
 
-        const path sharedDirectory = Environment::getSharedDirectory();
-        const size_t maxFileSize = Environment::getNodeMemoryGB() * Power<1024,3>::value;
-
-        size_t nbEntries = boost::lexical_cast<size_t>(argv[1]);
-        size_t nbBases = boost::lexical_cast<size_t>(argv[2]);
-        size_t nbBasesInFile = boost::lexical_cast<size_t>(argv[3]);
         size_t dbID = 0;
         size_t count = 1;
-
-        for ( FASTAIterator<DefaultTraits::RefSeqCharType> iterCur(Environment::getDatabaseFile()), iterEnd; iterCur != iterEnd; ++iterCur, ++count )
+        for (FASTAIterator<DefaultTraits::RefSeqCharType> iterCur(Environment::getDatabaseFile()),
+        	iterEnd; iterCur != iterEnd; ++iterCur, ++count)
         {
             ptrDatabase->addEntry(*iterCur);
 
-            if ( count == nbEntries or totalInfo.getTotalNbOfBases() > nbBases) break;
+            if (count == arg.get<int>("nbEntries") or totalInfo.getTotalNbOfBases() > arg.get<int>("nbBases")) break;
 
-            //if ( ptrDatabase->getMemoryUsage() > maxFileSize )
-            if ( ptrDatabase->getInformation().getTotalNbOfBases() > nbBasesInFile )
+            if (ptrDatabase->getInformation().getTotalNbOfBases() > arg.get<int>("nbBasesInFile"))
             {
                 path dbOutputFile = sharedDirectory / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
                 writeBinary(*ptrDatabase,"NucleotideDatabase",dbOutputFile);
