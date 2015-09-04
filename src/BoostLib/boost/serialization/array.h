@@ -3,9 +3,10 @@
 
 #include <boost/config.hpp>
 #include <boost/serialization/array.hpp>
+#include <boost/version.hpp>
 #include <array>
 
-#if ((BOOST_VERSION / 100) % 1000) < 58
+#if ((BOOST_VERSION / 100 % 1000) < 58)
 
 namespace boost {
 namespace serialization {
