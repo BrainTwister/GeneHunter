@@ -19,6 +19,14 @@ addons:
     packages:
     - gcc-4.9
     - g++-4.9
+  coverity_scan:
+    project:
+      name: "BrainTwister/GeneHunter"
+      description: "Build submitted via Travis CI"
+    notification_email: service@braintwister.eu
+    build_command_prepend: mkdir build-coverity && cd build-coverity && cmake -DCMAKE_BUILD_TYPE=Release ..
+    build_command: "make -j 4"
+    branch_pattern: coverity_scan
 os:
   - linux
 script:
@@ -32,6 +40,8 @@ env:
   matrix:
     - BUILD_TYPE=release VERBOSE_MAKE=false VERBOSE
     - BUILD_TYPE=debug VERBOSE_MAKE=false VERBOSE
+  global:
+   - secure: "WetZeWgZTMtLPSXVGwskULZH8jUMbOcwKjNNJHT8LpITt/qO517LpOBDNqG+C4VCZexgCkmMKpS47GJtaYpc+PiU86Cnz2/6Cq0W+oQoPFAZn1qgUgTuPlCviloSJW0odvsc/jwhuj8vmK5u0RRdT+wqEa461a67malZWuWLcGk="
 notifications:
   recipients:
     - service@braintwister.eu
