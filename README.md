@@ -2,9 +2,9 @@ GeneHunter
 ==========
 
 [![Build Status](https://travis-ci.org/BrainTwister/GeneHunter.png)](https://travis-ci.org/BrainTwister/GeneHunter)
-<a href="https://scan.coverity.com/projects/genehunter">
+<a href="https://scan.coverity.com/projects/braintwister-genehunter">
   <img alt="Coverity Scan Build Status"
-       src="https://scan.coverity.com/projects/6385/badge.svg"/>
+       src="https://scan.coverity.com/projects/6386/badge.svg"/>
 </a>
 
 Identification of organisms from a stream of DNA sequences.
