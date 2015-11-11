@@ -15,11 +15,11 @@ ArgumentParser::ArgumentParser(int argc, char* argv[], std::string const& versio
     programName = programName.substr(programName.find_last_of("/") + 1);
 
     this->optArgDefs.push_back(OptionalArgumentDefinition("help", "h", Value<bool>(false), "Print help page."));
-    this->optArgDefs.push_back(OptionalArgumentDefinition("version", "v", Value<std::string>(), "Print version string."));
+    this->optArgDefs.push_back(OptionalArgumentDefinition("version", "v", Value<bool>(false), "Print version string."));
 
     // Starting with index 1, because first entry is the name of the program
     size_t nbRegArgs = 0;
-    for (int i = 1; i != argc; ++i)
+    for (int i = 1; i < argc; ++i)
     {
         std::string current = argv[i];
         if (current.compare(0, 2, "--") == 0)
@@ -88,7 +88,13 @@ ArgumentParser::ArgumentParser(int argc, char* argv[], std::string const& versio
             }
 
         } else {
-            reqArgDefs[nbRegArgs++].value->setValue(current);
+            if (reqArgDefs[nbRegArgs].value->isVector()) {
+            	reqArgDefs[nbRegArgs].value->setValue(current);
+                for (++i; i < argc; ++i) reqArgDefs[nbRegArgs].value->setValue(argv[i]);
+            } else {
+            	reqArgDefs[nbRegArgs].value->setValue(current);
+            }
+            ++nbRegArgs;
         }
     }
 

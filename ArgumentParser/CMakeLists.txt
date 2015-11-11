@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(ArgumentParser VERSION 1.1 LANGUAGES CXX)
+project(ArgumentParser VERSION 1.3.0 LANGUAGES CXX)
 message("${PROJECT_NAME} version ${PROJECT_VERSION}")
 
 # add own cmake modules
@@ -17,16 +17,18 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_tolower)
-if(    NOT cmake_build_type_tolower STREQUAL "debug"
-   AND NOT cmake_build_type_tolower STREQUAL "release"
+if(    NOT cmake_build_type_tolower STREQUAL "release"
+   AND NOT cmake_build_type_tolower STREQUAL "debug"
+   AND NOT cmake_build_type_tolower STREQUAL "profiling"
    AND NOT cmake_build_type_tolower STREQUAL "relwithdebinfo")
-  message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Debug, Release, RelWithDebInfo (case-insensitive).")
+  message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Release, Debug, Profiling, RelWithDebInfo (case-insensitive).")
 endif()
 
 set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
+set(CMAKE_CXX_FLAGS_PROFILING "-O3 -pg")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g")
 
 set(CMAKE_VERBOSE_MAKEFILE false)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)

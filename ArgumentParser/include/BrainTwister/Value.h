@@ -12,6 +12,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <vector>
 
 namespace BrainTwister {
 
@@ -20,14 +21,15 @@ struct ValueBase
     virtual ~ValueBase() {};
 
     virtual void setValue(std::string const& str) = 0;
+
+    virtual bool isVector() const = 0;
 };
 
+/// Primary class
 template <class T>
-struct TypedValue : public ValueBase
+struct Value : public ValueBase
 {
-    TypedValue() : value() {}
-
-    TypedValue(T const& value) : value(value) {}
+	Value(T const& value = T()) : value(value) {}
 
     virtual void setValue(std::string const& str) {
         std::stringstream ss;
@@ -35,22 +37,29 @@ struct TypedValue : public ValueBase
         ss >> value;
     }
 
-    T value;
+    virtual bool isVector() const { return false; }
+
+	T value;
 };
 
-/// Primary function called by ArgumentDescription
+/// Specialization for std::vector
 template <class T>
-std::shared_ptr<ValueBase> Value()
+struct Value<std::vector<T>> : public ValueBase
 {
-    return std::make_shared< TypedValue<T> >();
-}
+	Value(std::vector<T> const& value = std::vector<T>()) : value(value) {}
 
-/// Primary function called by ArgumentDescription
-template <class T>
-std::shared_ptr<ValueBase> Value(T const& value)
-{
-    return std::make_shared< TypedValue<T> >(value);
-}
+    virtual void setValue(std::string const& str) {
+        std::stringstream ss;
+        ss << str;
+        T tmp;
+        ss >> tmp;
+        value.push_back(tmp);
+    }
+
+    virtual bool isVector() const { return true; }
+
+	std::vector<T> value;
+};
 
 } // namespace BrainTwister
 

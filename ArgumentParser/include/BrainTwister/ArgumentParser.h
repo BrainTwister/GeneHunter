@@ -21,8 +21,9 @@ namespace BrainTwister {
 /// Definition of an required argument
 struct RequiredArgumentDefinition
 {
-    RequiredArgumentDefinition(std::string const& label, std::shared_ptr<ValueBase> value, std::string const& description)
-     : label(label), value(value), description(description)
+	template <class T>
+    RequiredArgumentDefinition(std::string const& label, Value<T> const& value, std::string const& description)
+     : label(label), value(std::make_shared<Value<T>>(value.value)), description(description)
     {}
 
     std::string label;
@@ -33,9 +34,18 @@ struct RequiredArgumentDefinition
 /// Definition of an optional argument
 struct OptionalArgumentDefinition
 {
+	// Constructor with short label
+	template <class T>
     OptionalArgumentDefinition(std::string const& label, std::string const& shortLabel,
-        std::shared_ptr<ValueBase> value, std::string const& description)
-     : label(label), shortLabel(shortLabel), value(value), description(description)
+    	Value<T> const& value, std::string const& description)
+     : label(label), shortLabel(shortLabel), value(std::make_shared<Value<T>>(value.value)), description(description)
+    {}
+
+	// Constructor without short label
+	template <class T>
+    OptionalArgumentDefinition(std::string const& label, Value<T> const& value,
+    	std::string const& description)
+     : label(label), shortLabel(), value(std::make_shared<Value<T>>(value.value)), description(description)
     {}
 
     std::string label;
@@ -58,8 +68,8 @@ public:
     template <class T>
     T const& get(std::string const& label) const
     {
-        for (auto & def : reqArgDefs) if (def.label == label) return std::static_pointer_cast< TypedValue<T> >(def.value)->value;
-        for (auto & def : optArgDefs) if (def.label == label) return std::static_pointer_cast< TypedValue<T> >(def.value)->value;
+        for (auto & def : reqArgDefs) if (def.label == label) return std::static_pointer_cast<Value<T>>(def.value)->value;
+        for (auto & def : optArgDefs) if (def.label == label) return std::static_pointer_cast<Value<T>>(def.value)->value;
         throw std::runtime_error("Option " + label + " does not exist.");
     }
 
@@ -70,7 +80,7 @@ private:
     // Program name from argv[0].
     std::string programName;
 
-    // Verison string.
+    // Version string.
     std::string version;
 
     // List of required argument definitions.
