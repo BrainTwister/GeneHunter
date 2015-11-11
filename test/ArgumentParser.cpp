@@ -15,10 +15,10 @@ TEST(ArgumentParserTest, Test1)
          {"verbose", "v", bt::Value<std::string>("foo"), "Print more output."}}
     );
 
-    EXPECT_EQ(arg.get<std::string>("file1"), "arg1");
-    EXPECT_EQ(arg.get<std::string>("file2"), "arg2");
-    EXPECT_EQ(arg.get<std::string>("input"), "file");
-    EXPECT_EQ(arg.get<std::string>("verbose"), "foo");
+    EXPECT_EQ("arg1", arg.get<std::string>("file1"));
+    EXPECT_EQ("arg2", arg.get<std::string>("file2"));
+    EXPECT_EQ("file", arg.get<std::string>("input"));
+    EXPECT_EQ("foo", arg.get<std::string>("verbose"));
 }
 
 TEST(ArgumentParserTest, Test2)
@@ -30,7 +30,7 @@ TEST(ArgumentParserTest, Test2)
         {{"integer", bt::Value<int>(), "Required integer."}}
     );
 
-    EXPECT_EQ(arg.get<int>("integer"), 7);
+    EXPECT_EQ(7, arg.get<int>("integer"));
 }
 
 TEST(ArgumentParserTest, Test3)
@@ -43,4 +43,16 @@ TEST(ArgumentParserTest, Test3)
 			{{"integer", bt::Value<int>(), "Required integer."}}
 		);
     , ArgumentParserException);
+}
+
+TEST(ArgumentParserTest, Test4)
+{
+    char *argv[] = {strdup("program"), strdup("1"), strdup("2")};
+    int argc = (int)(sizeof(argv) / sizeof(argv[0]));
+
+    bt::ArgumentParser arg(argc, argv, "1.0",
+		{{"integer", bt::Value<std::vector<int>>(), "List of integers."}}
+	);
+
+    EXPECT_EQ(1, arg.get<std::vector<int>>("integer")[0]);
 }
