@@ -1,8 +1,8 @@
 #ifndef FASTQITERATOR_H_
 #define FASTQITERATOR_H_
 
-#include "FASTQ.h"
-#include "GeneHunterException.h"
+#include "GenomeLib/FASTQ.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/filesystem/path.hpp>

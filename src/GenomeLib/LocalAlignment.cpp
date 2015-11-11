@@ -1,7 +1,7 @@
-#include "BandMatrix.h"
-#include "LocalAlignment.h"
-#include "Matrix.h"
-#include "Quality.h"
+#include "UtilitiesLib/BandMatrix.h"
+#include "GenomeLib/LocalAlignment.h"
+#include "UtilitiesLib/Matrix.h"
+#include "GenomeLib/Quality.h"
 
 using namespace std;
 

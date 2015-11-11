@@ -1,9 +1,5 @@
-include_directories(
-)
-
 add_library(
     UtilitiesLib
-    ArgumentInterpreter.cpp
     Environment.cpp
     EnvironmentVariables.cpp
     StringUtilities.cpp

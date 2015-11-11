@@ -1,9 +1,9 @@
 #ifndef NUCLEOTIDEDATABASEITERATOR_H_
 #define NUCLEOTIDEDATABASEITERATOR_H_
 
-#include "FASTAIterator.h"
-#include "GeneHunterException.h"
-#include "NucleotideDatabase.h"
+#include "GenomeLib/FASTAIterator.h"
+#include "GenomeLib/NucleotideDatabase.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>

@@ -1,12 +1,12 @@
 #ifndef ORGANISMSREPORT_H_
 #define ORGANISMSREPORT_H_
 
-#include "CreateDataClass.h"
-#include "CDSDatabase.h"
-#include "Match.h"
-#include "Organism.h"
-#include "OrganismsDataset.h"
-#include "Taxonomy.h"
+#include "GenomeLib/CDSDatabase.h"
+#include "GenomeLib/Match.h"
+#include "GenomeLib/Organism.h"
+#include "GenomeLib/OrganismsDataset.h"
+#include "GenomeLib/Taxonomy.h"
+#include "UtilitiesLib/CreateDataClass.h"
 #include <boost/filesystem/path.hpp>
 #include <chrono>
 #include <map>

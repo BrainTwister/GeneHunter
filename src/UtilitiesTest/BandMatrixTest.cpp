@@ -1,7 +1,5 @@
-#include "BandMatrix.h"
+#include "UtilitiesLib/BandMatrix.h"
 #include "gtest/gtest.h"
-
-using namespace std;
 
 TEST(BandMatrixTest,Case0)
 {

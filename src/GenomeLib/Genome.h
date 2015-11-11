@@ -1,9 +1,9 @@
 #ifndef GENOME_H_
 #define GENOME_H_
 
-#include "CharTypes.h"
-#include "SequenceToken.h"
-#include "Version.h"
+#include "GenomeLib/CharTypes.h"
+#include "GenomeLib/SequenceToken.h"
+#include "UtilitiesLib/Version.h"
 #include <string>
 
 /**

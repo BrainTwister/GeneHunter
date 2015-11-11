@@ -1,8 +1,8 @@
 #ifndef SEQUENCE_H_
 #define SEQUENCE_H_
 
-#include "CharTypes.h"
-#include "GeneHunterException.h"
+#include "GenomeLib/CharTypes.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/string.hpp>
 #include <algorithm>

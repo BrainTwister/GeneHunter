@@ -1,7 +1,7 @@
-#include "TaxonomyWriter.h"
-#include "Environment.h"
-#include "GeneHunterException.h"
-#include "Location.h"
+#include "GenomeLib/Location.h"
+#include "TaxonomyDatabaseBuilder/TaxonomyWriter.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/tokenizer.hpp>
 #include <fstream>

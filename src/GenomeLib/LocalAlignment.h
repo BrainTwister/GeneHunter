@@ -1,8 +1,8 @@
 #ifndef LOCALALIGNMENT_H_
 #define LOCALALIGNMENT_H_
 
-#include "CreateDataClass.h"
-#include "Sequence.h"
+#include "GenomeLib/Sequence.h"
+#include "UtilitiesLib/CreateDataClass.h"
 
 namespace GeneHunter {
 

@@ -1,14 +1,15 @@
 #ifndef SEQUENCETOKEN_H_
 #define SEQUENCETOKEN_H_
 
-#include "CharTypes.h"
-#include "GeneHunterException.h"
-#include "Sequence.h"
+#include "GenomeLib/CharTypes.h"
+#include "GenomeLib/Sequence.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include "boost/lexical_cast.hpp"
 #include "boost/mpl/bool.hpp"
-#include "boost/serialization/path.h"
+#include "BoostLib/boost/serialization/path.h"
 #include <boost/type_traits.hpp>
 #include <array>
+#include <cassert>
 #include <functional>
 #include <string>
 
@@ -34,10 +35,7 @@ struct SequenceToken
     SequenceToken( Iterator const& beg, Iterator const& end,
         typename boost::enable_if< boost::is_same<typename Iterator::value_type,T> >::type* = 0 )
     {
-        #if DEBUG_MODE
-            if ( std::distance(beg,end) > CompressedSize ) throw GeneHunterException("SequenceToken: token size too large 1 ("
-                + boost::lexical_cast<std::string>(std::distance(beg,end)) + ").");
-        #endif
+        assert(std::distance(beg, end) == CompressedSize);
         std::fill( std::copy(beg,end,token_.begin()), token_.end(), Type() );
     }
 
@@ -50,10 +48,7 @@ struct SequenceToken
         static const size_t CompressedSizeInSeq = N / CompressionFactorInSeq;
         static const size_t FactorInOut = CompressionFactor / CompressionFactorInSeq;
 
-        #if DEBUG_MODE
-            if ( std::distance(beg,end) > CompressedSizeInSeq ) throw GeneHunterException("SequenceToken: token size too large 2 ("
-                + boost::lexical_cast<std::string>(std::distance(beg,end)) + ").");
-        #endif
+        assert(std::distance(beg, end) == CompressedSizeInSeq);
 
         Iterator iterCur(beg);
         Iterator iterEnd = std::distance(beg,end) > FactorInOut ? beg + FactorInOut : end;
@@ -110,18 +105,14 @@ struct SequenceToken<char,N>
     SequenceToken( std::string::const_iterator const& beg, std::string::const_iterator const& end )
      : token_()
     {
-        #if DEBUG_MODE
-            if ( std::distance(beg,end) > N ) throw GeneHunterException("SequenceToken: token size too large.");
-        #endif
+        assert (std::distance(beg, end) <= N);
         std::fill( std::copy(beg,end,token_.begin()), token_.end(), 'X' );
     }
 
     SequenceToken( Sequence<char>::ConstIterator const& beg, Sequence<char>::ConstIterator const& end )
      : token_()
     {
-        #if DEBUG_MODE
-            if ( std::distance(beg,end) > N ) throw GeneHunterException("SequenceToken: token size too large.");
-        #endif
+        assert(std::distance(beg, end) <= N);
         std::fill( std::copy(beg,end,token_.begin()), token_.end(), 'X' );
     }
 

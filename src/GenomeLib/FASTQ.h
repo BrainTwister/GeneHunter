@@ -1,9 +1,9 @@
 #ifndef FASTQ_H_
 #define FASTQ_H_
 
-#include "GeneHunterException.h"
-#include "Genome.h"
-#include "Sequence.h"
+#include "GenomeLib/Genome.h"
+#include "GenomeLib/Sequence.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <iostream>

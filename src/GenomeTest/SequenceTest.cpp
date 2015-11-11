@@ -1,5 +1,5 @@
-#include "CharTypes.h"
-#include "Sequence.h"
+#include "GenomeLib/CharTypes.h"
+#include "GenomeLib/Sequence.h"
 #include "gtest/gtest.h"
 
 using namespace std;

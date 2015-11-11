@@ -1,7 +1,6 @@
 include_directories(
-    ../BoostLib
-    ../GenomeLib
-    ../UtilitiesLib
+    ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/ArgumentParser/include
     ${MYSQL_INCLUDE_DIR}
 )
 
@@ -13,6 +12,7 @@ add_executable(
     
 target_link_libraries(
     TaxonomyDatabaseBuilder
+    ArgumentParser
     GenomeLib
     UtilitiesLib
     ${MYSQL_LIBRARIES}
@@ -20,4 +20,3 @@ target_link_libraries(
 )
 
 install(TARGETS TaxonomyDatabaseBuilder RUNTIME DESTINATION bin)
-

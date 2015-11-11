@@ -1,6 +1,6 @@
 include_directories(
-    ../BoostLib
-    ../UtilitiesLib
+    ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src/BoostLib
     ${MYSQL_INCLUDE_DIR}
 )
 

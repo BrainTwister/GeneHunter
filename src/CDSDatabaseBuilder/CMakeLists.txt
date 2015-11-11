@@ -1,7 +1,6 @@
 include_directories(
-    ../BoostLib
-    ../GenomeLib
-    ../UtilitiesLib
+    ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/ArgumentParser/include
     ${MYSQL_INCLUDE_DIR}
 )
 
@@ -19,4 +18,3 @@ target_link_libraries(
 )
 
 install(TARGETS CDSDatabaseBuilder RUNTIME DESTINATION bin)
-

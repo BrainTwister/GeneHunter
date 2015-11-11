@@ -1,9 +1,9 @@
 #ifndef FASTAITERATOR_H_
 #define FASTAITERATOR_H_
 
-#include "FASTA.h"
-#include "Genome.h"
-#include "GeneHunterException.h"
+#include "GenomeLib/FASTA.h"
+#include "GenomeLib/Genome.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>

@@ -1,8 +1,8 @@
 #ifndef NUCLEOTIDEDATABASEINFORMATION_H_
 #define NUCLEOTIDEDATABASEINFORMATION_H_
 
-#include "GeneHunterException.h"
-#include "FASTA.h"
+#include "UtilitiesLib/GeneHunterException.h"
+#include "GenomeLib/FASTA.h"
 #include <boost/serialization/access.hpp>
 
 namespace GeneHunter {

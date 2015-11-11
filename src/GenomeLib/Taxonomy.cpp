@@ -1,6 +1,6 @@
-#include "Environment.h"
-#include "GeneHunterException.h"
-#include "Taxonomy.h"
+#include "GenomeLib/Taxonomy.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 

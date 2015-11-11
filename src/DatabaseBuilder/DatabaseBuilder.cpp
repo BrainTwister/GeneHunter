@@ -1,11 +1,10 @@
 #include "BrainTwister/ArgumentParser.h"
-#include "Environment.h"
-#include "FASTAIterator.h"
-#include "FileIO.h"
-#include "GeneHunterException.h"
-#include "NucleotideDatabase.h"
-#include "Power.h"
-#include "StringUtilities.h"
+#include "GenomeLib/FASTAIterator.h"
+#include "GenomeLib/NucleotideDatabase.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/GeneHunterException.h"
+#include "UtilitiesLib/StringUtilities.h"
 #include <boost/filesystem.hpp>
 #include <fstream>
 #include <iostream>
@@ -13,23 +12,22 @@
 
 using namespace std;
 using namespace GeneHunter;
-using boost::filesystem::path;
+namespace filesystem = boost::filesystem;
 namespace bt = BrainTwister;
 
 int main(int argc, char* argv[])
 {
     try {
 
-        bt::ArgumentParser arg(argc, argv, version,
-            {{"input", "i", bt::Value<std::string>("nt.gz"), "Input file."},
-             {"output", "o", bt::Value<std::string>("."), "Output directory."}},
-            {{"nbEntries", bt::Value<size_t>(), "Number of entries to collect."},
-             {"nbBases", bt::Value<size_t>(), "Number of nucleotide bases to collect."},
-             {"nbBasesInFile", bt::Value<size_t>(), "Number of nucleotide bases per file."}}
+        const bt::ArgumentParser arg(argc, argv, version,
+            {{ "nbEntries",     bt::Value<size_t>(),                  "Number of entries to collect." },
+             { "nbBases",       bt::Value<size_t>(),                  "Number of nucleotide bases to collect." },
+             { "nbBasesInFile", bt::Value<size_t>(),                  "Number of nucleotide bases per file." }},
+            {{ "input", "i",    bt::Value<filesystem::path>("nt.gz"), "Input file." },
+             { "output", "o",   bt::Value<filesystem::path>("."),     "Output directory." }}
         );
 
         cout << "\n" << makeFrame("DatabaseBuilder version " + version, '*') << "\n" << endl;
-        const auto startTime = steady_clock::now();
 
         typedef Traits<12> DefaultTraits;
 
@@ -52,10 +50,10 @@ int main(int argc, char* argv[])
 
             if (ptrDatabase->getInformation().getTotalNbOfBases() > arg.get<int>("nbBasesInFile"))
             {
-                path dbOutputFile = sharedDirectory / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
+                filesystem::path dbOutputFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
                 writeBinary(*ptrDatabase,"NucleotideDatabase",dbOutputFile);
 
-                path hashMapInfoFile = sharedDirectory / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".info");
+                filesystem::path hashMapInfoFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".info");
                 ofstream ofs(hashMapInfoFile.c_str());
                 ptrDatabase->printHashMapReferenceSequenceState(ofs);
 
@@ -65,10 +63,10 @@ int main(int argc, char* argv[])
             }
         }
 
-        path dbOutputFile = sharedDirectory / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
+        filesystem::path dbOutputFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
         writeBinary(*ptrDatabase,"NucleotideDatabase",dbOutputFile);
 
-        path hashMapInfoFile = sharedDirectory / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".info");
+        filesystem::path hashMapInfoFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".info");
         ofstream ofs(hashMapInfoFile.c_str());
         ptrDatabase->printHashMapReferenceSequenceState(ofs);
 

@@ -1,8 +1,8 @@
 #ifndef MATCH_H_
 #define MATCH_H_
 
-#include "Genome.h"
-#include "Helpers.h"
+#include "GenomeLib/Genome.h"
+#include "UtilitiesLib/Helpers.h"
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <string>

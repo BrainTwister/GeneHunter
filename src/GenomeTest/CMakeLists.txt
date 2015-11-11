@@ -1,7 +1,5 @@
 include_directories(
-    ../BoostLib
-    ../GenomeLib
-    ../UtilitiesLib
+    ${PROJECT_SOURCE_DIR}/src
     ${GTEST_INCLUDE_DIR}
     ${MYSQL_INCLUDE_DIR}
 )

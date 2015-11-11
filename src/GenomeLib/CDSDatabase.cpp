@@ -1,7 +1,7 @@
-#include "CDSDatabase.h"
-#include "Environment.h"
-#include "GeneHunterException.h"
-#include "Location.h"
+#include "GenomeLib/CDSDatabase.h"
+#include "GenomeLib/Location.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/GeneHunterException.h"
 
 using namespace std;
 

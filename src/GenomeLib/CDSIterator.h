@@ -1,9 +1,9 @@
 #ifndef CDSITERATOR_H_
 #define CDSITERATOR_H_
 
-#include "CDSEntry.h"
-#include "CreateDataClass.h"
-#include "GeneHunterException.h"
+#include "GenomeLib/CDSEntry.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>

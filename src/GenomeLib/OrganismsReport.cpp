@@ -1,7 +1,7 @@
-#include "FileIO.h"
-#include "GeneHunterException.h"
-#include "Match.h"
-#include "OrganismsReport.h"
+#include "GenomeLib/Match.h"
+#include "GenomeLib/OrganismsReport.h"
+#include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 

@@ -1,8 +1,8 @@
 #ifndef COMPRESSEDCHARTHREEINONE_H_
 #define COMPRESSEDCHARTHREEINONE_H_
 
-#include "boost/serialization/array.h"
-#include "GeneHunterException.h"
+#include "BoostLib/boost/serialization/array.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <array>
 #include <functional>
 #include <string>

@@ -1,8 +1,8 @@
 #ifndef TAXONOMY_H_
 #define TAXONOMY_H_
 
-#include "CreateDataClass.h"
-#include "Organism.h"
+#include "GenomeLib/Organism.h"
+#include "UtilitiesLib/CreateDataClass.h"
 #include <cstdlib>
 #include <mysql.h>
 #include <string>

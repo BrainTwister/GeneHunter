@@ -1,13 +1,13 @@
 #ifndef COMPRESSEDCHARFOURINONE_H_
 #define COMPRESSEDCHARFOURINONE_H_
 
-#include "CompressedCharTwoInOne.h"
-#include "GeneHunterException.h"
-#include "GetCompressedIndex.h"
-#include "Power.h"
+#include "GenomeLib/CompressedCharTwoInOne.h"
+#include "GenomeLib/GetCompressedIndex.h"
+#include "UtilitiesLib/GeneHunterException.h"
+#include "UtilitiesLib/Power.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/access.hpp>
-#include "boost/serialization/array.h"
+#include "BoostLib/boost/serialization/array.h"
 #include <boost/type_traits.hpp>
 #include <array>
 #include <functional>

@@ -1,15 +1,15 @@
 #ifndef CDSDATABASE_H_
 #define CDSDATABASE_H_
 
-#include "CreateDataClass.h"
-#include "CDSEntry.h"
-#include "Gene.h"
-#include "Match.h"
-#include "ProteinLink.h"
+#include "GenomeLib/CDSEntry.h"
+#include "GenomeLib/Gene.h"
+#include "GenomeLib/Match.h"
+#include "GenomeLib/ProteinLink.h"
+#include "UtilitiesLib/CreateDataClass.h"
 #include <boost/filesystem.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/map.hpp>
-#include "boost/serialization/path.h"
+#include "BoostLib/boost/serialization/path.h"
 #include <map>
 #include <mysql.h>
 #include <fstream>

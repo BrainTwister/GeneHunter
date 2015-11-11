@@ -1,12 +1,14 @@
 #ifndef FIXEDSIZEHASHMAPSEARCH_H_
 #define FIXEDSIZEHASHMAPSEARCH_H_
 
-#include "ArgumentInterpreter.h"
-#include "FullMatchManager.h"
-#include "Genome.h"
-#include "Match.h"
-#include "NucleotideDatabaseIterator.h"
-#include "StringUtilities.h"
+#include "BrainTwister/ArgumentParser.h"
+#include "GenomeLib/FullMatchManager.h"
+#include "GenomeLib/Genome.h"
+#include "GenomeLib/Match.h"
+#include "GenomeLib/NucleotideDatabaseIterator.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/StringUtilities.h"
 #include <boost/filesystem.hpp>
 #include <mutex>
 #include <thread>
@@ -16,7 +18,7 @@ std::mutex mutex;
 
 namespace GeneHunter {
 
-template < class T >
+template <class T>
 void threadFunction( FullMatchManager& fullMatchManager, FASTQIterator& iterEntryCur, FASTQIterator const& iterEntryEnd,
     size_t& countRead, size_t maxReads, size_t step, NucleotideDatabaseInformation& readInfo, NucleotideDatabase<T> const& db )
 {
@@ -37,30 +39,28 @@ void threadFunction( FullMatchManager& fullMatchManager, FASTQIterator& iterEntr
     mutex.unlock();
 }
 
-template < FixedTokenSizeType Size >
-void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideDatabaseSettings const& nucleotideDatabaseSettings, ArgumentInterpreter const& arg )
+template <FixedTokenSizeType Size>
+void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideDatabaseSettings const& nucleotideDatabaseSettings, BrainTwister::ArgumentParser const& arg )
 {
     using namespace std;
-    using boost::filesystem::path;
+    namespace filesystem = boost::filesystem;
 
-    path readFile = arg.getNonOptionalArgument("readFile");
+    filesystem::path readFile = arg.get<filesystem::path>("readFile");
     if (!exists(readFile)) throw GeneHunterException("File not found: " + readFile.string());
 
-    path ntFile;
-    if ( arg.isOptionalFlagSet("NTDatabase") ) ntFile = arg.getOptionalArgument("NTDatabase");
-    else ntFile = Environment::getDatabaseFile();
+    filesystem::path ntFile = arg.get<filesystem::path>("NTDatabase");
 
-    size_t maxEntries = arg.isOptionalFlagSet("maxEntries") ? boost::lexical_cast<size_t>(arg.getOptionalArgument("maxEntries")) : numeric_limits<size_t>::max();
-    size_t maxBases = arg.isOptionalFlagSet("maxBases") ? boost::lexical_cast<size_t>(arg.getOptionalArgument("maxBases")) : numeric_limits<size_t>::max();
-    size_t maxBasesPerStep = arg.isOptionalFlagSet("maxBasesPerStep") ? boost::lexical_cast<size_t>(arg.getOptionalArgument("maxBasesPerStep")) : numeric_limits<size_t>::max();
-    size_t maxReads = arg.isOptionalFlagSet("maxReads") ? boost::lexical_cast<size_t>(arg.getOptionalArgument("maxReads")) : numeric_limits<size_t>::max();
-    size_t startEntry = arg.isOptionalFlagSet("startEntry") ? boost::lexical_cast<size_t>(arg.getOptionalArgument("startEntry")) : numeric_limits<size_t>::min();
+    size_t maxEntries = arg.get<size_t>("maxEntries");
+    size_t maxBases = arg.get<size_t>("maxBases");
+    size_t maxBasesPerStep = arg.get<size_t>("maxBasesPerStep");
+    size_t maxReads = arg.get<size_t>("maxReads");
+    size_t startEntry = arg.get<size_t>("startEntry");
 
     NucleotideDatabaseInformation totalInfo;
     NucleotideDatabaseInformation readInfo;
 
     ofstream hashMapInfoFile;
-    if (arg.isBooleanFlagSet("printHashMapInfo")) hashMapInfoFile.open("NucleotideDatabaseHashMapInformation.txt");
+    if (arg.get<bool>("printHashMapInfo")) hashMapInfoFile.open("NucleotideDatabaseHashMapInformation.txt");
 
     size_t step(1);
     size_t nbCoresPerNode = Environment::getNbCoresPerNode();
@@ -69,12 +69,12 @@ void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideD
     {
         totalInfo.merge((*iterNTDBCur)->getInformation());
 
-        if (arg.isBooleanFlagSet("printSteps")) {
+        if (arg.get<bool>("printSteps")) {
             string header = " Intermediate report import informations for step " + boost::lexical_cast<string>(step);
             cout << endl << header << endl << string(header.size()+1,'-') << endl << (*iterNTDBCur)->getInformation() << endl;
         }
 
-        if (arg.isBooleanFlagSet("printHashMapInfo")) {
+        if (arg.get<bool>("printHashMapInfo")) {
             hashMapInfoFile << underline("NucleotideDatabaseHashMapInformation for step " + boost::lexical_cast<string>(step) + " " ) << endl;
             (*iterNTDBCur)->printHashMapReferenceSequenceState(hashMapInfoFile);
             hashMapInfoFile << endl;
@@ -125,7 +125,7 @@ void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideD
 }
 
 void fixedSizeHashMapSearch( FixedTokenSizeType fixedTokenSize, FullMatchManager& fullMatchManager,
-    NucleotideDatabaseSettings const& nucleotideDatabaseSettings, ArgumentInterpreter const& arg )
+    NucleotideDatabaseSettings const& nucleotideDatabaseSettings, BrainTwister::ArgumentParser const& arg )
 {
     if (fixedTokenSize == 12 ) {
         fixedSizeHashMapSearchImpl<12>(fullMatchManager,nucleotideDatabaseSettings,arg);
