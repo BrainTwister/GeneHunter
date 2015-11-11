@@ -11,6 +11,7 @@ add_executable(
     
 target_link_libraries(
     CDSDatabaseBuilder
+    ArgumentParser
     GenomeLib
     UtilitiesLib
     ${MYSQL_LIBRARIES}

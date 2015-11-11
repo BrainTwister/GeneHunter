@@ -1,9 +1,5 @@
-cmake_minimum_required(VERSION 2.8)
-project(GeneHunter CXX)
-
-set(PROJECT_VERSION_MAJOR 1)
-set(PROJECT_VERSION_MINOR 0)
-set(PROJECT_VERSION_PATCH 1)
+cmake_minimum_required(VERSION 3.0)
+project(GeneHunter VERSION 1.1.0 LANGUAGES CXX)
 message("${PROJECT_NAME} version ${PROJECT_VERSION}")
 
 # add own cmake modules
