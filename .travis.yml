@@ -22,6 +22,7 @@ addons:
     packages:
     - gcc-4.9
     - g++-4.9
+    - ca-certificates
   coverity_scan:
     project:
       name: "BrainTwister/GeneHunter"
