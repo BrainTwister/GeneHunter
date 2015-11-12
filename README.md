@@ -16,7 +16,7 @@ GeneHunter is free software made available under the MIT License. For details se
 Requirements
 ------------
 
-- cmake (Version >= 2.6.6, http://www.cmake.org)
+- cmake (Version >= 3.0, http://www.cmake.org)
 - Boost (Version >= 1.52, http://www.boost.org, modules: system, filesystem, and serialization)
 - MySQL
 - gtest (optional)
