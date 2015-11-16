@@ -3,9 +3,9 @@
 
 #include "GenomeLib/CDSEntry.h"
 #include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/vector.hpp>
@@ -33,7 +33,7 @@ public:
      : endFlag_(true)
     {}
 
-    CDSIterator( boost::filesystem::path const& filename, Settings const& settings )
+    CDSIterator( filesystem::path const& filename, Settings const& settings )
      : ptrInputStream_(new std::ifstream(filename.string().c_str())), settings_(settings)
     {
         if ( ! *ptrInputStream_ )

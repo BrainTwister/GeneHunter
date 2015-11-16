@@ -26,7 +26,7 @@ public:
      : ptrNucleotideDatabase()
     {}
 
-    NucleotideDatabaseIterator( boost::filesystem::path const& filename, size_t maxNbEntries, size_t maxNbBases,
+    NucleotideDatabaseIterator(filesystem::path const& filename, size_t maxNbEntries, size_t maxNbBases,
         size_t maxNbBasesPerFile, size_t startEntry, NucleotideDatabaseSettings const& settings
     )
      : iterFASTACur(filename.string().c_str()),

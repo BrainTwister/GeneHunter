@@ -4,9 +4,9 @@
 #include "TaxonomyDatabaseBuilder/TaxonomyWriter.h"
 #include "UtilitiesLib/Environment.h"
 #include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
-#include <boost/filesystem.hpp>
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -15,7 +15,6 @@
 using namespace std;
 using namespace chrono;
 using namespace GeneHunter;
-namespace filesystem = boost::filesystem;
 namespace bt = BrainTwister;
 
 int main( int argc, char* argv[] )

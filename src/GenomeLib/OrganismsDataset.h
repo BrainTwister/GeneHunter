@@ -1,7 +1,7 @@
 #ifndef ORGANISMSDATASET_H_
 #define ORGANISMSDATASET_H_
 
-#include <boost/filesystem/path.hpp>
+#include "UtilitiesLib/Filesystem.h"
 #include <boost/property_tree/ptree.hpp>
 #include <string>
 
@@ -11,7 +11,7 @@ class OrganismsDataset
 {
 public:
 
-    OrganismsDataset( boost::filesystem::path const& datasetFile );
+    OrganismsDataset(filesystem::path const& datasetFile);
 
     void writeTree( boost::property_tree::ptree& pt );
 

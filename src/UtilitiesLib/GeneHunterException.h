@@ -1,5 +1,5 @@
-#ifndef GENEASSEMBLEREXCEPTION_H_
-#define GENEASSEMBLEREXCEPTION_H_
+#ifndef GENEHUNTEREXCEPTION_H_
+#define GENEHUNTEREXCEPTION_H_
 
 #include <stdexcept>
 #include <cassert>
@@ -13,4 +13,4 @@ struct GeneHunterException : public std::runtime_error {
 //    std::string what() const { return "error"; }
 //};
 
-#endif /* GENEASSEMBLEREXCEPTION_H_ */
+#endif /* GENEHUNTEREXCEPTION_H_ */

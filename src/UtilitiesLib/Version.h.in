@@ -3,13 +3,14 @@
 
 #define GeneHunter_VERSION_MAJOR @GeneHunter_VERSION_MAJOR@
 #define GeneHunter_VERSION_MINOR @GeneHunter_VERSION_MINOR@
+#define GeneHunter_VERSION_PATCH @GeneHunter_VERSION_PATCH@
 
 #define STR_EXPAND(tok) #tok
 #define STR(tok) STR_EXPAND(tok)
 
 namespace GeneHunter {
 
-const std::string version = STR(GeneHunter_VERSION_MAJOR.GeneHunter_VERSION_MINOR);
+const std::string version = STR(GeneHunter_VERSION_MAJOR.GeneHunter_VERSION_MINOR.GeneHunter_VERSION_PATCH);
 
 } // namespace GeneHunter
 

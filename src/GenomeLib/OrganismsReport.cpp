@@ -9,8 +9,8 @@ using namespace std;
 
 namespace GeneHunter {
 
-OrganismsReport::OrganismsReport( boost::filesystem::path const& reportFile, boost::filesystem::path const& datasetFile,
-    Settings const& settings, size_t nbReads )
+OrganismsReport::OrganismsReport(filesystem::path const& reportFile, filesystem::path const& datasetFile,
+    Settings const& settings, size_t nbReads)
  : dataset(datasetFile),
    reportFile(reportFile),
    taxonomy(settings.taxonomySettings_),

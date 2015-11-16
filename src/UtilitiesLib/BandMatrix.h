@@ -40,7 +40,7 @@ public:
         {
             size_t leftBorder = row_ > matrix_.leftBandwidth_ ? row_ - matrix_.leftBandwidth_ : 0;
             size_t rightBorder = matrix_.nbColumns_ - row_ > matrix_.rightBandwidth_ ? row_ + matrix_.rightBandwidth_ + 1 : matrix_.nbColumns_;
-            GENEASSEMBLER_FATAL_ERROR(column < leftBorder or column >= rightBorder);
+            GENEHUNTER_FATAL_ERROR(column < leftBorder or column >= rightBorder);
             return matrix_.container_[row_ + (column - leftBorder) * matrix_.nbRows_];
         }
 

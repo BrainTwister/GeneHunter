@@ -9,9 +9,9 @@
 #include "UtilitiesLib/CreateDataClass.h"
 #include "UtilitiesLib/Environment.h"
 #include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
-#include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <chrono>
 #include <iostream>
@@ -20,7 +20,6 @@
 using namespace std;
 using namespace chrono;
 using namespace GeneHunter;
-namespace filesystem = boost::filesystem;
 namespace bt = BrainTwister;
 
 CREATE_DATA_CLASS( GeneHunterSettings,\
@@ -49,7 +48,7 @@ int main( int argc, char* argv[] )
              { "readFullMatchManager", "", bt::Value<filesystem::path>(),    "FullMatchManager file for restart or determine taxonomy (binary or xml)." },
            //{ "threshold", "",            bt::Value<double>(),              "Threshold for match quality." },
              { "settings", "",             bt::Value<filesystem::path>(Environment::getGeneHunterRootDirectory() / "settings" / "GeneHunterSettings.xml"),
-            		                                                         "Define file for specific settings (default: $GENEASSEMBLER_ROOT/settings/GeneHunterSettings.xml)." },
+            		                                                         "Define file for specific settings (default: $GENEHUNTER_ROOT/settings/GeneHunterSettings.xml)." },
              { "NTDatabase", "",           bt::Value<filesystem::path>(Environment::getDatabaseFile()),
             		                                                         "Define nucleotide database file." },
              { "overwriteOutput", "",      bt::Value<bool>(),                "If set an existing output file will overwritten." },

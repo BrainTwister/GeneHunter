@@ -1,7 +1,7 @@
 #ifndef TAXONOMYWRITER_H_
 #define TAXONOMYWRITER_H_
 
-#include <boost/filesystem/path.hpp>
+#include "UtilitiesLib/Filesystem.h"
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/map.hpp>
 #include "BoostLib/boost/serialization/path.h"
@@ -15,16 +15,16 @@ class TaxonomyWriter
 {
 public:
 
-    TaxonomyWriter( boost::filesystem::path const& gi_taxid_nucl_file, boost::filesystem::path const& names_file,
-        boost::filesystem::path const& nodes_file, std::string const& database );
+    TaxonomyWriter(filesystem::path const& gi_taxid_nucl_file, filesystem::path const& names_file,
+        filesystem::path const& nodes_file, std::string const& database);
 
     ~TaxonomyWriter();
 
-    void importGITaxIDNuc( boost::filesystem::path const& filename );
+    void importGITaxIDNuc(filesystem::path const& filename);
 
-    void importNCBINames( boost::filesystem::path const& filename );
+    void importNCBINames(filesystem::path const& filename);
 
-    void importNCBINodes( boost::filesystem::path const& filename );
+    void importNCBINodes(filesystem::path const& filename);
 
     void createIndices() const;
 

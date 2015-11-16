@@ -1,15 +1,15 @@
 #ifndef ENVIRONMENT_H_
 #define ENVIRONMENT_H_
 
-#include <boost/filesystem.hpp>
+#include "UtilitiesLib/Filesystem.h"
 
 namespace GeneHunter {
 namespace Environment {
 
-boost::filesystem::path getDatabaseFile();
-boost::filesystem::path getSharedDirectory();
-boost::filesystem::path getLocalDirectory();
-boost::filesystem::path getGeneHunterRootDirectory();
+filesystem::path getDatabaseFile();
+filesystem::path getSharedDirectory();
+filesystem::path getLocalDirectory();
+filesystem::path getGeneHunterRootDirectory();
 size_t getNbNodes();
 size_t getNbCoresPerNode();
 size_t getNodeMemoryGB();

@@ -8,8 +8,8 @@
 #include "GenomeLib/NucleotideDatabaseIterator.h"
 #include "UtilitiesLib/Environment.h"
 #include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/StringUtilities.h"
-#include <boost/filesystem.hpp>
 #include <mutex>
 #include <thread>
 #include <vector>
@@ -43,7 +43,6 @@ template <FixedTokenSizeType Size>
 void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideDatabaseSettings const& nucleotideDatabaseSettings, BrainTwister::ArgumentParser const& arg )
 {
     using namespace std;
-    namespace filesystem = boost::filesystem;
 
     filesystem::path readFile = arg.get<filesystem::path>("readFile");
     if (!exists(readFile)) throw GeneHunterException("File not found: " + readFile.string());

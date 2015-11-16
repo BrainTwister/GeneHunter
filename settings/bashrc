@@ -2,7 +2,7 @@
 export GENEHUNTER_ROOT=
 
 # Prepend PATH (do not change next line)
-export PATH=${GENEASSEMBLER_ROOT}/bin:$PATH
+export PATH=${GENEHUNTER_ROOT}/bin:$PATH
 
 # MySQL server host name
 export MYSQL_HOST=

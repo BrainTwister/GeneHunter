@@ -1,6 +1,7 @@
 #include "GenomeLib/Location.h"
 #include "TaxonomyDatabaseBuilder/TaxonomyWriter.h"
 #include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/tokenizer.hpp>
@@ -8,7 +9,6 @@
 #include <sstream>
 
 using namespace std;
-using boost::filesystem::path;
 
 namespace GeneHunter {
 
@@ -18,8 +18,8 @@ const std::string TaxonomyWriter::ncbiNodesTableName_ = "ncbi_nodes";
 
 const std::string TaxonomyWriter::ncbiNamesTableName_ = "ncbi_names";
 
-TaxonomyWriter::TaxonomyWriter( boost::filesystem::path const& gi_taxid_nucl_file, boost::filesystem::path const& names_file,
-    boost::filesystem::path const& nodes_file, std::string const& database )
+TaxonomyWriter::TaxonomyWriter(filesystem::path const& gi_taxid_nucl_file, filesystem::path const& names_file,
+    filesystem::path const& nodes_file, std::string const& database)
  : myConnection_(mysql_init(NULL))
 {
     if ( mysql_real_connect(myConnection_,
@@ -89,7 +89,7 @@ TaxonomyWriter::~TaxonomyWriter()
     mysql_close(myConnection_);
 }
 
-void TaxonomyWriter::importGITaxIDNuc( path const& filename )
+void TaxonomyWriter::importGITaxIDNuc(filesystem::path const& filename)
 {
     ifstream ifs(filename.string().c_str());
     size_t gi,tax_id;
@@ -108,7 +108,7 @@ void TaxonomyWriter::importGITaxIDNuc( path const& filename )
     }
 }
 
-void TaxonomyWriter::importNCBINames( path const& filename )
+void TaxonomyWriter::importNCBINames(filesystem::path const& filename)
 {
     typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
@@ -136,7 +136,7 @@ void TaxonomyWriter::importNCBINames( path const& filename )
     }
 }
 
-void TaxonomyWriter::importNCBINodes( path const& filename )
+void TaxonomyWriter::importNCBINodes(filesystem::path const& filename)
 {
     typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
@@ -210,7 +210,7 @@ void TaxonomyWriter::createIndices() const
     throw GeneHunterException(mysql_error(myConnection_));
 }
 
-string TaxonomyWriter::strip( string const& s ) const
+string TaxonomyWriter::strip(string const& s) const
 {
     if (s.length() > stripBufferLength_)
         throw GeneHunterException("CDSDatabase::strip: buffer overflow.");

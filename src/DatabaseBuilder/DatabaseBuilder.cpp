@@ -1,59 +1,54 @@
 #include "BrainTwister/ArgumentParser.h"
 #include "GenomeLib/FASTAIterator.h"
 #include "GenomeLib/NucleotideDatabase.h"
-#include "UtilitiesLib/Environment.h"
 #include "UtilitiesLib/FileIO.h"
+#include <UtilitiesLib/Filesystem.h>
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
-#include <boost/filesystem.hpp>
 #include <fstream>
 #include <iostream>
 #include <string>
 
 using namespace std;
 using namespace GeneHunter;
-namespace filesystem = boost::filesystem;
 namespace bt = BrainTwister;
 
 int main(int argc, char* argv[])
 {
     try {
 
-        const bt::ArgumentParser arg(argc, argv, version,
-            {{ "nbEntries",     bt::Value<size_t>(),                  "Number of entries to collect." },
-             { "nbBases",       bt::Value<size_t>(),                  "Number of nucleotide bases to collect." },
-             { "nbBasesInFile", bt::Value<size_t>(),                  "Number of nucleotide bases per file." }},
-            {{ "input", "i",    bt::Value<filesystem::path>("nt.gz"), "Input file." },
-             { "output", "o",   bt::Value<filesystem::path>("."),     "Output directory." }}
-        );
-
         cout << "\n" << makeFrame("DatabaseBuilder version " + version, '*') << "\n" << endl;
 
-        typedef Traits<12> DefaultTraits;
+        const bt::ArgumentParser arg(argc, argv, version, {},
+            {{ "input", "i",    bt::Value<filesystem::path>("nt.gz"), "Input file." },
+             { "output", "o",   bt::Value<filesystem::path>("."),     "Output directory." },
+			 { "nbEntries",     bt::Value<size_t>(numeric_limits<size_t>::max()), "Number of entries to collect." },
+             { "nbBases",       bt::Value<size_t>(numeric_limits<size_t>::max()), "Number of nucleotide bases to collect." },
+             { "nbBasesInFile", bt::Value<size_t>(1e9),                           "Number of nucleotide bases per file." }}
+        );
 
-        if ( argc < 2 ) {
-            cout << "Usage: DatabaseBuilder <nbEntries> <nbBases> <nbBasesInFile>" << endl;
-            throw GeneHunterException("Wrong number of arguments.");
-        }
+        typedef Traits<12> DefaultTraits;
 
         PtrNucleotideDatabase<DefaultTraits> ptrDatabase = PtrNucleotideDatabase<DefaultTraits>(new NucleotideDatabase<DefaultTraits>());
         NucleotideDatabaseInformation totalInfo;
 
         size_t dbID = 0;
         size_t count = 1;
-        for (FASTAIterator<DefaultTraits::RefSeqCharType> iterCur(Environment::getDatabaseFile()),
+        for (FASTAIterator<DefaultTraits::RefSeqCharType> iterCur(arg.get<filesystem::path>("input")),
         	iterEnd; iterCur != iterEnd; ++iterCur, ++count)
         {
             ptrDatabase->addEntry(*iterCur);
 
-            if (count == arg.get<int>("nbEntries") or totalInfo.getTotalNbOfBases() > arg.get<int>("nbBases")) break;
+            if (count == arg.get<size_t>("nbEntries") or totalInfo.getTotalNbOfBases() > arg.get<size_t>("nbBases")) break;
 
-            if (ptrDatabase->getInformation().getTotalNbOfBases() > arg.get<int>("nbBasesInFile"))
+            if (ptrDatabase->getInformation().getTotalNbOfBases() > arg.get<size_t>("nbBasesInFile"))
             {
-                filesystem::path dbOutputFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
-                writeBinary(*ptrDatabase,"NucleotideDatabase",dbOutputFile);
+                std::string filename = "NucleotideDatabase" + std::to_string(dbID);
 
-                filesystem::path hashMapInfoFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".info");
+                filesystem::path dbOutputFile = arg.get<filesystem::path>("output") / (filename + ".bin");
+                writeBinary(*ptrDatabase, "NucleotideDatabase", dbOutputFile);
+
+                filesystem::path hashMapInfoFile = arg.get<filesystem::path>("output") / (filename + ".info");
                 ofstream ofs(hashMapInfoFile.c_str());
                 ptrDatabase->printHashMapReferenceSequenceState(ofs);
 
@@ -63,10 +58,12 @@ int main(int argc, char* argv[])
             }
         }
 
-        filesystem::path dbOutputFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".bin");
-        writeBinary(*ptrDatabase,"NucleotideDatabase",dbOutputFile);
+        std::string filename = "NucleotideDatabase" + std::to_string(dbID);
 
-        filesystem::path hashMapInfoFile = Environment::getSharedDirectory() / string("NucleotideDatabase" + boost::lexical_cast<string>(dbID) + ".info");
+        filesystem::path dbOutputFile = arg.get<filesystem::path>("output") / (filename + ".bin");
+        writeBinary(*ptrDatabase, "NucleotideDatabase", dbOutputFile);
+
+        filesystem::path hashMapInfoFile = arg.get<filesystem::path>("output") / (filename + ".info");
         ofstream ofs(hashMapInfoFile.c_str());
         ptrDatabase->printHashMapReferenceSequenceState(ofs);
 

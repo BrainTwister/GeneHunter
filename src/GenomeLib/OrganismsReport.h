@@ -28,7 +28,7 @@ public:
         (( uint8_t, verbosity, 0 ))\
     )
 
-    OrganismsReport( boost::filesystem::path const& reportFile, boost::filesystem::path const& datasetFile,
+    OrganismsReport(filesystem::path const& reportFile, filesystem::path const& datasetFile,
         Settings const& settings, size_t nbReads );
 
     ~OrganismsReport();
@@ -49,7 +49,7 @@ private:
 
     size_t nbReads;
 
-    boost::filesystem::path reportFile;
+    filesystem::path reportFile;
 
     Taxonomy taxonomy;
 

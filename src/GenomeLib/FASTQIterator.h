@@ -2,10 +2,10 @@
 #define FASTQITERATOR_H_
 
 #include "GenomeLib/FASTQ.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/iterator/iterator_facade.hpp>
-#include <boost/filesystem/path.hpp>
 #include <fstream>
 
 namespace GeneHunter {
@@ -21,7 +21,7 @@ public:
 
     FASTQIterator()    {}
 
-    FASTQIterator( boost::filesystem::path const& FASTQFilename )
+    FASTQIterator(filesystem::path const& FASTQFilename)
      : ptrInputStream_(new std::ifstream(FASTQFilename.string().c_str()))
     {
         increment();

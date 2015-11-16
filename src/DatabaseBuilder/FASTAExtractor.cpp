@@ -1,9 +1,9 @@
 #include "BrainTwister/ArgumentParser.h"
 #include "GenomeLib/FASTAIterator.h"
 #include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
-#include <boost/filesystem.hpp>
 #include <chrono>
 #include <fstream>
 #include <iomanip>
@@ -13,7 +13,6 @@
 using namespace std;
 using namespace chrono;
 using namespace GeneHunter;
-using boost::filesystem::path;
 namespace bt = BrainTwister;
 
 int main( int argc, char* argv[] )
