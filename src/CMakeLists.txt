@@ -1,0 +1,6 @@
+add_subdirectory(DatabaseBuilder)
+add_subdirectory(CDSDatabaseBuilder)
+add_subdirectory(GeneHunter)
+add_subdirectory(GenomeLib)
+add_subdirectory(UtilitiesLib)
+add_subdirectory(TaxonomyDatabaseBuilder)
