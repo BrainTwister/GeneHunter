@@ -13,13 +13,13 @@ using namespace std;
 namespace GeneHunter {
 
 const std::string TaxonomyWriter::giTaxIDNucTableName_ = "gi_taxid_nuc";
-
 const std::string TaxonomyWriter::ncbiNodesTableName_ = "ncbi_nodes";
-
 const std::string TaxonomyWriter::ncbiNamesTableName_ = "ncbi_names";
 
-TaxonomyWriter::TaxonomyWriter(filesystem::path const& gi_taxid_nucl_file, filesystem::path const& names_file,
-    filesystem::path const& nodes_file, std::string const& database)
+TaxonomyWriter::TaxonomyWriter(filesystem::path const& gi_taxid_nucl_file,
+		                       filesystem::path const& names_file,
+                               filesystem::path const& nodes_file,
+							   std::string const& database)
  : myConnection_(mysql_init(NULL))
 {
     if ( mysql_real_connect(myConnection_,

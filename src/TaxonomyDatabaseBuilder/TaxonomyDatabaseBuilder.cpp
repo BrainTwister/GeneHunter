@@ -21,6 +21,9 @@ int main( int argc, char* argv[] )
 {
     try {
 
+        cout << "\n" << makeFrame("TaxonomyDatabaseBuilder version " + version, '*') << "\n" << endl;
+        const auto startTime = steady_clock::now();
+
         const bt::ArgumentParser arg(argc, argv, version,
             {{ "gi_taxid_nucl", bt::Value<filesystem::path>(),      "Input file for taxonomy gi_taxid_nucl." },
              { "names",         bt::Value<filesystem::path>(),      "Input file for taxonomy names." },
@@ -28,15 +31,10 @@ int main( int argc, char* argv[] )
             {{ "database", "d", bt::Value<std::string>("Taxonomy"), "MySQL database name." }}
         );
 
-        cout << "\n" << makeFrame("TaxonomyDatabaseBuilder version " + version, '*') << "\n" << endl;
-        const auto startTime = steady_clock::now();
-
-        filesystem::path gi_taxid_nucl_file = arg.get<filesystem::path>("gi_taxid_nucl");
-        filesystem::path names_file = arg.get<filesystem::path>("names");
-        filesystem::path nodes_file = arg.get<filesystem::path>("nodes");
-        std::string database = arg.get<std::string>("database");
-
-        TaxonomyWriter(gi_taxid_nucl_file,names_file,nodes_file,database);
+        TaxonomyWriter(arg.get<filesystem::path>("gi_taxid_nucl"),
+        		       arg.get<filesystem::path>("names"),
+					   arg.get<filesystem::path>("nodes"),
+                       arg.get<std::string>("database"));
 
         const auto stopTime = steady_clock::now();
         const auto duration = stopTime - startTime;

@@ -1,6 +1,5 @@
 #include "BrainTwister/ArgumentParser.h"
 #include "GenomeLib/FASTAIterator.h"
-#include "UtilitiesLib/Environment.h"
 #include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
@@ -19,14 +18,15 @@ int main( int argc, char* argv[] )
 {
     try {
 
-        const bt::ArgumentParser arg(argc, argv, version,
-            {{ "geneID", bt::Value<size_t>(), "Gene ID number." },
-             { "start",  bt::Value<size_t>(), "Position of first base." },
-             { "length", bt::Value<size_t>(), "Length of sequence to extract." }}
-        );
-
         cout << "\n" << makeFrame("DatabaseBuilder version " + version, '*') << "\n" << endl;
         const auto startTime = steady_clock::now();
+
+        const bt::ArgumentParser arg(argc, argv, version,
+            {{ "input",  bt::Value<filesystem::path>(), "Input file." },
+             { "geneID", bt::Value<size_t>(),           "Gene ID number." },
+             { "start",  bt::Value<size_t>(),           "Position of first base." },
+             { "length", bt::Value<size_t>(),           "Length of sequence to extract." }}
+        );
 
         size_t geneID = arg.get<size_t>("geneID");
         size_t start = arg.get<size_t>("start");
@@ -34,7 +34,7 @@ int main( int argc, char* argv[] )
 
         string line;
         string sequence;
-        ifstream is(Environment::getDatabaseFile().c_str());
+        ifstream is(arg.get<filesystem::path>("input").c_str());
 
         while ( std::getline(is,line) )
         {
