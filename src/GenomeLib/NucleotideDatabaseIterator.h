@@ -8,7 +8,7 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
-#include <fstream>
+#include <istream>
 
 namespace GeneHunter {
 
@@ -26,10 +26,10 @@ public:
      : ptrNucleotideDatabase()
     {}
 
-    NucleotideDatabaseIterator(filesystem::path const& filename, size_t maxNbEntries, size_t maxNbBases,
+    NucleotideDatabaseIterator(boost::shared_ptr<std::istream> ptr_nt_is, size_t maxNbEntries, size_t maxNbBases,
         size_t maxNbBasesPerFile, size_t startEntry, NucleotideDatabaseSettings const& settings
     )
-     : iterFASTACur(filename.string().c_str()),
+     : iterFASTACur(ptr_nt_is),
        iterFASTAEnd(),
        maxNbEntries(maxNbEntries),
        maxNbBases(maxNbBases),

@@ -63,7 +63,7 @@ set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-FIND_PACKAGE(Boost COMPONENTS filesystem serialization system REQUIRED)
+FIND_PACKAGE(Boost COMPONENTS filesystem iostreams serialization system REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
@@ -71,6 +71,7 @@ if(Boost_FOUND)
 endif(Boost_FOUND)
 
 find_package(MySQL REQUIRED)
+find_package(ZLIB REQUIRED)
 
 add_subdirectory(ArgumentParser)
 add_subdirectory(src)

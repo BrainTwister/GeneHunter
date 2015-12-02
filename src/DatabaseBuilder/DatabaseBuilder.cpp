@@ -5,6 +5,8 @@
 #include <UtilitiesLib/Filesystem.h>
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -20,21 +22,28 @@ int main(int argc, char* argv[])
         cout << "\n" << makeFrame("DatabaseBuilder version " + version, '*') << "\n" << endl;
 
         const bt::ArgumentParser arg(argc, argv, version, {},
-            {{ "input", "i",    bt::Value<filesystem::path>("nt.gz"), "Input file." },
-             { "output", "o",   bt::Value<filesystem::path>("."),     "Output directory." },
+            {{ "input", "i",    bt::Value<filesystem::path>("nt.gz"),             "Input file." },
+             { "output", "o",   bt::Value<filesystem::path>("."),                 "Output directory." },
 			 { "nbEntries",     bt::Value<size_t>(numeric_limits<size_t>::max()), "Number of entries to collect." },
              { "nbBases",       bt::Value<size_t>(numeric_limits<size_t>::max()), "Number of nucleotide bases to collect." },
-             { "nbBasesInFile", bt::Value<size_t>(1e9),                           "Number of nucleotide bases per file." }}
+             { "nbBasesInFile", bt::Value<size_t>(1e7),                           "Number of nucleotide bases per file." }}
         );
 
         typedef Traits<12> DefaultTraits;
-
         PtrNucleotideDatabase<DefaultTraits> ptrDatabase = PtrNucleotideDatabase<DefaultTraits>(new NucleotideDatabase<DefaultTraits>());
         NucleotideDatabaseInformation totalInfo;
 
+        auto nt_file = arg.get<filesystem::path>("input");
+        std::ifstream ifs(nt_file.string());
+        if (!ifs) throw GeneHunterException("Error opening file " + nt_file.string());
+        boost::iostreams::filtering_streambuf<boost::iostreams::input> inbuf;
+        if (nt_file.extension() == ".gz") inbuf.push(boost::iostreams::gzip_decompressor());
+        inbuf.push(ifs);
+        boost::shared_ptr<std::istream> ptr_instream(new std::istream(&inbuf));
+
         size_t dbID = 0;
         size_t count = 1;
-        for (FASTAIterator<DefaultTraits::RefSeqCharType> iterCur(arg.get<filesystem::path>("input")),
+        for (FASTAIterator<DefaultTraits::RefSeqCharType> iterCur(ptr_instream),
         	iterEnd; iterCur != iterEnd; ++iterCur, ++count)
         {
             ptrDatabase->addEntry(*iterCur);

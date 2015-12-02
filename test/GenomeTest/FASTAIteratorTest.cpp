@@ -1,15 +1,10 @@
 #include "FASTAIterator.h"
-#include "GenomeTest.h"
+#include "gtest/gtest.h"
 
 using namespace std;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 
-void FASTAIteratorTest::operator () ( TestSuite& testSuite ) const
+TEST(FASTAIteratorTest, default_constructor)
 {
-	boost::filesystem::path testInput = testSuite.getInputDirectory() / "nt_head";
-
-	for ( FASTAIterator<char> iterCur(testInput), iterEnd; iterCur != iterEnd; ++iterCur )
-	{
-        //cout << *iterCur << endl;
-	}
+	FASTAIterator<char> iterCur;
 }

@@ -62,10 +62,10 @@ OrganismsReport::~OrganismsReport()
     ptReport.push_back(make_pair("organisms",ptOrganisms));
 
     std::ofstream output(reportFile.string().c_str());
-    write_xml(output,pt,boost::property_tree::xml_writer_settings<char>(' ',2));
+    write_xml(output, pt, boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
 
     std::ofstream removedOrganismsOut("removedOrganisms.xml");
-    write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<char>(' ',2));
+    write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
 
     if ( !geneIDsNotFountInTaxonomy.empty() )
     {

@@ -18,7 +18,7 @@ Requirements
 ------------
 
 - cmake (Version >= 3.0, http://www.cmake.org)
-- Boost (Version >= 1.52, http://www.boost.org, modules: system, filesystem, and serialization)
+- Boost (Version >= 1.52, http://www.boost.org, modules: filesystem, iostreams, serialization, and system)
 - MySQL
 - gtest (optional)
 - doxygen (optional)
@@ -64,6 +64,7 @@ Installation
 8) Download and generate taxonomy database
 
     wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_nucl.dmp.gz
 
     TaxonomyDatabaseBuilder [gi_taxid_nucl] [names] [nodes]
 
@@ -74,4 +75,4 @@ Installation
 Usage
 -----
 
-    GeneHunter [read-file] [description-file] [result-file]
+    GeneHunter [read-file] [description-file] [result-file] [nt-file]

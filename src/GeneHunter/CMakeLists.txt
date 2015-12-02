@@ -15,6 +15,8 @@ target_link_libraries(
     GenomeLib
     UtilitiesLib
     ${MYSQL_LIBRARIES}
+    ${Boost_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
 
 install(TARGETS GeneHunter RUNTIME DESTINATION bin)

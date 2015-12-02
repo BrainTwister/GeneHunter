@@ -13,6 +13,8 @@ target_link_libraries(
     ArgumentParser
     GenomeLib
     UtilitiesLib
+    ${Boost_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
 
 add_executable(

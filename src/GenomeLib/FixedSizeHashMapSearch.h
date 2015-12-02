@@ -10,6 +10,8 @@
 #include "UtilitiesLib/FileIO.h"
 #include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/StringUtilities.h"
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #include <mutex>
 #include <thread>
 #include <vector>
@@ -44,10 +46,17 @@ void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideD
 {
     using namespace std;
 
-    filesystem::path readFile = arg.get<filesystem::path>("readFile");
+    auto readFile = arg.get<filesystem::path>("read");
     if (!exists(readFile)) throw GeneHunterException("File not found: " + readFile.string());
 
-    filesystem::path ntFile = arg.get<filesystem::path>("NTDatabase");
+    auto nt_file = arg.get<filesystem::path>("nt");
+    if (!exists(nt_file)) throw GeneHunterException("File not found: " + nt_file.string());
+    std::ifstream ifs(nt_file.string());
+    if (!ifs) throw GeneHunterException("Error opening file " + nt_file.string());
+    boost::iostreams::filtering_streambuf<boost::iostreams::input> inbuf;
+    if (nt_file.extension() == ".gz") inbuf.push(boost::iostreams::gzip_decompressor());
+    inbuf.push(ifs);
+    boost::shared_ptr<std::istream> ptr_instream(new std::istream(&inbuf));
 
     size_t maxEntries = arg.get<size_t>("maxEntries");
     size_t maxBases = arg.get<size_t>("maxBases");
@@ -63,7 +72,8 @@ void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideD
 
     size_t step(1);
     size_t nbCoresPerNode = Environment::getNbCoresPerNode();
-    for ( NucleotideDatabaseIterator<Traits<Size> > iterNTDBCur(ntFile,maxEntries,maxBases,maxBasesPerStep,startEntry,nucleotideDatabaseSettings),
+    for (NucleotideDatabaseIterator<Traits<Size> > iterNTDBCur(ptr_instream, maxEntries,
+    	maxBases, maxBasesPerStep, startEntry, nucleotideDatabaseSettings),
         iterNTDBEnd; iterNTDBCur != iterNTDBEnd; ++iterNTDBCur, ++step )
     {
         totalInfo.merge((*iterNTDBCur)->getInformation());

@@ -8,7 +8,7 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
-#include <fstream>
+#include <istream>
 
 namespace GeneHunter {
 
@@ -19,8 +19,9 @@ class FASTAIterator
  public:
   FASTAIterator() {}
 
-  FASTAIterator(filesystem::path const& filename)
-      : ptrInputStream_(new std::ifstream(filename.string().c_str())) {
+  FASTAIterator(boost::shared_ptr<std::istream> ptrInputStream)
+      : ptrInputStream_(ptrInputStream)
+  {
     increment();
   }
 
@@ -62,7 +63,7 @@ class FASTAIterator
       ptrFASTA_->setSequence(sequence);
   }
 
-  boost::shared_ptr<std::ifstream> ptrInputStream_;
+  boost::shared_ptr<std::istream> ptrInputStream_;
 
   PtrFASTA<T> ptrFASTA_;
 

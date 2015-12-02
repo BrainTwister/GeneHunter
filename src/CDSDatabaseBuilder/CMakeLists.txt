@@ -16,6 +16,7 @@ target_link_libraries(
     UtilitiesLib
     ${MYSQL_LIBRARIES}
     ${Boost_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
 
 install(TARGETS CDSDatabaseBuilder RUNTIME DESTINATION bin)

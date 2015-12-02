@@ -7,6 +7,8 @@
 #include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -46,27 +48,18 @@ int main( int argc, char* argv[] )
 
         for (auto const& inputFile : arg.get<std::vector<filesystem::path>>("inputFiles"))
         {
-        	std::string filename = inputFile.string();
-            cout << "Import " << filename << endl;
+            std::cout << "Import " << inputFile.string() << std::endl;
 
-            bool fileIsZipped = false;
-            if ( filename.substr(filename.size()-3,3) == ".gz" ) {
-                string cmd = "gunzip " + filename;
-                cout << cmd << endl;
-                if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
-                filename.erase(filename.size()-3,3);
-                fileIsZipped = true;
-            }
+            std::ifstream ifs(inputFile.string());
+            if (!ifs) throw GeneHunterException("Error opening file " + inputFile.string());
+            boost::iostreams::filtering_streambuf<boost::iostreams::input> inbuf;
+            if (inputFile.extension() == ".gz") inbuf.push(boost::iostreams::gzip_decompressor());
+            inbuf.push(ifs);
+            boost::shared_ptr<std::istream> ptr_instream(new std::istream(&inbuf));
 
-            for ( CDSIterator iterCur(filename, settings.cdsIteratorSettings_), iterEnd; iterCur != iterEnd; ++iterCur )
+            for (CDSIterator iterCur(ptr_instream, settings.cdsIteratorSettings_), iterEnd; iterCur != iterEnd; ++iterCur)
             {
                 cdsDatabase.importGene(*iterCur);
-            }
-
-            if ( fileIsZipped ) {
-                string cmd = string("gzip ") + filename;
-                cout << cmd << endl;
-                if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
             }
         }
 

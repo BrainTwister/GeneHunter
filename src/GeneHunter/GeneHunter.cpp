@@ -37,32 +37,31 @@ int main( int argc, char* argv[] )
         const auto startTime = steady_clock::now();
 
         const bt::ArgumentParser arg(argc, argv, version,
-            {{ "readFile",                 bt::Value<filesystem::path>(),    "Read sequence in FASTQ format." },
-             { "descriptionFile",          bt::Value<filesystem::path>(),    "Description file in XML format." },
-             { "outputFile",               bt::Value<filesystem::path>(),    "Output file in XML format." }},
+            {{ "read",                     bt::Value<filesystem::path>(),    "Read sequence in FASTQ format." },
+             { "description",              bt::Value<filesystem::path>(),    "Description file in XML format." },
+             { "output",                   bt::Value<filesystem::path>(),    "Output file in XML format." },
+             { "nt",                       bt::Value<filesystem::path>(),    "Define nucleotide database file."}},
             {{ "maxEntries", "",           bt::Value<size_t>(numeric_limits<size_t>::max()), "Define how many entries are taken from NT database." },
              { "startEntry", "",           bt::Value<size_t>(numeric_limits<size_t>::min()), "Define the index of the starting NT database entry." },
              { "maxBases", "",             bt::Value<size_t>(numeric_limits<size_t>::max()), "Define how many bases are taken from NT database." },
-             { "maxBasesPerStep", "",      bt::Value<size_t>(numeric_limits<size_t>::max()), "Define how many bases are are taken from NT database for one step." },
+             { "maxBasesPerStep", "",      bt::Value<size_t>(1e7), "Define how many bases are are taken from NT database for one step." },
              { "maxReads", "",             bt::Value<size_t>(numeric_limits<size_t>::max()), "Maximal number of reads in fq file." },
              { "readFullMatchManager", "", bt::Value<filesystem::path>(),    "FullMatchManager file for restart or determine taxonomy (binary or xml)." },
            //{ "threshold", "",            bt::Value<double>(),              "Threshold for match quality." },
              { "settings", "",             bt::Value<filesystem::path>(Environment::getGeneHunterRootDirectory() / "settings" / "GeneHunterSettings.xml"),
             		                                                         "Define file for specific settings (default: $GENEHUNTER_ROOT/settings/GeneHunterSettings.xml)." },
-             { "NTDatabase", "",           bt::Value<filesystem::path>(Environment::getDatabaseFile()),
-            		                                                         "Define nucleotide database file." },
-             { "overwriteOutput", "",      bt::Value<bool>(),                "If set an existing output file will overwritten." },
+             { "overwrite", "",            bt::Value<bool>(),                "If set an existing output file will overwritten." },
              { "skipTaxonomy", "",         bt::Value<bool>(),                "Do not write result file, only FullMatchManager output." },
              { "onlyTaxonomy", "",         bt::Value<bool>(),                "Only write result file, do not search for new matches (is only possible together with -readFullMatchManager)." },
              { "printSteps", "",           bt::Value<bool>(),                "Printing intermediate import informations of NT database each step." },
              { "printHashMapInfo", "",     bt::Value<bool>(),                "Printing hashMap informations each step." }}
         );
 
-        filesystem::path inputXMLFile = arg.get<filesystem::path>("descriptionFile");
+        auto inputXMLFile = arg.get<filesystem::path>("description");
         if (!exists(inputXMLFile)) throw GeneHunterException("File not found: " + inputXMLFile.string());
 
-        filesystem::path outputXMLFile = arg.get<filesystem::path>("outputFile");
-        if (!arg.get<bool>("overwriteOutput") and exists(outputXMLFile))
+        auto outputXMLFile = arg.get<filesystem::path>("output");
+        if (!arg.get<bool>("overwrite") and exists(outputXMLFile))
             throw GeneHunterException("File exist and not allowed to overwrite: " + outputXMLFile.string());
 
         if (arg.get<bool>("onlyTaxonomy") and !arg.get<filesystem::path>("readFullMatchManager").empty())

@@ -11,7 +11,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/tokenizer.hpp>
-#include <fstream>
+#include <istream>
 
 namespace GeneHunter {
 
@@ -33,11 +33,9 @@ public:
      : endFlag_(true)
     {}
 
-    CDSIterator( filesystem::path const& filename, Settings const& settings )
-     : ptrInputStream_(new std::ifstream(filename.string().c_str())), settings_(settings)
+    CDSIterator( boost::shared_ptr<std::istream> ptrInputStream, Settings const& settings )
+     : ptrInputStream_(ptrInputStream), settings_(settings)
     {
-        if ( ! *ptrInputStream_ )
-            throw GeneHunterException("CDSIterator: Error opening file " + filename.string());
         increment();
     }
 
@@ -63,7 +61,7 @@ private:
 
     enum CurrentReading { Gene, Location, LocusTag, ProteinID, Product, Unused };
 
-    boost::shared_ptr<std::ifstream> ptrInputStream_;
+    boost::shared_ptr<std::istream> ptrInputStream_;
 
     CDSEntry currentEntry_;
 
