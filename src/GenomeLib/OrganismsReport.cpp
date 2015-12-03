@@ -4,6 +4,7 @@
 #include "UtilitiesLib/GeneHunterException.h"
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <boost/version.hpp>
 
 using namespace std;
 
@@ -62,10 +63,18 @@ OrganismsReport::~OrganismsReport()
     ptReport.push_back(make_pair("organisms",ptOrganisms));
 
     std::ofstream output(reportFile.string().c_str());
-    write_xml(output, pt, boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
+    #if BOOST_VERSION >= 105600
+        write_xml(output, pt, boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
+    #else
+        write_xml(output, pt, boost::property_tree::xml_writer_settings<char>(' ', 2u));
+    #endif
 
     std::ofstream removedOrganismsOut("removedOrganisms.xml");
-    write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
+    #if BOOST_VERSION >= 105600
+        write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
+    #else
+        write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<char>(' ', 2u));
+    #endif
 
     if ( !geneIDsNotFountInTaxonomy.empty() )
     {
