@@ -107,8 +107,12 @@ void fixedSizeHashMapSearchImpl( FullMatchManager& fullMatchManager, NucleotideD
             FASTQIterator iterEntryCur(readFile), iterEntryEnd;
 
             for ( auto & singleThread : threads ) {
-                singleThread.reset(new thread(threadFunction< Traits<Size> >,ref(fullMatchManager),ref(iterEntryCur),ref(iterEntryEnd),
-                    ref(countRead),maxReads,step,ref(readInfo),ref(**iterNTDBCur)));
+                singleThread.reset(new thread(threadFunction<Traits<Size>>,
+                    std::ref(fullMatchManager),
+                    std::ref(iterEntryCur),
+                    std::ref(iterEntryEnd),
+                    std::ref(countRead),
+                    maxReads,step,ref(readInfo),ref(**iterNTDBCur)));
             }
 
             for ( auto & thread : threads ) thread->join();
