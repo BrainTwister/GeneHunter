@@ -10,7 +10,7 @@ GeneHunter
 
 Identification of organisms from a stream of DNA sequences.
 
-Copyright 2013-2015 BrainTwister - All rights reserved.
+Copyright &copy; 2013-2016 BrainTwister - All rights reserved.
 
 GeneHunter is free software made available under the MIT License. For details see the LICENSE file.
 
