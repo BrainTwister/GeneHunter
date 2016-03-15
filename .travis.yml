@@ -7,7 +7,7 @@ before_install:
   - tar --bzip2 -xf boost_1_60_0.tar.bz2
   - cd boost_1_60_0
   - ./bootstrap.sh --with-libraries=filesystem,iostreams,serialization,system
-  - echo "using gcc : : /usr/bin/gcc-4.9 ; " >> tools/build/src/user-config.jam
+  #- echo "using gcc : : /usr/bin/gcc-4.9 ; " >> tools/build/src/user-config.jam
   - ./bjam --toolset=gcc-4.9
   - ./b2 install --prefix=$HOME/boost --toolset=gcc-4.9 >build.log 2>&1
   - cd -
