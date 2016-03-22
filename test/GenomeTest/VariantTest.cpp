@@ -1,18 +1,11 @@
-#include "FullMatchManager.h"
-#include "GenomeTest.h"
-#include "FileIO.h"
-#include "Range.h"
-#include "Variant.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-#include <map>
+#include "GenomeLib/Variant.h"
+#include <gtest/gtest.h>
 
-using namespace std;
-using namespace GeneAssembler;
-using boost::filesystem::path;
+using namespace GeneHunter;
 
-void VariantsTest::operator () ( TestSuite& testSuite ) const
+TEST(VariantTest, Default)
 {
+#if 0
 	{
 		Variant variant("P1",1212,"--","TA",38,"AGTGTAGATGGCGTAGCCCGATGACACCA");
 
@@ -25,7 +18,6 @@ void VariantsTest::operator () ( TestSuite& testSuite ) const
 
 		write_xml(output,pt,boost::property_tree::xml_writer_settings<char>(' ',2));
 	}
-#if 0
 	{
 		FullMatchManager fullMatchManager;
 

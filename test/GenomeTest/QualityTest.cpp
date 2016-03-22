@@ -1,25 +1,10 @@
-#include "Quality.h"
-#include "GenomeTest.h"
+#include "GenomeLib/Quality.h"
+#include <gtest/gtest.h>
 
-using namespace std;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 
-void QualityTest::operator () ( TestSuite& testSuite ) const
+TEST(QualityTest, Default)
 {
-	{
-		FastqSanger q;
-
-		constexpr std::array<double,FastqSanger::size> arr = FastqSanger::make_arr(FastqSanger::list());
-
-//		std::copy(begin(arr), end(arr), std::ostream_iterator<double>(std::cout, "\n"));
-	}
-	{
-//		for ( char c(33); c != 127; ++c) {
-//			cout << c << " " << FastqSanger::data[c] << endl;
-//		}
-	}
-	{
-		if ( !testSuite.isEqual(FastqSanger::data[33], 1.0, 1e-4) ) testSuite.errorLog(name() + ": FastqSanger::data[33] failed.");
-		if ( !testSuite.isEqual(FastqSanger::data[126], 5.01187e-10, 1e-4) ) testSuite.errorLog(name() + ": FastqSanger::data[126] failed.");
-	}
+    EXPECT_NEAR(1.0, static_cast<double>(FastqSanger::data[33]), 1e-4);
+    EXPECT_NEAR(5.01187e-10, static_cast<double>(FastqSanger::data[126]), 1e-4);
 }

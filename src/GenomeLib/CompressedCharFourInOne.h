@@ -97,7 +97,7 @@ private:
     }
 
     template < class Iterator >
-    char compress( Iterator const& iterBeg,    Iterator const& iterEnd,
+    char compress( Iterator const& iterBeg, Iterator const& iterEnd,
         typename boost::enable_if< boost::is_same<typename Iterator::value_type,char> >::type* = 0 ) const
     {
         if ( iterBeg == iterEnd ) return 0;
@@ -115,7 +115,7 @@ private:
     }
 
     template < class Iterator >
-    char compress( Iterator const& iterBeg,    Iterator const& iterEnd,
+    char compress( Iterator const& iterBeg, Iterator const& iterEnd,
         typename boost::enable_if< boost::is_same<typename Iterator::value_type,CompressedCharTwoInOne> >::type* = 0 ) const
     {
         if ( iterBeg == iterEnd ) return 0;

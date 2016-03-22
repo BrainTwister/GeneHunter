@@ -1,15 +1,9 @@
-#include "FASTQIterator.h"
-#include "GenomeTest.h"
+#include "GenomeLib/FASTQIterator.h"
+#include <gtest/gtest.h>
 
-using namespace std;
-using namespace GeneAssembler;
+using namespace GeneHunter;
 
-void FASTQIteratorTest::operator () ( TestSuite& testSuite ) const
+TEST(FASTQIteratorTest, default_constructor)
 {
-	boost::filesystem::path testInput = testSuite.getInputDirectory() / "Example1_head.fq";
-
-	for ( FASTQIterator iterCur(testInput), iterEnd; iterCur != iterEnd; ++iterCur )
-	{
-//	    cout << *iterCur << endl;
-	}
+    FASTQIterator iterCur;
 }

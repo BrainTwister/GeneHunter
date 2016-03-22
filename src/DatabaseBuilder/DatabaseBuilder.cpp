@@ -1,15 +1,21 @@
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <stddef.h>
+#include <iostream>
+#include <limits>
+#include <string>
+
 #include "BrainTwister/ArgumentParser.h"
+#include "BrainTwister/Value.h"
 #include "GenomeLib/FASTAIterator.h"
+#include "GenomeLib/Genome.h"
 #include "GenomeLib/NucleotideDatabase.h"
+#include "GenomeLib/NucleotideDatabaseInformation.h"
 #include "UtilitiesLib/FileIO.h"
-#include <UtilitiesLib/Filesystem.h>
+#include "UtilitiesLib/Filesystem.h"
 #include "UtilitiesLib/GeneHunterException.h"
 #include "UtilitiesLib/StringUtilities.h"
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
-#include <fstream>
-#include <iostream>
-#include <string>
+#include "UtilitiesLib/Version.h"
 
 using namespace std;
 using namespace GeneHunter;

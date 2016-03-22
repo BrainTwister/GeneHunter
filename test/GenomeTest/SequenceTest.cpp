@@ -2,7 +2,6 @@
 #include "GenomeLib/Sequence.h"
 #include "gtest/gtest.h"
 
-using namespace std;
 using namespace GeneHunter;
 
 TEST(SequenceTest, char)

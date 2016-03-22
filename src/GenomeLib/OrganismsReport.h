@@ -1,17 +1,19 @@
 #ifndef ORGANISMSREPORT_H_
 #define ORGANISMSREPORT_H_
 
-#include "GenomeLib/CDSDatabase.h"
-#include "GenomeLib/Match.h"
-#include "GenomeLib/Organism.h"
-#include "GenomeLib/OrganismsDataset.h"
-#include "GenomeLib/Taxonomy.h"
-#include "UtilitiesLib/CreateDataClass.h"
 #include <boost/filesystem/path.hpp>
-#include <chrono>
-#include <map>
-#include <string>
+#include <stddef.h>
+#include <set>
 #include <vector>
+
+#include "CDSDatabase.h"
+#include "Genome.h"
+#include "Match.h"
+#include "Organism.h"
+#include "OrganismsDataset.h"
+#include "Taxonomy.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/Filesystem.h"
 
 namespace GeneHunter {
 
@@ -47,11 +49,11 @@ private:
 
     OrganismLookupTable organismLookupTable;
 
-    size_t nbReads;
-
     filesystem::path reportFile;
 
     Taxonomy taxonomy;
+
+    size_t nbReads;
 
     CDSDatabase cdsDatabase;
 

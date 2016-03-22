@@ -53,7 +53,7 @@ private:
     }
 };
 
-using Matches = std::unordered_map<std::string,Match>;
+using Matches = std::unordered_map<std::string, Match>;
 
 inline std::ostream& operator << ( std::ostream& os, Match const& match )
 {

@@ -1,10 +1,13 @@
-#include "GenomeLib/Match.h"
-#include "GenomeLib/OrganismsReport.h"
-#include "UtilitiesLib/FileIO.h"
-#include "UtilitiesLib/GeneHunterException.h"
+#include "OrganismsReport.h"
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/version.hpp>
+#include <algorithm>
+#include <iostream>
+#include <utility>
+
+#include "UtilitiesLib/GeneHunterException.h"
 
 using namespace std;
 

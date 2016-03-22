@@ -18,13 +18,16 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.500187050.453381357" name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.1592576905" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.506150726" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/GeneHunter}/build_release_gnu" id="cdt.managedbuild.target.gnu.builder.base.97017999" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<builder buildPath="${workspace_loc:/GeneHunter}/build_release_gnu" id="cdt.managedbuild.target.gnu.builder.base.97017999" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="false" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1608264725" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1506268789" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.742755199" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/software/compiler/gcc/4.9.1_ubuntu_14.04/include#%Module"/>
-									<listOptionValue builtIn="false" value="/software/compiler/gcc/4.9.1_ubuntu_14.04/include"/>
 									<listOptionValue builtIn="false" value="/software/development_libraries/gtest/1.7.0/include"/>
+									<listOptionValue builtIn="false" value="/software/compiler/intel/parallel_studio_xe_2015_update_3/composer_xe_2015.3.187/mkl/include"/>
+									<listOptionValue builtIn="false" value="/software/compiler/gcc/4.9.2/include#%Module"/>
+									<listOptionValue builtIn="false" value="/software/compiler/gcc/4.9.2/include"/>
+									<listOptionValue builtIn="false" value="/software/development_libraries/boost/1.59.0/include"/>
+									<listOptionValue builtIn="false" value="/usr/include/mysql"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1851871900" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -64,7 +67,7 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.500187050.1458653509." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.14269773" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.2104902677" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/GeneHunter}/Build_Debug_Gnu" id="cdt.managedbuild.target.gnu.builder.base.1881848200" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<builder buildPath="${workspace_loc:/GeneHunter}/build_debug_gnu" id="cdt.managedbuild.target.gnu.builder.base.1881848200" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.69084845" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.197485447" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.497644041" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
