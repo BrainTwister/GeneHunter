@@ -7,6 +7,7 @@ GeneHunter
        src="https://scan.coverity.com/projects/6386/badge.svg"/>
 </a>
 [![MIT](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](http://opensource.org/licenses/MIT)
+[![Code Quality](https://landscape.io/github/BrainTwister/GeneHunter/master/landscape.svg)](https://landscape.io/github/BrainTwister/GeneHuner/master)
 
 Identification of organisms from a stream of DNA sequences.
 
