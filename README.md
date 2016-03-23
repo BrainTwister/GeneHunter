@@ -2,12 +2,13 @@ GeneHunter
 ==========
 
 [![Build Status](https://travis-ci.org/BrainTwister/GeneHunter.png)](https://travis-ci.org/BrainTwister/GeneHunter)
+[![Coverage Status](https://coveralls.io/repos/BrainTwister/GeneHunter/badge.png?branch=master)](https://coveralls.io/r/BrainTwister/GeneHunter?branch=master)
+[![Code Quality](https://landscape.io/github/BrainTwister/GeneHunter/master/landscape.svg)](https://landscape.io/github/BrainTwister/GeneHunter/master)
 <a href="https://scan.coverity.com/projects/braintwister-genehunter">
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/6386/badge.svg"/>
 </a>
 [![MIT](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](http://opensource.org/licenses/MIT)
-[![Code Quality](https://landscape.io/github/BrainTwister/GeneHunter/master/landscape.svg)](https://landscape.io/github/BrainTwister/GeneHunter/master)
 
 Identification of organisms from a stream of DNA sequences.
 
