@@ -1,6 +1,9 @@
+os: linux
+sudo: false
 language: cpp
 compiler:
   - gcc
+
 before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.bz2
@@ -17,6 +20,8 @@ before_install:
   - wget --no-check-certificate http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
   - tar xf cmake-3.2.2.tar.gz
   - cd cmake-3.2.2 && ./bootstrap --prefix=$HOME/cmake-3.2.2 && make install && cd -
+  - pip install --user cpp-coveralls
+
 addons:
   apt:
     sources:
@@ -33,8 +38,7 @@ addons:
     build_command_prepend: mkdir build-coverity && cd build-coverity && export BOOST_ROOT=$HOME/boost && export BOOST_ROOT=$HOME/boost && cmake -DCMAKE_BUILD_TYPE=Release ..
     build_command: "make -j 4"
     branch_pattern: coverity_scan
-os:
-  - linux
+
 script:
   - mkdir build
   - cd build
@@ -42,16 +46,20 @@ script:
   - export GTEST_ROOT=$HOME/build/BrainTwister/GeneHunter/googletest-release-1.7.0
   - $HOME/cmake-3.2.2/bin/cmake ..
   - make && make test
+
 env:
   matrix:
     - BUILD_TYPE=release VERBOSE_MAKE=false VERBOSE
     - BUILD_TYPE=debug VERBOSE_MAKE=false VERBOSE
   global:
    - secure: "WetZeWgZTMtLPSXVGwskULZH8jUMbOcwKjNNJHT8LpITt/qO517LpOBDNqG+C4VCZexgCkmMKpS47GJtaYpc+PiU86Cnz2/6Cq0W+oQoPFAZn1qgUgTuPlCviloSJW0odvsc/jwhuj8vmK5u0RRdT+wqEa461a67malZWuWLcGk="
+
+after_success:
+  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
+
 notifications:
   recipients:
     - service@braintwister.eu
   email:
     on_success: change
     on_failure: always
-sudo: false

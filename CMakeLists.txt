@@ -24,7 +24,7 @@ if(    NOT cmake_build_type_tolower STREQUAL "release"
   message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Release, Debug, Profiling, RelWithDebInfo (case-insensitive).")
 endif()
 
-message("CMake build type: ${CMAKE_BUILD_TYPE}")
+message("Build type: ${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic-errors")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fopenmp")
@@ -39,6 +39,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 set(CMAKE_CXX_FLAGS_PROFILING "-O3 -pg")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g")
+
+# enabling coverage
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 
 add_definitions(-DGENEHUNTER_THROW_FATAL_ERROR -DGENEHUNTER_USE_BOOST_FILESYSTEM)
 
