@@ -26,8 +26,15 @@ endif()
 
 message("CMake build type: ${CMAKE_BUILD_TYPE}")
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic-errors")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic-errors")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fopenmp")
+
+# For adressing an array a 'unsigned char' must be used to avoid negativ positions.
+# It would be more portable to use 'unsigned char' instead of 'signed char' directly within the code.
+# Since std::string is using by default a 'signed char', many cast would be needed.
+# Therefore, at the moment we simply switch off the warning and use '-funsigned-char' for the gnu compiler.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-char-subscripts -Wno-sign-compare")
+
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 set(CMAKE_CXX_FLAGS_PROFILING "-O3 -pg")

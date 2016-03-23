@@ -45,10 +45,9 @@ struct SequenceToken
     {
         typedef typename Iterator::value_type CharTypeInSeq;
         static const size_t CompressionFactorInSeq = GetNbBaseItemsInChar<CharTypeInSeq>::value;
-        static const size_t CompressedSizeInSeq = N / CompressionFactorInSeq;
         static const size_t FactorInOut = CompressionFactor / CompressionFactorInSeq;
 
-        assert(std::distance(beg, end) == CompressedSizeInSeq);
+        assert(std::distance(beg, end) == N / CompressionFactorInSeq);
 
         Iterator iterCur(beg);
         Iterator iterEnd = std::distance(beg,end) > FactorInOut ? beg + FactorInOut : end;

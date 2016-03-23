@@ -125,7 +125,6 @@ void FullMatchManager::firstTokensAsSeed( NucleotideDatabase<Traits> const& db, 
     using namespace std;
 
     typedef typename Traits::HashTokenCharType HashTokenCharType;
-    typedef typename Traits::RefSeqCharType RefSeqCharType;
 
     // TODO: improve token selection, not only the from beginning
     size_t count = 0;
@@ -172,7 +171,6 @@ void FullMatchManager::takeMatchWithMostSeeds( NucleotideDatabase<Traits> const&
 {
     typedef typename NucleotideDatabase<Traits>::PtrRefEntry PtrRefEntry;
     typedef typename Traits::HashTokenCharType HashTokenCharType;
-    typedef typename Traits::RefSeqCharType RefSeqCharType;
     typedef std::tuple<ReferenceSequencePositionType,bool,bool> Position;
     typedef typename std::map<Position,size_t> PositionCountList;
     typedef typename std::unordered_map<PtrRefEntry,PositionCountList> MatchLookup;

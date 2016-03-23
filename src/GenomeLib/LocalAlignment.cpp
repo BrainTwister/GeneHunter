@@ -9,10 +9,8 @@ namespace GeneHunter {
 
 double LocalAlignment::getQuality( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality )
 {
-    if ( settings.useBandMatrix_ and (seq1.size() + 1 > settings.bandwidth_ or seq2.size() + 1 > settings.bandwidth_))
-        getQualitySparse(seq1,seq2,quality);
-    else
-        getQualityDense(seq1,seq2,quality);
+    return (settings.useBandMatrix_ and (seq1.size() + 1 > settings.bandwidth_ or seq2.size() + 1 > settings.bandwidth_))
+        ? getQualitySparse(seq1,seq2,quality) : getQualityDense(seq1,seq2,quality);
 }
 
 double LocalAlignment::getQualityDense( Sequence<char> const& seq1, Sequence<char> const& seq2, Sequence<char> const& quality )
