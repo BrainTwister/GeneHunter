@@ -2,7 +2,7 @@ GeneHunter
 ==========
 
 [![Build Status](https://travis-ci.org/BrainTwister/GeneHunter.png)](https://travis-ci.org/BrainTwister/GeneHunter)
-[![Coverage Status](https://coveralls.io/repos/BrainTwister/GeneHunter/badge.png?branch=master)](https://coveralls.io/r/BrainTwister/GeneHunter?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/BrainTwister/GeneHunter/badge.svg?branch=master)](https://coveralls.io/github/BrainTwister/GeneHunter?branch=master)
 [![Code Quality](https://landscape.io/github/BrainTwister/GeneHunter/master/landscape.svg)](https://landscape.io/github/BrainTwister/GeneHunter/master)
 <a href="https://scan.coverity.com/projects/braintwister-genehunter">
   <img alt="Coverity Scan Build Status"
