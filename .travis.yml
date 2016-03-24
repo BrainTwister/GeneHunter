@@ -55,12 +55,14 @@ addons:
     branch_pattern: coverity_scan
 
 script:
+  - cd ${TRAVIS_BUILD_DIR}
   - mkdir build
   - cd build
   - export BOOST_ROOT=$HOME/boost
   - export GTEST_ROOT=$HOME/build/BrainTwister/GeneHunter/googletest-release-1.7.0
   - $HOME/cmake-3.2.2/bin/cmake ..
-  - make && make test
+  - make
+  - make test
 
 env:
   matrix:
