@@ -76,7 +76,7 @@ after_success:
   - ./lcov-1.11/bin/lcov --gcov-tool gcov-4.9 --directory . --capture --output-file coverage.info
   - ./lcov-1.11/bin/lcov --gcov-tool gcov-4.9 --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info
   - ./lcov-1.11/bin/lcov --gcov-tool gcov-4.9 --list coverage.info
-  - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info
+  - coveralls-lcov --repo-token=${COVERALLS_TOKEN} coverage.info
 
 notifications:
   recipients:
