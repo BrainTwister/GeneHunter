@@ -1,12 +1,12 @@
-#include "ArgumentInterpreter.h"
-#include "Environment.h"
-#include "FileIO.h"
-#include "CDSDatabase.h"
-#include "CDSIterator.h"
-#include "GeneHunterException.h"
-#include "StringUtilities.h"
-#include "TaxonomyWriter.h"
-#include <boost/filesystem.hpp>
+#include "BrainTwister/ArgumentParser.h"
+#include "GenomeLib/CDSDatabase.h"
+#include "GenomeLib/CDSIterator.h"
+#include "TaxonomyDatabaseBuilder/TaxonomyWriter.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/Filesystem.h"
+#include "UtilitiesLib/GeneHunterException.h"
+#include "UtilitiesLib/StringUtilities.h"
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -15,7 +15,7 @@
 using namespace std;
 using namespace chrono;
 using namespace GeneHunter;
-using boost::filesystem::path;
+namespace bt = BrainTwister;
 
 int main( int argc, char* argv[] )
 {
@@ -24,19 +24,17 @@ int main( int argc, char* argv[] )
         cout << "\n" << makeFrame("TaxonomyDatabaseBuilder version " + version, '*') << "\n" << endl;
         const auto startTime = steady_clock::now();
 
-        const ArgumentInterpreter arg(argc,argv,
-            {{ "gi_taxid_nucl", ArgumentInterpreter::NonOptional, "Input file for taxonomy gi_taxid_nucl." },
-             { "names",         ArgumentInterpreter::NonOptional, "Input file for taxonomy names." },
-             { "nodes",         ArgumentInterpreter::NonOptional, "Input file for taxonomy nodes." },
-             { "database",      ArgumentInterpreter::Optional,    "Define MySQL database." }}
+        const bt::ArgumentParser arg(argc, argv, version,
+            {{ "gi_taxid_nucl", bt::Value<filesystem::path>(),      "Input file for taxonomy gi_taxid_nucl." },
+             { "names",         bt::Value<filesystem::path>(),      "Input file for taxonomy names." },
+             { "nodes",         bt::Value<filesystem::path>(),      "Input file for taxonomy nodes." }},
+            {{ "database", "d", bt::Value<std::string>("Taxonomy"), "MySQL database name." }}
         );
 
-        path gi_taxid_nucl_file = arg.getNonOptionalArgument("gi_taxid_nucl");
-        path names_file = arg.getNonOptionalArgument("names");
-        path nodes_file = arg.getNonOptionalArgument("nodes");
-        string database = arg.isOptionalFlagSet("database") ? arg.getOptionalArgument("database") : "Taxonomy";
-
-        TaxonomyWriter(gi_taxid_nucl_file,names_file,nodes_file,database);
+        TaxonomyWriter(arg.get<filesystem::path>("gi_taxid_nucl"),
+        		       arg.get<filesystem::path>("names"),
+					   arg.get<filesystem::path>("nodes"),
+                       arg.get<std::string>("database"));
 
         const auto stopTime = steady_clock::now();
         const auto duration = stopTime - startTime;

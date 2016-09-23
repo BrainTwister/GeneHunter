@@ -1,9 +1,9 @@
 #ifndef TOKENITERATOR_H_
 #define TOKENITERATOR_H_
 
-#include "GeneHunterException.h"
-#include "Sequence.h"
-#include "SequenceToken.h"
+#include "GenomeLib/Sequence.h"
+#include "GenomeLib/SequenceToken.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/iterator/iterator_facade.hpp>
 
 namespace GeneHunter {

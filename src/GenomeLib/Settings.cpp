@@ -1,5 +1,5 @@
-#include "GeneHunterException.h"
-#include "Settings.h"
+#include "GenomeLib/Settings.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <string>
 
 namespace GeneHunter {

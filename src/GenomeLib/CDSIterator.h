@@ -1,17 +1,17 @@
 #ifndef CDSITERATOR_H_
 #define CDSITERATOR_H_
 
-#include "CDSEntry.h"
-#include "CreateDataClass.h"
-#include "GeneHunterException.h"
+#include "GenomeLib/CDSEntry.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/Filesystem.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/tokenizer.hpp>
-#include <fstream>
+#include <istream>
 
 namespace GeneHunter {
 
@@ -33,11 +33,9 @@ public:
      : endFlag_(true)
     {}
 
-    CDSIterator( boost::filesystem::path const& filename, Settings const& settings )
-     : ptrInputStream_(new std::ifstream(filename.string().c_str())), settings_(settings)
+    CDSIterator( boost::shared_ptr<std::istream> ptrInputStream, Settings const& settings )
+     : ptrInputStream_(ptrInputStream), settings_(settings)
     {
-        if ( ! *ptrInputStream_ )
-            throw GeneHunterException("CDSIterator: Error opening file " + filename.string());
         increment();
     }
 
@@ -63,7 +61,7 @@ private:
 
     enum CurrentReading { Gene, Location, LocusTag, ProteinID, Product, Unused };
 
-    boost::shared_ptr<std::ifstream> ptrInputStream_;
+    boost::shared_ptr<std::istream> ptrInputStream_;
 
     CDSEntry currentEntry_;
 

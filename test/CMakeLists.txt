@@ -1,0 +1,2 @@
+add_subdirectory(GenomeTest)
+add_subdirectory(UtilitiesTest)

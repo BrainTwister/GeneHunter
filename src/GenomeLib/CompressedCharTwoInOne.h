@@ -1,15 +1,13 @@
 #ifndef COMPRESSEDCHARTWOINONE_H_
 #define COMPRESSEDCHARTWOINONE_H_
 
-#include "GeneHunterException.h"
-#include "GetCompressedIndex.h"
 #include <boost/serialization/access.hpp>
-#include "boost/serialization/array.h"
-#include "boost/lexical_cast.hpp"
-#include <array>
+#include <cstddef>
 #include <functional>
+#include <iostream>
 #include <string>
-#include <string>
+#include "UtilitiesLib/GeneHunterException.h"
+#include "GetCompressedIndex.h"
 
 namespace GeneHunter {
 

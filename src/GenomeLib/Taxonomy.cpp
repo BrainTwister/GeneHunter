@@ -1,8 +1,10 @@
-#include "Environment.h"
-#include "GeneHunterException.h"
 #include "Taxonomy.h"
+
 #include <boost/lexical_cast.hpp>
-#include <iostream>
+#include <cstddef>
+
+#include "../UtilitiesLib/Environment.h"
+#include "../UtilitiesLib/GeneHunterException.h"
 
 using namespace std;
 

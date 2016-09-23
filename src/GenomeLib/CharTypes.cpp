@@ -2,20 +2,6 @@
 
 namespace GeneHunter {
 
-/*
- *     U   uridine (matches T)
- *     K   G or T
- *     S   G or C
- *     R   G or A
- *     M   A or C
- *     W   A or T
- *     Y   T or C
- *     B   G, T, or C
- *     D   G, A, or T
- *     H   A, C, or T
- *     V   G, C, or A
- *     N   A, C, G, or T
- */
 bool firstMatchSecond( char c1, char c2 )
 {
     if ( c1 == c2 ) return true;

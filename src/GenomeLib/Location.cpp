@@ -1,5 +1,5 @@
-#include "GeneHunterException.h"
-#include "Location.h"
+#include "GenomeLib/Location.h"
+#include "UtilitiesLib/GeneHunterException.h"
 #include <boost/tokenizer.hpp>
 #include <iostream>
 

@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 2.8)
-project(GeneHunter CXX)
+cmake_minimum_required(VERSION 3.0)
+project(GeneHunter VERSION 1.1.0 LANGUAGES CXX)
+message("${PROJECT_NAME} version ${PROJECT_VERSION}")
 
-set(PROJECT_VERSION "1.0.1")
-message("Project version ${PROJECT_VERSION}")
-
+# add own cmake modules
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-  message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there. You may need to remove CMakeCache.txt.")
+  message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory)
+          and run CMake from there. You may need to remove CMakeCache.txt.")
 endif()
 
 # guard against bad build-type strings
@@ -17,18 +17,38 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_tolower)
-if(    NOT cmake_build_type_tolower STREQUAL "debug"
-   AND NOT cmake_build_type_tolower STREQUAL "release"
-   AND NOT cmake_build_type_tolower STREQUAL "relwithdebinfo"
-   AND NOT cmake_build_type_tolower STREQUAL "profiling" )
-  message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Debug, Release, RelWithDebInfo, Profiling (case-insensitive).")
+if(    NOT cmake_build_type_tolower STREQUAL "release"
+   AND NOT cmake_build_type_tolower STREQUAL "debug"
+   AND NOT cmake_build_type_tolower STREQUAL "profiling"
+   AND NOT cmake_build_type_tolower STREQUAL "relwithdebinfo")
+  message(FATAL_ERROR "Unknown build type \"${CMAKE_BUILD_TYPE}\". Allowed values are Release, Debug, Profiling, RelWithDebInfo (case-insensitive).")
 endif()
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -fPIC -fopenmp -DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG -DGENEASSEMBLER_THROW_FATAL_ERROR")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -DDEBUG_MODE")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DDEBUG_MODE")
+message("Build type: ${CMAKE_BUILD_TYPE}")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic-errors")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fopenmp")
+
+# For adressing an array a 'unsigned char' must be used to avoid negativ positions.
+# It would be more portable to use 'unsigned char' instead of 'signed char' directly within the code.
+# Since std::string is using by default a 'signed char', many cast would be needed.
+# Therefore, at the moment we simply switch off the warning and use '-funsigned-char' for the gnu compiler.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-char-subscripts -Wno-sign-compare")
+
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 set(CMAKE_CXX_FLAGS_PROFILING "-O3 -pg")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g")
+
+# enabling coverage
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+
+add_definitions(-DGENEHUNTER_THROW_FATAL_ERROR -DGENEHUNTER_USE_BOOST_FILESYSTEM)
+
+# C++ ISO standard
+set(CPP_ISO_STANDARD "c++14" CACHE STRING "C++ ISO standard")
+message("Use ${CPP_ISO_STANDARD} ISO standard")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=${CPP_ISO_STANDARD}")
 
 if( ${CMAKE_CXX_COMPILER} MATCHES "icpc" )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__GXX_EXPERIMENTAL_CXX0X__ -DNO_INITIALIZER_LIST_SUPPORTED")
@@ -49,11 +69,11 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/src/UtilitiesLib/Version.h"
 )
 
-set(Boost_USE_STATIC_LIBS        ON)
-set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME    OFF)
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
 
-FIND_PACKAGE(Boost COMPONENTS filesystem serialization system REQUIRED)
+FIND_PACKAGE(Boost COMPONENTS filesystem iostreams serialization system REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
@@ -61,19 +81,15 @@ if(Boost_FOUND)
 endif(Boost_FOUND)
 
 find_package(MySQL REQUIRED)
+find_package(ZLIB REQUIRED)
 
-add_subdirectory(src/DatabaseBuilder)
-add_subdirectory(src/CDSDatabaseBuilder)
-add_subdirectory(src/GeneHunter)
-add_subdirectory(src/GenomeLib)
-add_subdirectory(src/UtilitiesLib)
-add_subdirectory(src/TaxonomyDatabaseBuilder)
+add_subdirectory(ArgumentParser)
+add_subdirectory(src)
 
 find_package(GTest)
 if(GTEST_FOUND)
     ENABLE_TESTING()
-    add_subdirectory(src/GenomeTest)
-    add_subdirectory(src/UtilitiesTest)
+    add_subdirectory(test)
 endif(GTEST_FOUND)
 
 FIND_PACKAGE(Doxygen)

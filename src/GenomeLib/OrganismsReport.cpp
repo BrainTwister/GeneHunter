@@ -1,16 +1,20 @@
-#include "FileIO.h"
-#include "GeneHunterException.h"
-#include "Match.h"
 #include "OrganismsReport.h"
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <boost/version.hpp>
+#include <algorithm>
+#include <iostream>
+#include <utility>
+
+#include "UtilitiesLib/GeneHunterException.h"
 
 using namespace std;
 
 namespace GeneHunter {
 
-OrganismsReport::OrganismsReport( boost::filesystem::path const& reportFile, boost::filesystem::path const& datasetFile,
-    Settings const& settings, size_t nbReads )
+OrganismsReport::OrganismsReport(filesystem::path const& reportFile, filesystem::path const& datasetFile,
+    Settings const& settings, size_t nbReads)
  : dataset(datasetFile),
    reportFile(reportFile),
    taxonomy(settings.taxonomySettings_),
@@ -62,10 +66,18 @@ OrganismsReport::~OrganismsReport()
     ptReport.push_back(make_pair("organisms",ptOrganisms));
 
     std::ofstream output(reportFile.string().c_str());
-    write_xml(output,pt,boost::property_tree::xml_writer_settings<char>(' ',2));
+    #if BOOST_VERSION >= 105600
+        write_xml(output, pt, boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
+    #else
+        write_xml(output, pt, boost::property_tree::xml_writer_settings<char>(' ', 2u));
+    #endif
 
     std::ofstream removedOrganismsOut("removedOrganisms.xml");
-    write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<char>(' ',2));
+    #if BOOST_VERSION >= 105600
+        write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<ptree::key_type>(' ', 2u));
+    #else
+        write_xml(removedOrganismsOut,ptRemovedOrganisms,boost::property_tree::xml_writer_settings<char>(' ', 2u));
+    #endif
 
     if ( !geneIDsNotFountInTaxonomy.empty() )
     {

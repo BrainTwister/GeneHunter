@@ -1,7 +1,7 @@
 #ifndef GETCOMPRESSEDINDEX_H_
 #define GETCOMPRESSEDINDEX_H_
 
-#include "Power.h"
+#include "UtilitiesLib/Power.h"
 
 namespace GeneHunter {
 

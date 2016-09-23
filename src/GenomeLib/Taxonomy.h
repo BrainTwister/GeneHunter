@@ -1,11 +1,13 @@
 #ifndef TAXONOMY_H_
 #define TAXONOMY_H_
 
-#include "CreateDataClass.h"
-#include "Organism.h"
-#include <cstdlib>
 #include <mysql.h>
+#include <stddef.h>
 #include <string>
+#include <vector>
+
+#include "UtilitiesLib/CreateDataClass.h"
+#include "Organism.h"
 
 namespace GeneHunter {
 
@@ -48,9 +50,9 @@ private:
 
     mutable size_t currentTraceTaxID_ = 0;
 
-    MYSQL *myConnection_;
-
     Settings settings_;
+
+    MYSQL *myConnection_;
 
 };
 

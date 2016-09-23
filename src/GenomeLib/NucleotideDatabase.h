@@ -1,28 +1,22 @@
 #ifndef NUCLEOTIDEDATABASE_H_
 #define NUCLEOTIDEDATABASE_H_
 
-#include "CreateDataClass.h"
-#include "GeneHunterException.h"
-#include "Genome.h"
-#include "FASTA.h"
-#include "NucleotideDatabaseInformation.h"
-#include "printHashTableState.h"
-#include "SequenceToken.h"
-#include "TokenIterator.h"
-#include <boost/algorithm/string/trim.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/serialization/access.hpp>
-#include "boost/serialization/unordered_map.hpp"
 #include <boost/serialization/vector.hpp>
-#include <boost/serialization/shared_ptr.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/tokenizer.hpp>
-#include <fstream>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <stddef.h>
+#include <functional>
 #include <iostream>
 #include <map>
-#include <sstream>
 #include <unordered_map>
+#include <vector>
+#include "BoostLib/boost/serialization/unordered_map.hpp"
+#include "FASTA.h"
+#include "Genome.h"
+#include "NucleotideDatabaseInformation.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/printHashTableState.h"
+#include "TokenIterator.h"
 
 namespace GeneHunter {
 

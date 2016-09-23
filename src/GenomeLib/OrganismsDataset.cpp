@@ -5,7 +5,7 @@ using namespace std;
 
 namespace GeneHunter {
 
-OrganismsDataset::OrganismsDataset( boost::filesystem::path const& datasetFile )
+OrganismsDataset::OrganismsDataset(filesystem::path const& datasetFile)
 {
     using boost::property_tree::ptree;
 

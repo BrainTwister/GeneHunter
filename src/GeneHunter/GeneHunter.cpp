@@ -1,17 +1,17 @@
-#include "ArgumentInterpreter.h"
-#include "CreateDataClass.h"
-#include "Environment.h"
-#include "FASTQIterator.h"
-#include "FileIO.h"
-#include "FixedSizeHashMapSearch.h"
-#include "FullMatchManager.h"
-#include "GeneHunterException.h"
-#include "NucleotideDatabaseIterator.h"
-#include "OrganismsReport.h"
-#include "Sequence.h"
-#include "StringUtilities.h"
-#include "TokenIterator.h"
-#include <boost/filesystem.hpp>
+#include "BrainTwister/ArgumentParser.h"
+#include "GenomeLib/FASTQIterator.h"
+#include "GenomeLib/FixedSizeHashMapSearch.h"
+#include "GenomeLib/FullMatchManager.h"
+#include "GenomeLib/NucleotideDatabaseIterator.h"
+#include "GenomeLib/OrganismsReport.h"
+#include "GenomeLib/Sequence.h"
+#include "GenomeLib/TokenIterator.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/Filesystem.h"
+#include "UtilitiesLib/GeneHunterException.h"
+#include "UtilitiesLib/StringUtilities.h"
 #include <boost/lexical_cast.hpp>
 #include <chrono>
 #include <iostream>
@@ -20,7 +20,7 @@
 using namespace std;
 using namespace chrono;
 using namespace GeneHunter;
-using boost::filesystem::path;
+namespace bt = BrainTwister;
 
 CREATE_DATA_CLASS( GeneHunterSettings,\
     (( FixedTokenSizeType, fixedTokenSize, 12 ))\
@@ -36,39 +36,39 @@ int main( int argc, char* argv[] )
         cout << "\n" << makeFrame("GeneHunter version " + version, '*') << "\n" << endl;
         const auto startTime = steady_clock::now();
 
-        ArgumentInterpreter arg(argc,argv,
-            {{ "readFile",             ArgumentInterpreter::NonOptional, "Read sequence in FASTQ format." },
-             { "descriptionFile",      ArgumentInterpreter::NonOptional, "Description file in XML format." },
-             { "outputFile",           ArgumentInterpreter::NonOptional, "Output file in XML format." },
-             { "maxEntries",           ArgumentInterpreter::Optional,    "Define how many entries are taken from NT database." },
-             { "startEntry",           ArgumentInterpreter::Optional,    "Define the index of the starting NT database entry." },
-             { "maxBases",             ArgumentInterpreter::Optional,    "Define how many bases are taken from NT database." },
-             { "maxBasesPerStep",      ArgumentInterpreter::Optional,    "Define how many bases are are taken from NT database for one step." },
-             { "maxReads",             ArgumentInterpreter::Optional,    "Maximal number of reads in fq file." },
-             { "readFullMatchManager", ArgumentInterpreter::Optional,    "FullMatchManager file for restart or determine taxonomy (binary or xml)." },
-             //{ "threshold",            ArgumentInterpreter::Optional,    "Threshold for match quality." },
-             { "settings",             ArgumentInterpreter::Optional,    "Define file for specific settings (default: $GENEASSEMBLER_ROOT/settings/GeneHunterSettings.xml)." },
-             { "NTDatabase",           ArgumentInterpreter::Optional,    "Define nucleotide database file." },
-             { "overwriteOutput",      ArgumentInterpreter::Boolean,     "If set an existing output file will overwritten." },
-             { "skipTaxonomy",         ArgumentInterpreter::Boolean,     "Do not write result file, only FullMatchManager output." },
-             { "onlyTaxonomy",         ArgumentInterpreter::Boolean,     "Only write result file, do not search for new matches (is only possible together with -readFullMatchManager)." },
-             { "printSteps",           ArgumentInterpreter::Boolean,     "Printing intermediate import informations of NT database each step." },
-             { "printHashMapInfo",     ArgumentInterpreter::Boolean,     "Printing hashMap informations each step." }}
+        const bt::ArgumentParser arg(argc, argv, version,
+            {{ "read",                     bt::Value<filesystem::path>(),    "Read sequence in FASTQ format." },
+             { "description",              bt::Value<filesystem::path>(),    "Description file in XML format." },
+             { "output",                   bt::Value<filesystem::path>(),    "Output file in XML format." },
+             { "nt",                       bt::Value<filesystem::path>(),    "Define nucleotide database file."}},
+            {{ "maxEntries", "",           bt::Value<size_t>(numeric_limits<size_t>::max()), "Define how many entries are taken from NT database." },
+             { "startEntry", "",           bt::Value<size_t>(numeric_limits<size_t>::min()), "Define the index of the starting NT database entry." },
+             { "maxBases", "",             bt::Value<size_t>(numeric_limits<size_t>::max()), "Define how many bases are taken from NT database." },
+             { "maxBasesPerStep", "",      bt::Value<size_t>(1e7), "Define how many bases are are taken from NT database for one step." },
+             { "maxReads", "",             bt::Value<size_t>(numeric_limits<size_t>::max()), "Maximal number of reads in fq file." },
+             { "readFullMatchManager", "", bt::Value<filesystem::path>(),    "FullMatchManager file for restart or determine taxonomy (binary or xml)." },
+           //{ "threshold", "",            bt::Value<double>(),              "Threshold for match quality." },
+             { "settings", "",             bt::Value<filesystem::path>(Environment::getGeneHunterRootDirectory() / "settings" / "GeneHunterSettings.xml"),
+            		                                                         "Define file for specific settings (default: $GENEHUNTER_ROOT/settings/GeneHunterSettings.xml)." },
+             { "overwrite", "",            bt::Value<bool>(),                "If set an existing output file will overwritten." },
+             { "skipTaxonomy", "",         bt::Value<bool>(),                "Do not write result file, only FullMatchManager output." },
+             { "onlyTaxonomy", "",         bt::Value<bool>(),                "Only write result file, do not search for new matches (is only possible together with -readFullMatchManager)." },
+             { "printSteps", "",           bt::Value<bool>(),                "Printing intermediate import informations of NT database each step." },
+             { "printHashMapInfo", "",     bt::Value<bool>(),                "Printing hashMap informations each step." }}
         );
 
-        path inputXMLFile = arg.getNonOptionalArgument("descriptionFile");
+        auto inputXMLFile = arg.get<filesystem::path>("description");
         if (!exists(inputXMLFile)) throw GeneHunterException("File not found: " + inputXMLFile.string());
 
-        path outputXMLFile = arg.getNonOptionalArgument("outputFile");
-        if (!arg.isBooleanFlagSet("overwriteOutput") and exists(outputXMLFile))
+        auto outputXMLFile = arg.get<filesystem::path>("output");
+        if (!arg.get<bool>("overwrite") and exists(outputXMLFile))
             throw GeneHunterException("File exist and not allowed to overwrite: " + outputXMLFile.string());
 
-        if ( arg.isBooleanFlagSet("onlyTaxonomy") and !arg.isOptionalFlagSet("readFullMatchManager") )
+        if (arg.get<bool>("onlyTaxonomy") and !arg.get<filesystem::path>("readFullMatchManager").empty())
             throw GeneHunterException("Option 'onlyTaxonomy' can only used together with 'readFullMatchManager'.");
 
         // Read settings
-        path settingsFile = Environment::getGeneHunterRootDirectory() / "settings" / "GeneHunterSettings.xml";
-        if (arg.isOptionalFlagSet("settings")) settingsFile = path(arg.getOptionalArgument("settings"));
+        filesystem::path settingsFile = arg.get<filesystem::path>("settings");
         if (!exists(settingsFile)) throw GeneHunterException("Settings file " + settingsFile.string() + " not found.");
         GeneHunterSettings settings;
         readXML(settings,"GeneHunterSettings",settingsFile);
@@ -90,15 +90,16 @@ int main( int argc, char* argv[] )
 
         FullMatchManager fullMatchManager(settings.fullMatchManagerSettings_);
 
-        if (arg.isOptionalFlagSet("readFullMatchManager")) {
-            readExtensionDependend(fullMatchManager,"FullMatchManager",arg.getOptionalArgument("readFullMatchManager"));
+        if (!arg.get<filesystem::path>("readFullMatchManager").empty()) {
+            readExtensionDependend(fullMatchManager, "FullMatchManager", arg.get<filesystem::path>("readFullMatchManager"));
         }
 
-        if (!arg.isBooleanFlagSet("onlyTaxonomy")) {
-            fixedSizeHashMapSearch(settings.fixedTokenSize_,fullMatchManager,settings.nucleotideDatabaseSettings_,arg);
+        if (!arg.get<bool>("onlyTaxonomy"))
+        {
+            fixedSizeHashMapSearch(settings.fixedTokenSize_, fullMatchManager, settings.nucleotideDatabaseSettings_, arg);
         }
 
-        if (!arg.isBooleanFlagSet("skipTaxonomy"))
+        if (!arg.get<bool>("skipTaxonomy"))
         {
             OrganismsReport organismsReport(outputXMLFile,inputXMLFile,settings.organismsReportSettings_,
                 fullMatchManager.getTotalNbImportedReadSeq());

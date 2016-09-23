@@ -1,12 +1,14 @@
-#include "ArgumentInterpreter.h"
-#include "CreateDataClass.h"
-#include "Environment.h"
-#include "FileIO.h"
-#include "CDSDatabase.h"
-#include "CDSIterator.h"
-#include "GeneHunterException.h"
-#include "StringUtilities.h"
-#include <boost/filesystem.hpp>
+#include "BrainTwister/ArgumentParser.h"
+#include "GenomeLib/CDSDatabase.h"
+#include "GenomeLib/CDSIterator.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/Environment.h"
+#include "UtilitiesLib/FileIO.h"
+#include "UtilitiesLib/Filesystem.h"
+#include "UtilitiesLib/GeneHunterException.h"
+#include "UtilitiesLib/StringUtilities.h"
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -15,7 +17,7 @@
 using namespace std;
 using namespace chrono;
 using namespace GeneHunter;
-using boost::filesystem::path;
+namespace bt = BrainTwister;
 
 CREATE_DATA_CLASS( CDSDatabaseBuilderSettings,\
     (( CDSIterator::Settings, cdsIteratorSettings, CDSIterator::Settings() ))\
@@ -28,47 +30,36 @@ int main( int argc, char* argv[] )
         cout << "\n" << makeFrame("CDSDatabaseBuilder version " + version, '*') << "\n" << endl;
         const auto startTime = steady_clock::now();
 
-        const ArgumentInterpreter arg(argc,argv,
-            {{ "inputFiles", ArgumentInterpreter::NonOptionalList, "Input files containing CDS features (gz-files are supported)." },
-             { "settings",   ArgumentInterpreter::Optional,        "File for specific settings (default: $GENEASSEMBLER_ROOT/settings/CDSDatabaseBuilderSettings.xml)." },
-             { "tableName",  ArgumentInterpreter::Optional,        "Table name for MySQL database (default: ProteinLink)." }}
+        const bt::ArgumentParser arg(argc, argv, version,
+            {{ "inputFiles",     bt::Value<std::vector<filesystem::path>>(), "Input files containing CDS features (gz-files are supported)." }},
+            {{ "settings", "s",  bt::Value<filesystem::path>(Environment::getGeneHunterRootDirectory() / "settings" / "CDSDatabaseBuilderSettings.xml"),
+            		                                                         "File for specific settings." },
+             { "tableName", "t", bt::Value<std::string>("ProteinLink"),      "Table name for MySQL database." }}
         );
 
-        string tableName = arg.isOptionalFlagSet("tableName") ? arg.getOptionalArgument("tableName") : "ProteinLink";
-        bool onlyGenes = arg.isOptionalFlagSet("onlyGenes") ? true : false;
-
+        string tableName = arg.get<std::string>("tableName");
         CDSDatabase cdsDatabase(CDSDatabase::Settings(tableName,0,false));
 
         // Read settings
-        path settingsFile = Environment::getGeneHunterRootDirectory() / "settings" / "CDSDatabaseBuilderSettings.xml";
-        if (arg.isOptionalFlagSet("settings")) settingsFile = path(arg.getOptionalArgument("settings"));
+        filesystem::path settingsFile = arg.get<filesystem::path>("settings");
         if (!exists(settingsFile)) throw GeneHunterException("Settings file " + settingsFile.string() + " not found.");
         CDSDatabaseBuilderSettings settings;
         readXML(settings,"CDSDatabaseBuilderSettings",settingsFile);
 
-        for ( auto const& inputFile : arg.getNonOptionalList() )
+        for (auto const& inputFile : arg.get<std::vector<filesystem::path>>("inputFiles"))
         {
-            string filename(inputFile);
-            cout << "Import " << filename << endl;
+            std::cout << "Import " << inputFile.string() << std::endl;
 
-            bool fileIsZipped = false;
-            if ( filename.substr(filename.size()-3,3) == ".gz" ) {
-                string cmd = "gunzip " + filename;
-                cout << cmd << endl;
-                if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
-                filename.erase(filename.size()-3,3);
-                fileIsZipped = true;
-            }
+            std::ifstream ifs(inputFile.string());
+            if (!ifs) throw GeneHunterException("Error opening file " + inputFile.string());
+            boost::iostreams::filtering_streambuf<boost::iostreams::input> inbuf;
+            if (inputFile.extension() == ".gz") inbuf.push(boost::iostreams::gzip_decompressor());
+            inbuf.push(ifs);
+            boost::shared_ptr<std::istream> ptr_instream(new std::istream(&inbuf));
 
-            for ( CDSIterator iterCur(filename,settings.cdsIteratorSettings_), iterEnd; iterCur != iterEnd; ++iterCur )
+            for (CDSIterator iterCur(ptr_instream, settings.cdsIteratorSettings_), iterEnd; iterCur != iterEnd; ++iterCur)
             {
                 cdsDatabase.importGene(*iterCur);
-            }
-
-            if ( fileIsZipped ) {
-                string cmd = string("gzip ") + filename;
-                cout << cmd << endl;
-                if (system(cmd.c_str())) throw GeneHunterException("Error in executing " + cmd + ".");
             }
         }
 

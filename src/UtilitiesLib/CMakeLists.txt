@@ -1,9 +1,9 @@
 include_directories(
+    ${PROJECT_SOURCE_DIR}/src
 )
 
 add_library(
     UtilitiesLib
-    ArgumentInterpreter.cpp
     Environment.cpp
     EnvironmentVariables.cpp
     StringUtilities.cpp

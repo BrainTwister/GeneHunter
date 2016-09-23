@@ -1,8 +1,8 @@
 #ifndef MATCH_H_
 #define MATCH_H_
 
-#include "Genome.h"
-#include "Helpers.h"
+#include "GenomeLib/Genome.h"
+#include "UtilitiesLib/Helpers.h"
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <string>
@@ -53,7 +53,7 @@ private:
     }
 };
 
-using Matches = std::unordered_map<std::string,Match>;
+using Matches = std::unordered_map<std::string, Match>;
 
 inline std::ostream& operator << ( std::ostream& os, Match const& match )
 {

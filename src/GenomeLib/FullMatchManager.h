@@ -1,17 +1,17 @@
 #ifndef FULLMATCHMANAGER_H_
 #define FULLMATCHMANAGER_H_
 
-#include "CreateDataClass.h"
-#include "FASTA.h"
-#include "FASTQ.h"
-#include "Genome.h"
-#include "Helpers.h"
-#include "LocalAlignment.h"
-#include "Match.h"
-#include "NucleotideDatabase.h"
-#include "Quality.h"
-#include "Range.h"
-#include "Settings.h"
+#include "GenomeLib/FASTA.h"
+#include "GenomeLib/FASTQ.h"
+#include "GenomeLib/Genome.h"
+#include "GenomeLib/LocalAlignment.h"
+#include "GenomeLib/Match.h"
+#include "GenomeLib/NucleotideDatabase.h"
+#include "GenomeLib/Quality.h"
+#include "GenomeLib/Range.h"
+#include "GenomeLib/Settings.h"
+#include "UtilitiesLib/CreateDataClass.h"
+#include "UtilitiesLib/Helpers.h"
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/version.hpp>
 #include <map>
@@ -125,7 +125,6 @@ void FullMatchManager::firstTokensAsSeed( NucleotideDatabase<Traits> const& db, 
     using namespace std;
 
     typedef typename Traits::HashTokenCharType HashTokenCharType;
-    typedef typename Traits::RefSeqCharType RefSeqCharType;
 
     // TODO: improve token selection, not only the from beginning
     size_t count = 0;
@@ -172,7 +171,6 @@ void FullMatchManager::takeMatchWithMostSeeds( NucleotideDatabase<Traits> const&
 {
     typedef typename NucleotideDatabase<Traits>::PtrRefEntry PtrRefEntry;
     typedef typename Traits::HashTokenCharType HashTokenCharType;
-    typedef typename Traits::RefSeqCharType RefSeqCharType;
     typedef std::tuple<ReferenceSequencePositionType,bool,bool> Position;
     typedef typename std::map<Position,size_t> PositionCountList;
     typedef typename std::unordered_map<PtrRefEntry,PositionCountList> MatchLookup;

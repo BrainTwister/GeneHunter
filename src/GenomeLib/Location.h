@@ -4,7 +4,8 @@
 #include "Range.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/access.hpp>
-#include <boost/serialization/set.hpp>
+#include <boost/serialization/serialization.hpp>
+//#include <boost/serialization/set.hpp>
 #include <set>
 #include <string>
 #include <vector>
