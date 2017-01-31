@@ -2,6 +2,7 @@
 #define QUALITY_H_
 
 #include <algorithm>
+#include <cmath>
 #include <array>
 
 namespace GeneHunter {
@@ -19,7 +20,7 @@ struct gens< 0, S... >
 };
 
 constexpr double quality( char c, uint8_t offset ) {
-    return c > offset ? pow(10.0,-static_cast<double>(c-offset)/10) : 1.0;
+    return c > offset ? std::pow(10.0,-static_cast<double>(c-offset)/10) : 1.0;
 }
 
 /**
